@@ -1,0 +1,437 @@
+# 系统文件
+Thumbs.db
+.DS_Store
+
+# 临时文件和缓存
+*.tmp
+*.temp
+*.log
+*.swp
+*.swo
+*~
+
+# 编辑器文件
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 依赖目录
+node_modules/
+vendor/
+
+# 构建输出
+dist/
+build/
+out/
+
+# 环境文件
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# 日志目录
+logs/
+
+# 操作系统文件
+Thumbs.db
+Desktop.ini
+
+# 包文件
+*.zip
+*.tar.gz
+*.rar
+
+# 可执行文件
+*.exe
+*.dll
+*.so
+*.dylib
+
+# 测试覆盖率
+coverage/
+*.lcov
+
+# 其他临时文件
+.temp
+.cache
+
+# IDE 配置
+.idea/
+.vscode/
+.project
+.settings/
+.classpath
+
+# 构建工具
+.npm
+.yarn-integrity
+
+# 版本控制
+.git/
+.hg/
+.svn/
+
+# 其他
+*.pem
+
+# 排除特定目录
+coze-studio-0.5.0/node_modules/
+coze-studio-0.5.0/dist/
+coze-studio-0.5.0/build/
+
+# 敏感信息
+*.key
+*.pem
+*.crt
+
+# 大文件
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.mkv
+*.mp3
+*.wav
+*.flac
+*.aac
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+*.bz2
+*.iso
+*.dmg
+*.pkg
+
+# 备份文件
+*.bak
+*.backup
+*.old
+
+# 编译文件
+*.o
+*.obj
+*.ko
+*.elf
+
+# 语言特定
+*.pyc
+__pycache__/
+
+# Go
+vendor/
+bin/
+
+# Ruby
+bundle/
+
+# Java
+target/
+*.jar
+*.war
+*.ear
+
+# PHP
+vendor/
+composer.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# Rust
+target/
+
+# C/C++
+build/
+out/
+*.o
+*.obj
+*.so
+*.dylib
+*.dll
+
+# Swift
+.build/
+
+# Kotlin
+*.ktm
+*.kotlin_module
+
+# Scala
+*.class
+*.log
+
+# 其他
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 开发工具
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 构建工具
+.npm
+.yarn-integrity
+
+# 版本控制
+.git/
+.hg/
+.svn/
+
+# 其他临时文件
+.temp
+.cache
+
+# 敏感信息
+*.key
+*.pem
+*.crt
+
+# 大文件
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.mkv
+*.mp3
+*.wav
+*.flac
+*.aac
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+*.bz2
+*.iso
+*.dmg
+*.pkg
+
+# 备份文件
+*.bak
+*.backup
+*.old
+
+# 编译文件
+*.o
+*.obj
+*.ko
+*.elf
+
+# 语言特定
+*.pyc
+__pycache__/
+
+# Go
+vendor/
+bin/
+
+# Ruby
+bundle/
+
+# Java
+target/
+*.jar
+*.war
+*.ear
+
+# PHP
+vendor/
+composer.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# Rust
+target/
+
+# C/C++
+build/
+out/
+*.o
+*.obj
+*.so
+*.dylib
+*.dll
+
+# Swift
+.build/
+
+# Kotlin
+*.ktm
+*.kotlin_module
+
+# Scala
+*.class
+*.log
+
+# 其他
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 开发工具
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 构建工具
+.npm
+.yarn-integrity
+
+# 版本控制
+.git/
+.hg/
+.svn/
+
+# 其他临时文件
+.temp
+.cache
+
+# 敏感信息
+*.key
+*.pem
+*.crt
+
+# 大文件
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.mkv
+*.mp3
+*.wav
+*.flac
+*.aac
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+*.bz2
+*.iso
+*.dmg
+*.pkg
+
+# 备份文件
+*.bak
+*.backup
+*.old
+
+# 编译文件
+*.o
+*.obj
+*.ko
+*.elf
+
+# 语言特定
+*.pyc
+__pycache__/
+
+# Go
+vendor/
+bin/
+
+# Ruby
+bundle/
+
+# Java
+target/
+*.jar
+*.war
+*.ear
+
+# PHP
+vendor/
+composer.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# Rust
+target/
+
+# C/C++
+build/
+out/
+*.o
+*.obj
+*.so
+*.dylib
+*.dll
+
+# Swift
+.build/
+
+# Kotlin
+*.ktm
+*.kotlin_module
+
+# Scala
+*.class
+*.log

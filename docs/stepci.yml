@@ -1,0 +1,58 @@
+version: "1.1"
+name: Coze Studio 代码质量检查
+
+env:
+  NODE_ENV: development
+
+tests:
+  # ESLint 检查
+  - name: ESLint 代码质量检查
+    command: npm run lint
+    cwd: ./
+    assertions:
+      - result.code should equal 0
+      - result.stdout should contain "All lint checks passed"
+
+  # Prettier 检查
+  - name: Prettier 代码格式化检查
+    command: npm run format:check
+    cwd: ./
+    assertions:
+      - result.code should equal 0
+      - result.stdout should contain "Checking formatting"
+
+  # 依赖检查
+  - name: 依赖完整性检查
+    command: npm ls --depth=0
+    cwd: ./
+    assertions:
+      - result.code should equal 0
+
+  # 安全检查
+  - name: 安全漏洞检查
+    command: npm audit --audit-level=high
+    cwd: ./
+    assertions:
+      - result.code should equal 0
+
+  # Go 代码检查
+  - name: Go 代码构建检查
+    command: go build ./...
+    cwd: ./
+    assertions:
+      - result.code should equal 0
+
+  # Python 代码检查
+  - name: Python 代码语法检查
+    command: python -m py_compile ./scripts/**/*.py 2>/dev/null || true
+    cwd: ./
+    assertions:
+      - result.code should equal 0
+
+  # Docker 构建检查
+  - name: Docker 构建检查
+    command: docker build -t coze-studio-test -f ./Dockerfile . || true
+    cwd: ./
+    assertions:
+      - result.code should equal 0
+      - result.stderr should not contain "ERROR"

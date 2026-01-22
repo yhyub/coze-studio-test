@@ -1,0 +1,210 @@
+name: Coze Studio 自动化部署
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: '部署环境'
+        required: true
+        default: 'development'
+        type: choice
+        options:
+          - development
+          - staging
+          - production
+      deploy_type:
+        description: '部署类型'
+        required: true
+        default: 'full'
+        type: choice
+        options:
+          - full
+          - backend-only
+          - frontend-only
+          - docker-only
+
+jobs:
+  setup-environment:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    
+    steps:
+      - name: 检查代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 设置Go环境
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22.x'
+          cache: true
+
+      - name: 设置Node.js环境
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+
+      - name: 设置Python环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.x'
+          cache: 'pip'
+
+      - name: 安装依赖
+        run: |
+          echo "安装Go依赖"
+          go mod download
+          
+          echo "安装Node.js依赖"
+          cd frontend
+          npm install
+          
+          echo "安装Python依赖"
+          pip install -r requirements.txt || echo "No requirements.txt found"
+
+      - name: 代码质量检查
+        uses: pre-commit/action@v3.0.1
+        with:
+          extra_args: --all-files
+
+      - name: 测试报告生成
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: Test Results
+          path: '**/test-results.xml'
+          reporter: jest-junit
+
+  docker-deploy:
+    needs: setup-environment
+    runs-on: windows-latest
+    timeout-minutes: 120
+    
+    steps:
+      - name: 检查代码
+        uses: actions/checkout@v4
+
+      - name: 配置Docker环境
+        uses: docker/setup-buildx-action@v3
+
+      - name: 登录Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: 构建和推送Docker镜像
+        if: github.event.inputs.deploy_type != 'backend-only' && github.event.inputs.deploy_type != 'frontend-only'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/coze-studio:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: 启动Coze Studio服务
+        run: |
+          echo "进入docker目录"
+          cd coze-studio-0.5.0/docker
+          
+          echo "启动Docker服务"
+          docker compose --profile "*" up -d
+          
+          echo "等待服务启动完成"
+          timeout 300 docker logs -f coze-server || true
+        shell: powershell
+
+      - name: 验证服务状态
+        run: |
+          echo "检查容器状态"
+          docker ps
+          
+          echo "检查服务日志"
+          docker logs coze-server --tail 50
+          
+          echo "测试服务访问"
+          curl -v http://localhost:8888 || true
+        shell: powershell
+
+  cleanup:
+    needs: docker-deploy
+    runs-on: windows-latest
+    if: always()
+    
+    steps:
+      - name: 取消不必要的工作流
+        uses: styfle/cancel-workflow-action@0.12.1
+        with:
+          access_token: ${{ github.token }}
+
+      - name: 清理资源
+        run: |
+          echo "清理临时文件"
+          Remove-Item -Path "*" -Include "*.tmp", "*.log" -Recurse -Force -ErrorAction SilentlyContinue
+          
+          echo "检查并停止未使用的容器"
+          docker container prune -f || true
+          
+          echo "检查并清理未使用的镜像"
+          docker image prune -f || true
+        shell: powershell
+
+  security-scan:
+    needs: docker-deploy
+    runs-on: ubuntu-latest
+    if: github.event.inputs.environment == 'production'
+    
+    steps:
+      - name: 检查代码
+        uses: actions/checkout@v4
+
+      - name: 代码安全扫描
+        uses: snyk/actions/setup@v1
+        with:
+          snyk-token: ${{ secrets.SNYK_TOKEN }}
+
+      - name: 依赖安全检查
+        run: |
+          snyk test --severity-threshold=high
+          snyk code test
+          snyk container test ${{ secrets.DOCKER_USERNAME }}/coze-studio:${{ github.sha }} --file=Dockerfile --severity-threshold=high
+
+  cypress-tests:
+    needs: docker-deploy
+    runs-on: windows-latest
+    if: github.event.inputs.deploy_type != 'backend-only'
+    
+    steps:
+      - name: 检查代码
+        uses: actions/checkout@v4
+
+      - name: 安装Cypress
+        run: |
+          cd frontend
+          npm install cypress --save-dev
+
+      - name: 运行Cypress测试
+        uses: cypress-io/github-action@v6
+        with:
+          project: ./frontend
+          browser: chrome
+          headless: true
+          config-file: cypress.config.js
+
+  deploy-notification:
+    needs: [docker-deploy, security-scan, cypress-tests]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: 发送部署通知
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: github.event_name != 'pull_request' && contains(github.ref, 'main')

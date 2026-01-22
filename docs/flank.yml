@@ -1,0 +1,91 @@
+# Flank 测试配置文件
+# 用于并行运行Android和iOS测试
+
+# 通用配置
+gcp:
+  # GCP项目ID（可选）
+  project: your-gcp-project-id
+  # GCP服务账号密钥路径（可选）
+  service-account-key-path: ./gcp-service-account-key.json
+
+# Android 测试配置
+android:
+  # 测试类型
+  test-type: instrumentation
+  # APK文件路径
+  app: ./app-debug.apk
+  # 测试APK文件路径
+  test: ./app-debug-androidTest.apk
+  # 测试运行器
+  test-runner-class: androidx.test.runner.AndroidJUnitRunner
+  # 测试设备配置
+  device:
+    - model: Pixel 5
+      version: 30
+      locale: en_US
+      orientation: portrait
+    - model: Pixel 4
+      version: 29
+      locale: en_US
+      orientation: portrait
+  # 测试选项
+  test-options:
+    clearPackageData: true
+  # 输出目录
+  output-dir: ./test-results/android
+  # 并行度
+  max-test-shards: 5
+  # 每个分片的测试数量
+  shard-time: 120
+  # 结果格式
+  result-format: junit
+
+# iOS 测试配置
+ios:
+  # 测试类型
+  test-type: xctest
+  # 测试包路径
+  xctestrun-file: ./CozeStudioTests.xctestrun
+  # 测试设备配置
+  device:
+    - model: iPhone 13
+      version: 15.0
+      locale: en_US
+      orientation: portrait
+    - model: iPad Pro (12.9-inch) (5th generation)
+      version: 15.0
+      locale: en_US
+      orientation: landscape
+  # 输出目录
+  output-dir: ./test-results/ios
+  # 并行度
+  test-targets:
+    - CozeStudioTests
+  # 结果格式
+  result-format: junit
+
+# 通用测试配置
+general:
+  # 输出风格
+  output-style: multi
+  # 日志级别
+  log-level: info
+  # 结果处理
+  disable-sharding: false
+  # 测试超时
+  test-timeout: 3600s
+  # 结果上传
+  full-junit-result: true
+  # 性能监控
+  record-video: true
+  # 截图
+  record-screenshots: true
+
+# 报告配置
+report:
+  # 报告类型
+  type: html
+  # 报告标题
+  title: Coze Studio 测试报告
+  # 报告路径
+  path: ./test-results/flank-report.html
