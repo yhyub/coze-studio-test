@@ -1,0 +1,26 @@
+Windows 程序包管理器 v1.12.350
+版权所有 (C) Microsoft Corporation。保留所有权利。
+
+未提供所需参数: "output"
+
+将已安装程序包的列表写入文件。然后可以通过 import 命令安装这些包。
+
+使用情况: winget export [-o] <output> [<选项>]
+
+以下参数可用：
+  -o,--output                 将在其中写入结果的文件
+
+下列选项可用：
+  -s,--source                 从指定源导出程序包
+  --include-versions          在导出文件中包括包版本
+  --accept-source-agreements  在源操作期间接受所有源协议
+  -?,--help                   显示选定命令的帮助信息
+  --wait                      提示用户在退出前按任意键
+  --logs,--open-logs          打开默认日志位置
+  --verbose,--verbose-logs    启用 WinGet 的详细日志记录
+  --nowarn,--ignore-warnings  禁止显示警告输出
+  --disable-interactivity     禁用交互式提示
+  --proxy                     设置要用于此执行的代理
+  --no-proxy                  禁止对此执行使用代理
+
+可在此找到更多帮助: "https://aka.ms/winget-command-export"
