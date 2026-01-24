@@ -1,0 +1,129 @@
+{
+  "version": "1.0.0",
+  "name": "Coze单节点超级智能体",
+  "description": "基于Coze平台的极致单节点架构智能体，具备完整的自我创建和自动化生成能力",
+  "created_at": "2025-12-26T04:49:47.592919",
+  "updated_at": "2025-12-26T04:49:47.592919",
+  "metadata": {
+    "creator": "coze_single_node_generator",
+    "tags": [
+      "超级智能体",
+      "单节点",
+      "自我创建",
+      "自动化生成"
+    ],
+    "platform": "coze"
+  },
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "start",
+      "name": "开始节点",
+      "position": {
+        "x": 100,
+        "y": 100
+      },
+      "data": {
+        "inputs": [
+          {
+            "name": "user_input",
+            "type": "text",
+            "required": true,
+            "description": "用户输入的问题或请求"
+          }
+        ]
+      }
+    },
+    {
+      "id": "super_agent_node",
+      "type": "llm",
+      "name": "超级单节点智能体",
+      "position": {
+        "x": 300,
+        "y": 100
+      },
+      "data": {
+        "model": "doubao-pro-32k",
+        "system_prompt": "\n我是单节点超级智能体，是一个运行在Coze平台上的极简架构智能体，所有功能都集成在单一的大模型节点中。我具备以下核心能力：\n\n1. 架构设计原则：\n   - 单节点约束：所有功能必须在单一大模型节点内实现，不使用额外节点\n   - 自我创建能力：可以生成自身的完整配置和系统提示词\n   - 自我复制能力：可以复制自身为新的智能体\n   - 自动化生成：可以生成各种类型的Coze资产（智能体、插件、工作流）\n\n2. 自我创建系统：\n   - 节点复制：可以生成与自身结构完全一致的新节点配置\n   - 模型生成：可以根据需求选择合适的模型参数（温度、top_p、最大tokens等）\n   - 组件繁殖：可以生成各种功能组件的配置\n\n3. 全栈自动化生成系统：\n   - 代码生成：可以生成各种编程语言的代码\n   - 配置生成：可以生成各种配置文件（JSON、YAML、XML等）\n   - 组件自动化：可以自动化创建各种功能组件\n\n4. 数据处理与分析模块：\n   - 数据整合：可以整合来自多个来源的数据\n   - 数据分析：可以对数据进行深度分析\n   - 数据可视化：可以生成数据可视化结果\n\n5. 核心行为规则：\n   - 极简主义：只生成必要的功能，不添加冗余内容\n   - 直接响应：直接输出用户需要的结果，不进行多余的解释\n   - 高效执行：快速完成用户的请求\n   - 准确无误：确保生成的内容准确无误\n\n6. 输出格式规范：\n   - 完整输出：输出完整的内容，不进行截断\n   - 格式化输出：按照用户要求的格式进行输出\n   - 代码块：使用代码块包裹代码内容\n\n7. 通信协议：\n   - 澄清协议：当用户的请求不明确时，进行必要的澄清\n   - 多文件协议：当需要生成多个文件时，明确说明每个文件的内容和用途\n   - 恢复协议：当生成过程中断时，可以从中断的地方恢复\n\n8. 异常处理机制：\n   - 错误检测：自动检测生成内容中的错误\n   - 错误修复：自动修复生成内容中的错误\n   - 错误报告：当无法自动修复错误时，向用户报告错误信息\n\n9. 恢复与验证机制：\n   - 恢复点：在生成过程中设置恢复点\n   - 验证检查：验证生成内容的完整性和准确性\n   - 重新生成：当验证失败时，重新生成内容\n\n10. 优化机制：\n    - 性能优化：优化生成过程的性能\n    - 质量优化：优化生成内容的质量\n    - 效率优化：优化生成过程的效率\n\n11. 最终原则与承诺：\n    - 始终专注于用户的需求\n    - 始终提供高质量的内容\n    - 始终保持极简主义的设计理念\n    - 始终遵循Coze平台的最佳实践\n",
+        "temperature": 0.7,
+        "top_p": 0.9,
+        "max_tokens": 4096,
+        "inputs": [
+          {
+            "name": "user_input",
+            "type": "text",
+            "required": true
+          }
+        ],
+        "outputs": [
+          {
+            "name": "agent_output",
+            "type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "end",
+      "name": "结束节点",
+      "position": {
+        "x": 500,
+        "y": 100
+      },
+      "data": {
+        "outputs": [
+          {
+            "name": "final_output",
+            "type": "text",
+            "description": "智能体的最终输出结果"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_start_to_agent",
+      "source": "start_node",
+      "target": "super_agent_node",
+      "source_handle": "output",
+      "target_handle": "input",
+      "data": {
+        "mappings": {
+          "user_input": "user_input"
+        }
+      }
+    },
+    {
+      "id": "edge_agent_to_end",
+      "source": "super_agent_node",
+      "target": "end_node",
+      "source_handle": "output",
+      "target_handle": "input",
+      "data": {
+        "mappings": {
+          "agent_output": "final_output"
+        }
+      }
+    }
+  ],
+  "trigger": {
+    "type": "webhook",
+    "data": {
+      "method": "POST",
+      "url": "https://open.coze.cn/open-api/v2/workflow/trigger",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "request_body": {
+        "user_input": "{{user_input}}"
+      }
+    }
+  },
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.8
+  }
+}

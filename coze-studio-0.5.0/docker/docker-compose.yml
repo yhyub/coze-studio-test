@@ -327,9 +327,9 @@ services:
     #   - '9091'
     depends_on:
       etcd:
-        condition: service_healthy
+        condition: service_started
       minio:
-        condition: service_healthy
+        condition: service_started
     networks:
       - coze-network
   nsqlookupd:
@@ -359,7 +359,7 @@ services:
     #   - '4151'
     depends_on:
       nsqlookupd:
-        condition: service_healthy
+        condition: service_started
     networks:
       - coze-network
     healthcheck:
@@ -378,7 +378,7 @@ services:
     #   - '4171'
     depends_on:
       nsqlookupd:
-        condition: service_healthy
+        condition: service_started
     networks:
       - coze-network
 
@@ -403,15 +403,15 @@ services:
       # - ../backend/static:/app/resources/static
     depends_on:
       mysql:
-        condition: service_healthy
+        condition: service_started
       redis:
-        condition: service_healthy
+        condition: service_started
       elasticsearch:
-        condition: service_healthy
+        condition: service_started
       minio:
-        condition: service_healthy
+        condition: service_started
       milvus:
-        condition: service_healthy
+        condition: service_started
     command: ['/app/opencoze']
 
   coze-web:
@@ -436,4 +436,14 @@ services:
 networks:
   coze-network:
     driver: bridge
+
+
+
+
+
+
+
+
+
+
 

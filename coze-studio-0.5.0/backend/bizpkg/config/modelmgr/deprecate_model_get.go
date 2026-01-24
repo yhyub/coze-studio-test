@@ -297,6 +297,17 @@ func toNewModel(old *OldModel) (*Model, error) {
 	return m, nil
 }
 
+// replaceEnvVariables replaces ${VAR_NAME} with the corresponding environment variable value
+func replaceEnvVariables(data []byte) []byte {
+	return []byte(os.Expand(string(data), func(key string) string {
+		value, exists := os.LookupEnv(key)
+		if !exists {
+			return "${" + key + "}"
+		}
+		return value
+	}))
+}
+
 func readDirYaml[T any](dir string) ([]*T, error) {
 	des, err := os.ReadDir(dir)
 	if err != nil {
@@ -313,6 +324,8 @@ func readDirYaml[T any](dir string) ([]*T, error) {
 			if err != nil {
 				return nil, err
 			}
+			// Replace environment variables in the YAML content
+			data = replaceEnvVariables(data)
 			var content T
 			if err := yaml.Unmarshal(data, &content); err != nil {
 				return nil, err
