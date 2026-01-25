@@ -175,7 +175,7 @@ jobs:
       - name: 检查Coze Studio目录
         run: |
           echo "=== 检查Coze Studio目录 ==="
-          $cozeDir = "C:\Users\Administrator\Desktop\项目\coze-studio-0.5.0\docker"
+          $cozeDir = ".\coze-studio-0.5.0\docker"
           if (-not (Test-Path $cozeDir)) {
             Write-Error "❌ Coze Studio目录不存在，请检查路径是否正确"
             exit 1
@@ -186,7 +186,7 @@ jobs:
       - name: 构建Docker镜像
         run: |
           echo "=== 构建Docker镜像 ==="
-          cd "C:\Users\Administrator\Desktop\项目\coze-studio-0.5.0\docker"
+          cd ".\coze-studio-0.5.0\docker"
           echo "开始构建Docker镜像...首次运行需下载镜像（约5-10分钟，取决于网络）"
           docker compose build
           echo "✅ Docker镜像构建完成"
@@ -195,7 +195,7 @@ jobs:
       - name: 启动Coze Studio服务
         run: |
           echo "=== 启动Coze Studio服务 ==="
-          cd "C:\Users\Administrator\Desktop\项目\coze-studio-0.5.0\docker"
+          cd ".\coze-studio-0.5.0\docker"
           echo "开始启动Coze Studio服务..."
           docker compose --profile "*" up -d
           echo "✅ Coze Studio服务启动命令已执行"
@@ -203,7 +203,7 @@ jobs:
       - name: 等待服务启动并验证
         run: |
           echo "=== 等待服务启动并验证 ==="
-          cd "C:\Users\Administrator\Desktop\项目\coze-studio-0.5.0\docker"
+          cd ".\coze-studio-0.5.0\docker"
           $maxWaitTime = 600  # 10分钟超时
           $waitTime = 0
           $serviceStarted = $false
@@ -484,7 +484,7 @@ cd "C:\Users\Administrator\Desktop\项目\coze-studio-0.5.0\docker" && docker co
       - name: 清理Docker资源
         run: |
           echo "开始清理Docker资源..."
-          docker compose -f "C:\Users\Administrator\Desktop\项目\coze-studio-0.5.0\docker\docker-compose.yml" down --volumes --remove-orphans
+          docker compose -f ".\coze-studio-0.5.0\docker\docker-compose.yml" down --volumes --remove-orphans
           echo "Docker资源清理完成"
 
   # 完整功能验证阶段 - 使用所有指定的GitHub Actions工具
