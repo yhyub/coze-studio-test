@@ -19,13 +19,13 @@ scan:
 language:
   go:
     enabled: true
-    go_mod_path: coze-studio-0.5.0/backend/go.mod
-    go_sum_path: coze-studio-0.5.0/backend/go.sum
+    go_mod_path: ./coze-studio-0.5.0/backend/go.mod
+    go_sum_path: ./coze-studio-0.5.0/backend/go.sum
 
   javascript:
     enabled: true
     package_json_paths:
-      - coze-studio-0.5.0/frontend/package.json
+      - ./coze-studio-0.5.0/frontend/package.json
 
 report:
   format: json

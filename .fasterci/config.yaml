@@ -17,6 +17,10 @@ scan:
     - "coze-studio-0.5.0/vendor"
     - "coze-studio-0.5.0/dist"
     - "coze-studio-0.5.0/build"
+    - ".git"
+    - ".github"
+    - "docker"
+    - "docs"
   ignore_patterns:
     - "*.log"
     - "*.tmp"
