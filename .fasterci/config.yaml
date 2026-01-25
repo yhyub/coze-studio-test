@@ -13,6 +13,10 @@ scan:
     - "vendor"
     - "dist"
     - "build"
+    - "coze-studio-0.5.0/node_modules"
+    - "coze-studio-0.5.0/vendor"
+    - "coze-studio-0.5.0/dist"
+    - "coze-studio-0.5.0/build"
   ignore_patterns:
     - "*.log"
     - "*.tmp"
