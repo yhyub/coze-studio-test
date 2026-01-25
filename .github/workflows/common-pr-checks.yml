@@ -13,9 +13,9 @@ permissions:
   contents: read
 
 jobs:
-  common-checks:
+  common-pr-checks:
     name: PR Common Checks
-    runs-on: ubuntu-latest
+    runs-on: fasterci-medium
     steps:
       - uses: actions/checkout@v3
         with:

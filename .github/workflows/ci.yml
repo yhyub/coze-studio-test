@@ -22,7 +22,7 @@ jobs:
         include:
           - NodeVersion: 22.16.0
             NodeVersionDisplayName: 22
-            OS: ubuntu-latest
+            OS: fasterci-medium
     name: Setup and Install Dependencies
     runs-on: ${{ matrix.OS }}
     outputs:

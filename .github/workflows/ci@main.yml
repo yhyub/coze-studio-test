@@ -23,11 +23,11 @@ jobs:
         include:
           - NodeVersion: 22.16.0
             NodeVersionDisplayName: 22
-            OS: ubuntu-latest
+            OS: fasterci-medium
     name: Node.js v${{ matrix.NodeVersionDisplayName }} (${{ matrix.OS }})
     runs-on: ${{ matrix.OS }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
@@ -37,27 +37,30 @@ jobs:
           git config --local user.name "flow_bot"
           git config --local user.email "flow_bot@bytedance.com"
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.NodeVersion }}
+          cache: 'pnpm'
 
-      - name: Cache
+      - name: Cache Rush dependencies
         uses: actions/cache@v4
         with:
           path: |
             common/temp/pnpm-local
             common/temp/pnpm-store
             common/temp/install-run
-          key: ${{ runner.os }}-rush-store-main
+          key: ${{ runner.os }}-rush-store-${{ hashFiles('common/config/subspaces/**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-rush-store-main
             ${{ runner.os }}-rush-store
 
-      - name: Install Dependencies
+      - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libasound2-dev
-          node common/scripts/install-run-rush.js install
+
+      - name: Install Rush dependencies
+        run: node common/scripts/install-run-rush.js install
 
       - name: Build all
         run: node common/scripts/install-run-rush.js build --verbose
@@ -74,3 +77,6 @@ jobs:
 
       - name: Lint all
         run: node common/scripts/install-run-rush.js lint --verbose
+
+      - name: Type check all
+        run: node common/scripts/install-run-rush.js ts-check --verbose

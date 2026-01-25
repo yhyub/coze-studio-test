@@ -6,7 +6,7 @@ on:
 
 jobs:
   summarize:
-    runs-on: ubuntu-latest
+    runs-on: fasterci-medium
     permissions:
       issues: write
       contents: read
@@ -14,14 +14,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run AI inference
+      - name: Summarize issue using GitHub Script
         id: inference
-        uses: actions/ai-inference@v1
+        uses: actions/github-script@v7
         with:
-          prompt: |
-            用一段话总结以下 GitHub 问题：
-            标题：${{ github.event.issue.title }}
-            正文：${{ github.event.issue.body }}
+          script: |
+            // Simple issue summary logic
+            const title = context.payload.issue.title;
+            const body = context.payload.issue.body || '';
+            
+            // Extract first 100 characters as summary
+            const summary = body.length > 100 ? `${title}\n\n${body.substring(0, 100)}...` : `${title}\n\n${body}`;
+            
+            return summary;
 
       - name: Comment with AI summary
         run: |
