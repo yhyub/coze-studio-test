@@ -1,0 +1,32 @@
+# Debricked configuration
+project:
+  name: coze-studio-test
+  description: Coze Studio Test Project
+
+scan:
+  enabled: true
+  depth: 1
+  ignore_paths:
+    - node_modules
+    - vendor
+    - dist
+    - build
+    - .git
+    - .github
+    - docker
+    - docs
+
+language:
+  go:
+    enabled: true
+    go_mod_path: coze-studio-0.5.0/backend/go.mod
+    go_sum_path: coze-studio-0.5.0/backend/go.sum
+
+  javascript:
+    enabled: true
+    package_json_paths:
+      - coze-studio-0.5.0/frontend/package.json
+
+report:
+  format: json
+  output_path: debricked-report.json
