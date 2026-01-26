@@ -404,8 +404,8 @@ jobs:
   deploy-coze-studio:
     needs: test
     runs-on: windows-latest
-    environment: ${{ github.event.inputs.environment || 'development' }}
-    if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.deploy_coze_studio == true }}
+    environment: ${{ github.event_name == "workflow_dispatch" && github.event.inputs.environment || 'development' }}
+    if: ${{ github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_coze_studio == true) }}
     steps:
       - name: 检出代码
         uses: actions/checkout@v4

@@ -1,0 +1,22 @@
+name: Test Error Workflow
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      test_env:
+        description: 'Test Environment'
+        required: false
+        default: 'production'
+        type: string
+
+jobs:
+  test-job:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event_name == "workflow_dispatch" && github.event.inputs.test_env || 'staging' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Test Step
+        if: ${{ github.event_name == "workflow_dispatch" && github.event.inputs.test_env == 'production' }}
+        run: echo "Running in production"
