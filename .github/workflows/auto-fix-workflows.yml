@@ -127,13 +127,13 @@ jobs:
                   
                   # Fix 3: Fix conditional expressions
                   # Fix if expressions with missing github.event_name check
-                  fixed_content = re.sub(r'if: \$\{\{\s*(github\.event\.inputs\.[^\}]+)\s*\}\}', 
+                  fixed_content = re.sub(r'if: \$\{\{\s*(github\.event\.inputs\.[^\}]+\s*(==|!=|<=|>=|<|>|&&|\|\|)[^\}]+)\s*\}\}', 
                                        r'if: ${{ github.event_name == "workflow_dispatch" && \1 }}', 
                                        fixed_content)
                   
-                  # Fix 4: Fix environment expressions
-                  fixed_content = re.sub(r'environment: \$\{\{\s*(github\.event\.inputs\.[^\}]+)\s*\|\|\s*[^\}]+\s*\}\}', 
-                                       r'environment: ${{ \1 || "development" }}', 
+                  # Fix 4: Fix environment expressions with missing github.event_name check
+                  fixed_content = re.sub(r'environment: \$\{\{\s*(github\.event\.inputs\.[^\}]+\s*\|\|\s*[^\}]+)\s*\}\}', 
+                                       r'environment: ${{ github.event_name == "workflow_dispatch" && \1 }}', 
                                        fixed_content)
                   
                   # Fix 5: Fix on triggers syntax
