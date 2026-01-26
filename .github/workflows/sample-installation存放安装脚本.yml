@@ -417,7 +417,7 @@ jobs:
 
       - name: 环境信息
         run: |
-          echo "部署环境: ${{ github.event.inputs.environment || 'development' }}"
+          echo "部署环境: ${{ github.event_name == "workflow_dispatch" && github.event.inputs.environment || 'development' }}"
           echo "GitHub SHA: ${{ github.sha }}"
           echo "GitHub Ref: ${{ github.ref }}"
 
@@ -602,7 +602,7 @@ jobs:
         run: |
           echo "🎉 Coze Studio自动化部署与完整功能集成已完成！"
           echo "📋 部署信息："
-          echo "   - 环境：${{ github.event.inputs.environment || 'development' }}"
+          echo "   - 环境：${{ github.event_name == "workflow_dispatch" && github.event.inputs.environment || 'development' }}"
           echo "   - 提交：${{ github.sha }}"
           echo "   - 部署时间：$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
           echo "🔗 访问地址：http://localhost:8888"
@@ -613,7 +613,7 @@ jobs:
         run: |
           $reportPath = "deployment-report.md"
           $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
-          $environment = "${{ github.event.inputs.environment || 'development' }}"
+          $environment = "${{ github.event_name == "workflow_dispatch" && github.event.inputs.environment || 'development' }}"
           
           @"
 # Coze Studio 自动化部署与完整功能集成报告

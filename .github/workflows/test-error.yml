@@ -4,12 +4,23 @@ on:
   push:
     branches: [ main, master ]
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy'
+        required: false
+        default: 'development'
+        type: string
+      deploy:
+        description: 'Whether to deploy'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   test:
     runs-on: ubuntu-latest
     environment: ${{ github.event_name == "workflow_dispatch" && github.event.inputs.environment || 'development' }}
-    if: ${{ github.event_name == "workflow_dispatch" && github.event.inputs.deploy == true }}
+    if: ${{ github.event_name != "workflow_dispatch" || github.event.inputs.deploy == true }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
