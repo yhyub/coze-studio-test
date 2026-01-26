@@ -1,4 +1,5 @@
 name: Auto Fix Workflows
+run-name: ${{ github.actor }} - Auto Fixing Workflow Errors
 
 on:
   push:
@@ -8,6 +9,12 @@ on:
     branches: [ main, master ]
     paths: [ '.github/workflows/**/*.yml', '.github/workflows/**/*.yaml' ]
   workflow_dispatch:
+    inputs:
+      debug:
+        description: 'Enable debug mode'
+        required: false
+        default: 'false'
+        type: boolean
 
 jobs:
   auto-fix-workflows:
@@ -16,9 +23,12 @@ jobs:
       contents: write
       pull-requests: write
     
+    env:
+      DEBUG_MODE: ${{ github.event.inputs.debug || 'false' }}
+    
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref || github.ref }}

@@ -1,0 +1,17 @@
+name: Test Error Workflow
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event_name == "workflow_dispatch" && github.event.inputs.environment || 'development' }}
+    if: ${{ github.event_name == "workflow_dispatch" && github.event.inputs.deploy == true }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Test step
+        run: echo "Test workflow with errors!"
