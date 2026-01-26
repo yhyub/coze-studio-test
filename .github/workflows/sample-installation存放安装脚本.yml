@@ -405,7 +405,7 @@ jobs:
     needs: test
     runs-on: windows-latest
     environment: ${{ github.event.inputs.environment || 'development' }}
-    if: ${{ github.event.inputs.deploy_coze_studio == true || github.event_name != 'workflow_dispatch' }}
+    if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.deploy_coze_studio == true }}
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
@@ -743,7 +743,7 @@ cd "C:\Users\Administrator\Desktop\项目\coze-studio-0.5.0\docker" && docker co
   # 清理阶段 - 仅在手动触发且不部署Coze Studio时执行
   cleanup:
     needs: post-deployment
-    if: always() && github.event.inputs.deploy_coze_studio == false
+    if: always() && github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_coze_studio == false
     runs-on: windows-latest
     steps:
       - name: 清理Docker资源
