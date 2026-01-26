@@ -1,0 +1,58 @@
+name: 数据获取测试工作流
+on:
+  workflow_dispatch:
+    inputs:
+      test_data:
+        description: '测试数据'
+        required: false
+        default: 'default'
+        type: string
+
+jobs:
+  data-acquisition:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: 检查代码
+        uses: actions/checkout@v5
+
+      - name: 设置环境
+        run: |
+          echo "测试数据: ${{ github.event.inputs.test_data }}"
+          echo "GitHub SHA: ${{ github.sha }}"
+          echo "运行环境: ${{ runner.os }}"
+
+      - name: 模拟数据获取
+        id: data_fetch
+        run: |
+          # 模拟数据获取过程
+          echo "开始获取数据..."
+          sleep 5
+          echo "数据获取完成！"
+          # 设置输出数据
+          echo "data=获取到的数据: ${{ github.event.inputs.test_data }}" >> $GITHUB_OUTPUT
+
+      - name: 处理获取的数据
+        run: |
+          echo "开始处理数据..."
+          echo "获取到的数据: ${{ steps.data_fetch.outputs.data }}"
+          # 模拟数据处理
+          sleep 3
+          echo "数据处理完成！"
+
+      - name: 验证数据
+        run: |
+          echo "验证数据完整性..."
+          # 模拟数据验证
+          if [ "${{ github.event.inputs.test_data }}" = "default" ]; then
+            echo "✅ 数据验证通过！"
+          else
+            echo "✅ 数据验证通过！测试数据: ${{ github.event.inputs.test_data }}"
+          fi
+
+      - name: 输出结果
+        run: |
+          echo "🎉 数据获取工作流运行成功！"
+          echo "📊 数据获取和处理都已完成"
+          echo "✅ 所有步骤都成功执行"
