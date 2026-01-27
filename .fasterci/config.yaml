@@ -17,3 +17,11 @@ cache:
   paths:
     - ~/.npm
     - ~/.cache
+    - common/temp/pnpm-local
+    - common/temp/pnpm-store
+    - common/temp/install-run
+
+optimizations:
+  parallelism: true
+  fast_checkout: true
+  incremental_build: true

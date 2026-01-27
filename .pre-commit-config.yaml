@@ -17,7 +17,23 @@ repos:
     rev: v8.57.0
     hooks:
       - id: eslint
-        files: \.[jt]sx?$
+        files: \.[jt]sx?$\|\.mdx?$\|\.tsx?$\|\.jsx?$
         types: [file]
         additional_dependencies:
           - eslint@8.57.0
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.0.3
+    hooks:
+      - id: prettier
+        files: \.[jt]sx?$\|\.mdx?$\|\.tsx?$\|\.jsx?$\|\.css$\|\.scss$\|\.less$\|\.json$\|\.yaml$\|\.yml$
+
+  - repo: https://github.com/doublify/pre-commit-go
+    rev: v2.0.0
+    hooks:
+      - id: go-fmt
+        files: \.go$
+      - id: go-vet
+        files: \.go$
+      - id: go-lint
+        files: \.go$
