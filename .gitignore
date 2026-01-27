@@ -1,143 +1,10 @@
-<<<<<<< HEAD
-# 系统文件
-Thumbs.db
-.DS_Store
-Desktop.ini
-
-# 临时文件和缓存
-*.tmp
-*.temp
-*.log
-*.swp
-*.swo
-*~
-.temp
-.cache
-
-# 编辑器文件
-.vscode/
-.idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-.project
-.settings/
-.classpath
-
-# 依赖目录
-node_modules/
-vendor/
-__pycache__/
-
-# 构建输出
-dist/
-build/
-out/
-
-# 环境文件
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# 数据库文件
-*.db
-*.sqlite
-*.sqlite3
-
-# 日志目录
-logs/
-
-# 包文件
-*.zip
-*.tar.gz
-*.rar
-*.7z
-*.tar
-*.gz
-*.bz2
-*.iso
-*.dmg
-*.pkg
-
-# 可执行文件
-*.exe
-=======
 # Binaries for programs and plugins
 *.exe
 *.exe~
->>>>>>> fcfa231a0fad8cda95fba8a5908e2c965b83d1d0
 *.dll
 *.so
 *.dylib
 
-<<<<<<< HEAD
-# 测试覆盖率
-coverage/
-*.lcov
-
-# 构建工具
-.npm
-.yarn-integrity
-
-# 版本控制
-.git/
-.hg/
-.svn/
-
-# 敏感信息
-*.pem
-*.key
-*.crt
-
-# 大文件
-*.mp4
-*.avi
-*.mov
-*.wmv
-*.flv
-*.mkv
-*.mp3
-*.wav
-*.flac
-*.aac
-
-# 备份文件
-*.bak
-*.backup
-*.old
-
-# 编译文件
-*.o
-*.obj
-*.ko
-*.elf
-*.pyc
-*.py[cod]
-*$py.class
-*.ktm
-*.kotlin_module
-*.class
-*.jar
-*.war
-*.ear
-composer.lock
-*.tsbuildinfo
-
-# 语言特定
-target/
-bin/
-bundle/
-.build/
-
-# 排除特定目录
-coze-studio-0.5.0/node_modules/
-coze-studio-0.5.0/dist/
-coze-studio-0.5.0/build/
-=======
 .env
 .env.debug
 .env.oceanbase
@@ -193,4 +60,3 @@ values-dev.yaml
 
 *.tsbuildinfo
 .trae/*
->>>>>>> fcfa231a0fad8cda95fba8a5908e2c965b83d1d0
