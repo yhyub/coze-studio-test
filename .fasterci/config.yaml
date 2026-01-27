@@ -1,11 +1,12 @@
-# Faster CI Configuration
 workflows:
   - name: CI
     on:
       pull_request:
-        branches: [main]
+        branches:
+          - main
       push:
-        branches: [main]
+        branches:
+          - main
     github_check_md_file: .github/workflows/ci.yml
     steps:
       - name: Checkout code
