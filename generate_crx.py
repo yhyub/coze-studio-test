@@ -12,7 +12,8 @@ try:
     import crx3
 except ImportError:
     print('正在安装pycrx3库...')
-    os.system(f'{sys.executable} -m pip install pycrx3')
+    import subprocess
+    subprocess.run([sys.executable, '-m', 'pip', 'install', 'pycrx3'], check=True)
     import crx3
 
 def generate_crx(extension_dir, output_path=None):

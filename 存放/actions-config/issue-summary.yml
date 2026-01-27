@@ -1,4 +1,4 @@
-name: Summarize new issues (Chinese)
+name: Issue Summary
 
 on:
   issues:
@@ -16,12 +16,11 @@ jobs:
 
       - name: Create summary comment
         run: |
-          echo "创建问题摘要..."
-          echo "问题标题：${{ github.event.issue.title }}"
-          echo "问题正文：${{ github.event.issue.body }}"
-          # 由于 actions/ai-inference@v1 可能不存在，这里使用简单的摘要逻辑
-          SUMMARY="问题摘要：${{ github.event.issue.title }} - 由 ${{ github.event.issue.user.login }} 创建"
-          echo "摘要：$SUMMARY"
+          echo "Creating issue summary..."
+          echo "Issue title: ${{ github.event.issue.title }}"
+          echo "Issue body: ${{ github.event.issue.body }}"
+          SUMMARY="Issue summary: ${{ github.event.issue.title }} - Created by ${{ github.event.issue.user.login }}"
+          echo "Summary: $SUMMARY"
           echo "SUMMARY=$SUMMARY" >> $GITHUB_ENV
 
       - name: Comment with summary

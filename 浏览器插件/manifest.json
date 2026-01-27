@@ -1,0 +1,52 @@
+{"manifest_version": 3,
+  "name": "安全浏览器修复器",
+  "version": "1.1.1",
+  "description": "修复Docker、GitHub访问问题和2345浏览器下载安全问题，提供急速访问体验和实时进度条，包含安全证书修复功能",
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "tabs",
+    "scripting",
+    "downloads",
+    "downloads.shelf"
+  ],
+  "host_permissions": [
+    "*://*.github.com/*",
+    "*://*.docker.com/*",
+    "*://*.docker.io/*",
+    "*://*.dockerhub.com/*",
+    "*://*.2345.com/*",
+    "*://*.2345soft.com/*",
+    "*://*.2345.net/*",
+    "*://*.2345cdn.com/*",
+    "*://140.82.113.3/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.github.com/*",
+        "*://*.docker.com/*",
+        "*://*.docker.io/*",
+        "*://*.dockerhub.com/*",
+        "*://*.2345.com/*",
+        "*://*.2345soft.com/*",
+        "*://*.2345.net/*",
+        "*://*.2345cdn.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.css", "popup.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
