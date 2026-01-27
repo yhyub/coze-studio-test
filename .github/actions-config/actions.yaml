@@ -1,215 +1,50 @@
-# GitHub Actions 配置管理文件
-# 用于安全管理和配置仓库中使用的GitHub Actions
+allowed_sources:
+  - actions/checkout
+  - actions/setup-node
+  - actions/setup-python
+  - peaceiris/actions-gh-pages
+  - actions/upload-artifact
 
-# 全局配置
-global:
-  # 允许使用的GitHub Actions来源
-  allowed_sources:
-    - marketplace  # 允许使用GitHub Marketplace的Actions
-    - github.com   # 允许使用GitHub仓库的Actions
-  # 禁止使用的Actions（安全考虑）
-  blocked_actions:
-    - "*@master"  # 禁止使用master分支的Action，避免不可预测的更新
-  # 安全扫描配置
-  security_scan:
-    enabled: true
-    scan_on_push: true
-    scan_on_pull_request: true
-
-# 已安装的Actions列表
 installed_actions:
-  # 代码检出
   - name: actions/checkout
     version: v4
-    source: marketplace
-    usage: 用于检出仓库代码
+    source: actions/checkout
+    usage: 每天使用
     security: 已审核
-    workflows: [main.yml, ci.yml, ci@backend.yml, ci@main.yml, claude.yml, coze-deploy.yml]
+    workflows: [ci-cd.yml, deploy.yml]
   
-  # Go环境设置
-  - name: actions/setup-go
-    version: v5
-    source: marketplace
-    usage: 用于设置Go开发环境
-    security: 已审核
-    workflows: [main.yml, ci@backend.yml, ci@main.yml, coze-deploy.yml]
-  
-  # Node.js环境设置
   - name: actions/setup-node
-    version: v4
-    source: marketplace
-    usage: 用于设置Node.js开发环境
+    version: v5
+    source: actions/setup-node
+    usage: 每周使用
     security: 已审核
-    workflows: [main.yml, ci@main.yml, coze-deploy.yml]
+    workflows: [deploy.yml]
   
-  # Python环境设置
   - name: actions/setup-python
     version: v5
-    source: marketplace
-    usage: 用于设置Python开发环境
+    source: actions/setup-python
+    usage: 每月使用
     security: 已审核
-    workflows: [main.yml, coze-deploy.yml]
+    workflows: [security-scan.yml]
   
-  # Docker Buildx设置
-  - name: docker/setup-buildx-action
-    version: v3
-    source: marketplace
-    usage: 用于设置Docker Buildx
-    security: 已审核
-    workflows: [main.yml, coze-deploy.yml]
-  
-  # Docker登录
-  - name: docker/login-action
-    version: v3
-    source: marketplace
-    usage: 用于登录Docker注册表
-    security: 已审核
-    workflows: [coze-deploy.yml]
-  
-  # Docker构建推送
-  - name: docker/build-push-action
-    version: v6
-    source: marketplace
-    usage: 用于构建和推送Docker镜像
-    security: 已审核
-    workflows: [coze-deploy.yml]
-  
-  # 缓存
-  - name: actions/cache
+  - name: peaceiris/actions-gh-pages
     version: v4
-    source: marketplace
-    usage: 用于缓存依赖和构建产物
+    source: peaceiris/actions-gh-pages
+    usage: 每季度使用
     security: 已审核
-    workflows: [main.yml, ci@main.yml]
+    workflows: [deploy.yml]
   
-  # MySQL设置
-  - name: mirromutth/mysql-action
-    version: v1.1
-    source: marketplace
-    usage: 用于设置MySQL数据库
+  - name: actions/upload-artifact
+    version: v4
+    source: actions/upload-artifact
+    usage: 每年使用
     security: 已审核
-    workflows: [ci@backend.yml]
-  
-  # 重试
-  - name: nick-fields/retry
-    version: v3
-    source: marketplace
-    usage: 用于重试失败的命令
-    security: 已审核
-    workflows: [ci@backend.yml]
-  
-  # Codecov
-  - name: codecov/codecov-action
-    version: v5
-    source: marketplace
-    usage: 用于上传代码覆盖率报告
-    security: 已审核
-    workflows: [ci@backend.yml]
-  
-  # Claude PR助手
-  - name: anthropics/claude-code-action
-    version: beta
-    source: marketplace
-    usage: 用于AI辅助PR审核
-    security: 已审核
-    workflows: [claude.yml]
-  
-  # 测试报告
-  - name: dorny/test-reporter
-    version: v1
-    source: marketplace
-    usage: 用于生成测试报告
-    security: 已审核
-    workflows: [coze-deploy.yml]
-  
-  # 工作流取消
-  - name: styfle/cancel-workflow-action
-    version: 0.12.1
-    source: marketplace
-    usage: 用于取消不必要的工作流
-    security: 已审核
-    workflows: [coze-deploy.yml]
-  
-  # Snyk安全扫描
-  - name: snyk/actions/setup
-    version: v1
-    source: marketplace
-    usage: 用于设置Snyk安全扫描
-    security: 已审核
-    workflows: [coze-deploy.yml]
-  
-  # Cypress测试
-  - name: cypress-io/github-action
-    version: v6
-    source: marketplace
-    usage: 用于运行Cypress测试
-    security: 已审核
-    workflows: [coze-deploy.yml]
-  
-  # Slack通知
-  - name: 8398a7/action-slack
-    version: v3
-    source: marketplace
-    usage: 用于发送Slack通知
-    security: 已审核
-    workflows: [coze-deploy.yml]
+    workflows: [security-scan.yml]
 
-# 自定义Action配置
 custom_actions:
-  # 存放自定义Action的目录
-  directory: ".github/actions"
-  # 自定义Action列表（当前为空）
-  list: []
-
-# 安全策略
-security_policy:
-  # 强制使用固定版本的Action
-  require_fixed_version: true
-  # 定期检查Action安全更新
-  check_security_updates: true
-  # 安全更新检查频率（天）
-  update_check_frequency: 7
-  # 自动更新安全补丁版本
-  auto_update_patch_versions: true
-  # 自动更新次要版本
-  auto_update_minor_versions: false
-  # 自动更新主要版本
-  auto_update_major_versions: false
-
-# 工作流配置
-workflow_config:
-  # 工作流文件存放位置
-  workflow_directory: ".github/workflows"
-  # 允许的工作流触发事件
-  allowed_triggers:
-    - push
-    - pull_request
-    - workflow_dispatch
-    - issue_comment
-    - pull_request_review_comment
-    - issues
-    - pull_request_review
-  # 禁止的工作流触发事件
-  blocked_triggers: []
-
-# 审核日志
-audit_log:
-  enabled: true
-  log_directory: "logs"
-  retention_days: 365  # 日志保留天数
-  log_level: info  # 日志级别：debug, info, warn, error
-
-# 安装说明
-# 要安装新的GitHub Action，请按照以下步骤操作：
-# 1. 在installed_actions列表中添加Action的配置
-# 2. 运行安全审核
-# 3. 更新相关工作流文件
-# 4. 测试工作流运行
-# 5. 更新审核日志
-
-# 安全审核流程
-# 1. 检查Action的源代码
-# 2. 检查Action的依赖
-# 3. 检查Action的权限要求
-# 4. 检查Action的安全漏洞
-# 5. 记录审核结果
+  - name: my-custom-action
+    version: v1
+    source: my-org/my-repo
+    usage: 测试使用
+    security: 待审核
+    workflows: [test.yml]
