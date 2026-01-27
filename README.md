@@ -1,5 +1,7 @@
 ![Image](https://p9-arcosite.byteimg.com/tos-cn-i-goo7wpa0wc/943f576df3424fa98580c2ad18946719~tplv-goo7wpa0wc-image.image)
 
+<!-- CI/CD Configuration Updated: Faster CI and pre-commit.ci configured -->
+
 <div align="center"><p>
 <a href="#what-is-coze-studio">Coze Studio</a> •
 <a href="#feature-list">Feature list</a> •
