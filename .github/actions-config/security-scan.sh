@@ -7,8 +7,8 @@ set -e
 
 # 配置文件路径 - 支持本地和云端两种模式
 # 本地模式: CONFIG_FILE="actions.yaml"
-# 云端模式: CONFIG_FILE="https://github.com/yhyub/coze-studio-test/blob/main/%E5%AD%98%E6%94%BE/actions-config/actions.yaml"
-CONFIG_FILE="https://github.com/yhyub/coze-studio-test/blob/main/%E5%AD%98%E6%94%BE/actions-config/actions.yaml"
+# 云端模式: CONFIG_FILE="https://github.com/yhyub/coze-studio-test/blob/main/.github/actions-config/actions.yaml"
+CONFIG_FILE="https://github.com/yhyub/coze-studio-test/blob/main/.github/actions-config/actions.yaml"
 
 # 日志文件路径
 LOG_DIR="logs"
