@@ -1,0 +1,100 @@
+name: Workflow Auto-Fixer
+
+on:
+  workflow_dispatch:
+    inputs:
+      fix-type:
+        description: 'Type of fix to apply'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - syntax
+          - permissions
+          - versions
+  workflow_run:
+    workflows: ['*']
+    types: [completed]
+
+jobs:
+  analyze-workflows:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          
+      - name: Install workflow-parser
+        run: npm install -g @actions/workflow-parser
+        
+      - name: Analyze workflow files
+        id: analyze
+        run: |
+          # 检查所有工作流文件语法
+          errors=()
+          for file in .github/workflows/*.yml; do
+            echo "Checking $file..."
+            if ! workflow-parser validate "$file"; then
+              errors+="$file"
+            fi
+          done
+          echo "errors=${errors[*]}" >> $GITHUB_OUTPUT
+          
+      - name: Create fix report
+        if: steps.analyze.outputs.errors != ''
+        run: |
+          echo "Workflow errors found: ${{ steps.analyze.outputs.errors }}" > fix-report.txt
+          cat fix-report.txt
+
+  fix-workflows:
+    needs: analyze-workflows
+    runs-on: ubuntu-latest
+    if: steps.analyze.outputs.errors != ''
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Auto-fix workflow syntax
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // 自动修复常见工作流错误
+            const fs = require('fs');
+            const path = require('path');
+            
+            const workflowsDir = path.join(__dirname, '.github', 'workflows');
+            const files = fs.readdirSync(workflowsDir);
+            
+            files.forEach(file => {
+              if (file.endsWith('.yml') || file.endsWith('.yaml')) {
+                const filePath = path.join(workflowsDir, file);
+                let content = fs.readFileSync(filePath, 'utf8');
+                
+                // 修复常见版本问题
+                content = content.replace(/actions\/checkout@v3/g, 'actions/checkout@v4');
+                content = content.replace(/actions\/setup-node@v3/g, 'actions/setup-node@v4');
+                content = content.replace(/actions\/setup-go@v4/g, 'actions/setup-go@v5');
+                
+                // 修复权限问题
+                content = content.replace(/permissions: {}/g, 'permissions: write-all');
+                
+                // 修复超时设置
+                content = content.replace(/timeout-minutes: 10/g, 'timeout-minutes: 30');
+                
+                fs.writeFileSync(filePath, content, 'utf8');
+                console.log(`Fixed ${file}`);
+              }
+            });
+            
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: 'Auto-fix workflow errors'
+          body: 'Automatically fixed workflow errors found in the repository'
+          branch: 'workflow-fixes'
+          commit-message: 'fix: auto-correct workflow configuration errors'

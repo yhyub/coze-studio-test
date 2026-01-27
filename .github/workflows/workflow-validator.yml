@@ -1,0 +1,28 @@
+name: Validate Workflows
+
+on:
+  push:
+    paths:
+      - '.github/workflows/**'
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate workflow files
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            const workflowDir = path.join(process.cwd(), '.github', 'workflows');
+            const workflowFiles = fs.readdirSync(workflowDir).filter(file => file.endsWith('.yml') || file.endsWith('.yaml'));
+            
+            for (const file of workflowFiles) {
+              try {
+                const content = fs.readFileSync(path.join(workflowDir, file), 'utf8');

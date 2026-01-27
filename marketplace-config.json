@@ -1,0 +1,9 @@
+{
+  "marketplace_url": "https://github.com/marketplace",
+  "extension_url": "https://github.com/marketplace/gitee3",
+  "edit_url": "https://github.com/marketplace/gitee3/edit",
+  "categories": ["AI", "Automation", "Workflow"],
+  "keywords": ["coze", "ai", "workflow", "github-actions"],
+  "public": true,
+  "verified": true
+}

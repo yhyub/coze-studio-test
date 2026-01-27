@@ -1,0 +1,40 @@
+{
+  "name": "workflow-auto-fixer",
+  "version": "1.0.0",
+  "description": "Automatically fix GitHub workflow errors",
+  "author": "Workflow Fixer Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marketplace/gitee3"
+  },
+  "keywords": [
+    "github",
+    "actions",
+    "workflow",
+    "fix",
+    "automation"
+  ],
+  "marketplace": {
+    "categories": [
+      "Automation",
+      "GitHub Actions",
+      "DevOps"
+    ],
+    "badge": "https://img.shields.io/github/v/release/marketplace/gitee3",
+    "demo": "https://github.com/marketplace/gitee3/demo",
+    "documentation": "https://github.com/marketplace/gitee3#readme"
+  },
+  "files": [
+    "action.yml",
+    "dist/**",
+    "src/**",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "ncc build src/index.js -o dist",
+    "package": "npm run build",
+    "test": "jest"
+  }
+}

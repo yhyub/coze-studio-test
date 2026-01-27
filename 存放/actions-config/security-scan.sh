@@ -5,8 +5,10 @@
 
 set -e
 
-# 配置文件路径
-CONFIG_FILE="actions.yaml"
+# 配置文件路径 - 支持本地和云端两种模式
+# 本地模式: CONFIG_FILE="actions.yaml"
+# 云端模式: CONFIG_FILE="https://github.com/yhyub/coze-studio-test/blob/main/%E5%AD%98%E6%94%BE/actions-config/actions.yaml"
+CONFIG_FILE="https://github.com/yhyub/coze-studio-test/blob/main/%E5%AD%98%E6%94%BE/actions-config/actions.yaml"
 
 # 日志文件路径
 LOG_DIR="logs"
@@ -127,7 +129,13 @@ check_source() {
     local source=$2
     
     # 从配置文件中获取允许的来源
-    local allowed_sources=$(grep -A 10 "allowed_sources" $CONFIG_FILE | grep -v "allowed_sources" | grep -v "^")
+    if [[ "$CONFIG_FILE" == http* ]]; then
+        # 云端模式: 直接从云端获取允许的来源
+        local allowed_sources=$(curl -s "$RAW_CONFIG_URL" | grep -A 10 "allowed_sources" | grep -v "allowed_sources" | grep -v "^")
+    else
+        # 本地模式: 从本地文件获取允许的来源
+        local allowed_sources=$(grep -A 10 "allowed_sources" $CONFIG_FILE | grep -v "allowed_sources" | grep -v "^")
+    fi
     
     if echo "$allowed_sources" | grep -q "$source"; then
         log "Action '$action_name' 来源 '$source' 合法" debug
@@ -192,29 +200,56 @@ scan_action() {
 scan_from_config() {
     log "从配置文件中读取Actions..." info
     
+    # 检查配置文件是本地文件还是云端URL
+    if [[ "$CONFIG_FILE" == http* ]]; then
+        # 云端模式: 下载配置文件到临时文件
+        log "使用云端配置文件: $CONFIG_FILE" debug
+        RAW_CONFIG_URL=$(echo "$CONFIG_FILE" | sed 's|github.com|raw.githubusercontent.com|; s|/blob||')
+        TEMP_CONFIG=$(mktemp)
+        if ! curl -s "$RAW_CONFIG_URL" -o "$TEMP_CONFIG"; then
+            log "无法下载配置文件: $RAW_CONFIG_URL" error
+            exit 1
+        fi
+        WORKING_CONFIG="$TEMP_CONFIG"
+    else
+        # 本地模式: 直接使用本地文件
+        log "使用本地配置文件: $CONFIG_FILE" debug
+        if [[ ! -f "$CONFIG_FILE" ]]; then
+            log "配置文件不存在: $CONFIG_FILE" error
+            exit 1
+        fi
+        WORKING_CONFIG="$CONFIG_FILE"
+    fi
+    
     # 使用yq工具解析YAML文件（如果可用）
     if command -v yq &> /dev/null; then
-        scan_with_yq
+        scan_with_yq "$WORKING_CONFIG"
     else
         log "yq工具未安装，使用grep/sed解析YAML文件" warn
-        scan_with_grep_sed
+        scan_with_grep_sed "$WORKING_CONFIG"
+    fi
+    
+    # 清理临时文件（如果是云端模式）
+    if [[ "$CONFIG_FILE" == http* ]]; then
+        rm -f "$TEMP_CONFIG"
     fi
 }
 
 # 使用yq工具扫描Actions
 scan_with_yq() {
-    local actions_count=$(yq eval '.installed_actions | length' $CONFIG_FILE)
+    local temp_config=$1
+    local actions_count=$(yq eval '.installed_actions | length' $temp_config)
     log "找到 $actions_count 个已安装的Actions" info
     
     local failed_count=0
     
     for ((i=0; i<$actions_count; i++)); do
-        local action_name=$(yq eval ".installed_actions[$i].name" $CONFIG_FILE)
-        local version=$(yq eval ".installed_actions[$i].version" $CONFIG_FILE)
-        local source=$(yq eval ".installed_actions[$i].source" $CONFIG_FILE)
-        local usage=$(yq eval ".installed_actions[$i].usage" $CONFIG_FILE)
-        local security=$(yq eval ".installed_actions[$i].security" $CONFIG_FILE)
-        local workflows=$(yq eval ".installed_actions[$i].workflows" $CONFIG_FILE)
+        local action_name=$(yq eval ".installed_actions[$i].name" $temp_config)
+        local version=$(yq eval ".installed_actions[$i].version" $temp_config)
+        local source=$(yq eval ".installed_actions[$i].source" $temp_config)
+        local usage=$(yq eval ".installed_actions[$i].usage" $temp_config)
+        local security=$(yq eval ".installed_actions[$i].security" $temp_config)
+        local workflows=$(yq eval ".installed_actions[$i].workflows" $temp_config)
         
         # 如果指定了目标Action，只扫描该Action
         if [[ -n $TARGET_ACTION && $action_name != $TARGET_ACTION ]]; then
@@ -237,8 +272,9 @@ scan_with_yq() {
 
 # 使用grep/sed工具扫描Actions
 scan_with_grep_sed() {
+    local temp_config=$1
     # 读取配置文件中的installed_actions部分
-    local actions_content=$(grep -A 100 "installed_actions:" $CONFIG_FILE | grep -v "installed_actions:" | grep -B 100 "custom_actions:" | grep -v "custom_actions:")
+    local actions_content=$(grep -A 100 "installed_actions:" $temp_config | grep -v "installed_actions:" | grep -B 100 "custom_actions:" | grep -v "custom_actions:")
     
     # 将Actions内容分割成单个Action
     local IFS=$'\n'
