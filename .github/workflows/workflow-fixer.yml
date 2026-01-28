@@ -1,5 +1,9 @@
 name: Workflow Auto-Fixer
 
+permissions:
+  contents: write
+  pull-requests: write
+
 on:
   workflow_dispatch:
     inputs:
@@ -30,9 +34,10 @@ jobs:
         with:
           node-version: 20
           
-      - name: Install workflow-parser
-        run: npm install -g @actions/workflow-parser
-        
+      - name: Install yq
+        run: |
+          sudo apt-get update && sudo apt-get install -y yq
+          
       - name: Analyze workflow files
         id: analyze
         run: |
@@ -40,7 +45,8 @@ jobs:
           errors=""
           for file in .github/workflows/*.yml; do
             echo "Checking $file..."
-            if ! workflow-parser validate "$file"; then
+            # 使用 yq 检查 YAML 语法
+            if ! yq eval "$file" > /dev/null 2>&1; then
               errors+="$file,"
             fi
           done
