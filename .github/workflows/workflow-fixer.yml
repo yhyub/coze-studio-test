@@ -128,4 +128,3 @@ jobs:
           labels: 'bug,auto-fix,workflow'
           assignees: 'yhyub'
           reviewers: 'yhyub'
-          token: ${{ secrets.GITHUB_TOKEN }}
