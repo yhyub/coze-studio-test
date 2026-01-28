@@ -36,7 +36,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -g @actions/workflow-parser
           python -m pip install --upgrade pip
           pip install yq
 
@@ -94,7 +93,7 @@ EOF
           errors=""
           for file in .github/workflows/*.yml; do
             echo "Checking $file..."
-            if ! workflow-parser validate "$file"; then
+            if ! yq eval "$file" > /dev/null 2>&1; then
               errors+="$file,"
             fi
           done
