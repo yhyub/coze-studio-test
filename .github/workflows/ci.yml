@@ -67,10 +67,9 @@ jobs:
           echo "已生成缓存文件: changed-files-cache.json"
 
       - name: Config Git User
-        # should be turn to ci user
         run: |
-          git config --local user.name "flow_bot"
-          git config --local user.email "flow_bot@bytedance.com"
+          git config --global user.name "flow_bot"
+          git config --global user.email "flow_bot@bytedance.com"
 
       - uses: actions/setup-node@v4
         with:
