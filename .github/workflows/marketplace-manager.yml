@@ -1,0 +1,163 @@
+name: Marketplace Actions Manager
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to perform'
+        required: true
+        default: 'sync'
+        type: choice
+        options:
+          - sync
+          - validate
+          - clean
+          - audit
+  schedule:
+    - cron: '0 12 * * *'  # 每天中午12点运行
+
+jobs:
+  manage-marketplace-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          npm install -g @actions/workflow-parser
+          python -m pip install --upgrade pip
+          pip install yq
+
+      - name: Validate actions-config directory
+        run: |
+          if [ ! -d ".github/actions-config" ]; then
+            echo "Warning: .github/actions-config directory not found"
+            echo "Creating actions-config directory..."
+            mkdir -p .github/actions-config
+          fi
+          
+          if [ ! -f ".github/actions-config/actions.yaml" ]; then
+            echo "Warning: .github/actions-config/actions.yaml not found"
+            echo "Creating minimal actions.yaml file..."
+            cat > .github/actions-config/actions.yaml << EOF
+allowed_sources:
+  - actions/checkout
+  - actions/setup-node
+  - actions/setup-python
+  - actions/upload-artifact
+
+installed_actions:
+  - name: actions/checkout
+    version: v4
+    source: actions/checkout
+    usage: 基础代码检出
+    security: 已审核
+    workflows: []
+EOF
+          fi
+          
+          echo "✓ actions-config directory and configuration files validated"
+
+      - name: Sync marketplace actions
+        if: github.event.inputs.action == 'sync' || github.event_name == 'schedule'
+        run: |
+          cd .github/actions-config
+          echo "Syncing marketplace actions..."
+          # 检查配置文件格式
+          if yq eval '.installed_actions' actions.yaml > /dev/null 2>&1; then
+            echo "✓ Configuration file format is valid"
+          else
+            echo "Error: Invalid configuration file format"
+            exit 1
+          fi
+          
+          # 列出所有已安装的actions
+          echo "\nInstalled actions:"
+          yq eval '.installed_actions[] | {name: .name, version: .version}' actions.yaml
+
+      - name: Validate workflow files
+        if: github.event.inputs.action == 'validate'
+        run: |
+          echo "Validating workflow files..."
+          errors=""
+          for file in .github/workflows/*.yml; do
+            echo "Checking $file..."
+            if ! workflow-parser validate "$file"; then
+              errors+="$file,"
+            fi
+          done
+          
+          # 移除末尾的逗号
+          errors=$(echo "$errors" | sed 's/,$//')
+          
+          if [ -n "$errors" ]; then
+            echo "\nError: Invalid workflow files found: $errors"
+            exit 1
+          else
+            echo "\n✓ All workflow files are valid"
+          fi
+
+      - name: Cleanup non-official files
+        if: github.event.inputs.action == 'clean'
+        run: |
+          echo "Cleaning up non-official files..."
+          cd .github/actions-config
+          
+          # 定义官方文件列表
+          official_files=("actions.yaml" "install-action.sh" "security-scan.sh" "security-policy.md" "marketplace-actions.yaml")
+          
+          # 遍历目录中的所有文件
+          for file in *; do
+            # 检查是否是官方文件
+            is_official=false
+            for official_file in "${official_files[@]}"; do
+              if [ "$file" == "$official_file" ]; then
+                is_official=true
+                break
+              fi
+            done
+            
+            # 检查是否是目录
+            if [ -d "$file" ]; then
+              # 检查是否是官方目录
+              if [ "$file" != "logs" ]; then
+                echo "Removing non-official directory: $file"
+                # rm -rf "$file"  # 注释掉实际删除操作，仅显示需要删除的文件
+              fi
+            elif [ "$is_official" == false ]; then
+              echo "Removing non-official file: $file"
+              # rm "$file"  # 注释掉实际删除操作，仅显示需要删除的文件
+            fi
+          done
+          
+          echo "\n✓ Cleanup completed (dry run)"
+
+      - name: Audit marketplace actions
+        if: github.event.inputs.action == 'audit'
+        run: |
+          echo "Auditing marketplace actions..."
+          cd .github/actions-config
+          
+          # 运行安全扫描
+          CONFIG_FILE="actions.yaml" bash security-scan.sh -v -l
+          
+          echo "\n✓ Audit completed"
+
+      - name: Upload audit results
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: marketplace-actions-audit
+          path: .github/actions-config/logs/

@@ -22,7 +22,10 @@ jobs:
     - name: Run security scan
       run: |
         cd .github/actions-config
-        bash security-scan.sh -v -l
+        # 创建日志目录
+        mkdir -p logs
+        # 使用本地配置文件进行扫描
+        CONFIG_FILE="actions.yaml" bash security-scan.sh -v -l
     
   deploy:
     runs-on: ubuntu-latest

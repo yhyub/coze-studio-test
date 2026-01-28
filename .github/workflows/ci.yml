@@ -90,11 +90,11 @@ jobs:
     env:
       BUILD_BRANCH: ${{ github.head_ref || github.ref_name }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ needs.setup.outputs.matrix_node_version }}
 
@@ -131,11 +131,11 @@ jobs:
     runs-on: ${{ needs.setup.outputs.matrix_os }}
     name: Increment Test Coverage
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ needs.setup.outputs.matrix_node_version }}
 
@@ -180,11 +180,11 @@ jobs:
     runs-on: ${{ needs.setup.outputs.matrix_os }}
     name: Increment Lint
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ needs.setup.outputs.matrix_node_version }}
 
@@ -221,11 +221,11 @@ jobs:
     runs-on: ${{ needs.setup.outputs.matrix_os }}
     name: Increment TS Check
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ needs.setup.outputs.matrix_node_version }}
 
@@ -262,11 +262,11 @@ jobs:
     runs-on: ${{ needs.setup.outputs.matrix_os }}
     name: Increment Package Audit
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ needs.setup.outputs.matrix_node_version }}
 
@@ -297,3 +297,4 @@ jobs:
 
       - name: Increment Package Audit
         run: node common/scripts/install-run-rush.js increment --action package-audit -p "${{ needs.setup.outputs.cache_file }}"
+

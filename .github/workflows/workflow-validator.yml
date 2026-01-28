@@ -26,3 +26,4 @@ jobs:
             for (const file of workflowFiles) {
               try {
                 const content = fs.readFileSync(path.join(workflowDir, file), 'utf8');
+

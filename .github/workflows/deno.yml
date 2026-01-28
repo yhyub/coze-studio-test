@@ -1,39 +1,26 @@
-# 此工作流程使用未经 GitHub 认证的操作。
-# 它们由第三方提供并受
-# 单独的服务条款、隐私政策和支持
-# 文档。
+name: Deno
 
-# 此工作流程将安装 Deno，然后运行 ​​`deno lint` 和 `deno test`。
-# 有关更多信息，请参阅：https://github.com/denoland/setup-deno
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
-姓名：德诺: Deno
+permissions:
+  contents: read
 
-在：:
-  推：:
-    分支：[“主要”]: ["main"]
-  拉请求：:
-    分支：[“主要”]: ["main"]
+jobs:
+  test:
+    runs-on: ubuntu-latest
 
-权限：:
-  内容： 阅读: read
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v4
 
-职位：:
-  测试：:
-    运行：ubuntu-latest: ubuntu-latest
-
-    步骤：:
-      - 名称：设置存储库name: Setup repo
-        使用：actions/checkout@v4: actions/checkout@v4
-
-      - 名称：Setup Denoname: Setup Deno
-        # 使用： enoland/setup-deno@v1# uses: denoland/setup-deno@v1
-        使用： denoland/setup-deno@61fe2df320078202e33d7d5ad347e7dcfa0e8f31 # v1.1.2: denoland/setup-deno@61fe2df320078202e33d7d5ad347e7dcfa0e8f31  # v1.1.2
-        和：:
-          deno 版本：v1.x: v1.x
-
-      # 取消注释此步骤以验证每次提交时是否使用“deno fmt”。# Uncomment this step to verify the use of 'deno fmt' on each commit.
-      # - name：验证格式# - name: Verify formatting
-      # 运行： eno fmt --check#   run: deno fmt --check
+      - name: Setup Deno
+        uses: denoland/setup-deno@61fe2df320078202e33d7d5ad347e7dcfa0e8f31  # v1.1.2
+        with:
+          deno-version: v1.x
 
       - name: Run linter
         run: deno lint

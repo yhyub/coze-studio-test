@@ -20,6 +20,8 @@ on:
 jobs:
   analyze-workflows:
     runs-on: ubuntu-latest
+    outputs:
+      errors: ${{ steps.analyze.outputs.errors }}
     steps:
       - uses: actions/checkout@v4
       
@@ -35,14 +37,16 @@ jobs:
         id: analyze
         run: |
           # 检查所有工作流文件语法
-          errors=()
+          errors=""
           for file in .github/workflows/*.yml; do
             echo "Checking $file..."
             if ! workflow-parser validate "$file"; then
-              errors+="$file"
+              errors+="$file,"
             fi
           done
-          echo "errors=${errors[*]}" >> $GITHUB_OUTPUT
+          # 移除末尾的逗号
+          errors=$(echo "$errors" | sed 's/,$//')
+          echo "errors=$errors" >> $GITHUB_OUTPUT
           
       - name: Create fix report
         if: steps.analyze.outputs.errors != ''
@@ -53,7 +57,7 @@ jobs:
   fix-workflows:
     needs: analyze-workflows
     runs-on: ubuntu-latest
-    if: steps.analyze.outputs.errors != ''
+    if: needs.analyze-workflows.outputs.errors != ''
     steps:
       - uses: actions/checkout@v4
         with:
@@ -67,7 +71,16 @@ jobs:
             const fs = require('fs');
             const path = require('path');
             
-            const workflowsDir = path.join(__dirname, '.github', 'workflows');
+            // 使用当前工作目录作为基础路径
+            const workflowsDir = path.join(process.cwd(), '.github', 'workflows');
+            console.log(`Workflow directory: ${workflowsDir}`);
+            
+            // 检查目录是否存在
+            if (!fs.existsSync(workflowsDir)) {
+              console.error(`Directory ${workflowsDir} does not exist`);
+              return;
+            }
+            
             const files = fs.readdirSync(workflowsDir);
             
             files.forEach(file => {
