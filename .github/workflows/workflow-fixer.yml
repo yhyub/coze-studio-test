@@ -1,17 +1,5 @@
 name: Workflow Auto-Fixer
 
-permissions:
-  contents: write
-  pull-requests: write
-  actions: read
-  checks: read
-  deployments: read
-  issues: read
-  packages: read
-  repository-projects: read
-  security-events: read
-  statuses: read
-
 on:
   workflow_dispatch:
     inputs:
@@ -28,6 +16,18 @@ on:
   workflow_run:
     workflows: ['*']
     types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: read
+  actions: read
+  checks: read
+  deployments: read
+  issues: read
+  packages: read
+  repository-projects: read
+  security-events: read
+  statuses: read
 
 jobs:
   analyze-workflows:
@@ -53,7 +53,6 @@ jobs:
           errors=""
           for file in .github/workflows/*.yml; do
             echo "Checking $file..."
-            # 使用 yq 检查 YAML 语法
             if ! yq eval "$file" > /dev/null 2>&1; then
               errors+="$file,"
             fi
@@ -76,6 +75,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Config Git User
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
           
       - name: Auto-fix workflow syntax
         uses: actions/github-script@v7
@@ -97,10 +102,13 @@ jobs:
             
             const files = fs.readdirSync(workflowsDir);
             
+            let fixedFiles = 0;
+            
             files.forEach(file => {
               if (file.endsWith('.yml') || file.endsWith('.yaml')) {
                 const filePath = path.join(workflowsDir, file);
                 let content = fs.readFileSync(filePath, 'utf8');
+                let originalContent = content;
                 
                 // 修复常见版本问题
                 content = content.replace(/actions\/checkout@v3/g, 'actions/checkout@v4');
@@ -113,18 +121,32 @@ jobs:
                 // 修复超时设置
                 content = content.replace(/timeout-minutes: 10/g, 'timeout-minutes: 30');
                 
-                fs.writeFileSync(filePath, content, 'utf8');
-                console.log(`Fixed ${file}`);
+                // 只在内容变化时写入
+                if (content !== originalContent) {
+                  fs.writeFileSync(filePath, content, 'utf8');
+                  console.log(`Fixed ${file}`);
+                  fixedFiles++;
+                }
               }
             });
             
-      - name: Create pull request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          title: 'Auto-fix workflow errors'
-          body: 'Automatically fixed workflow errors found in the repository'
-          branch: 'workflow-fixes'
-          commit-message: 'fix: auto-correct workflow configuration errors'
-          labels: 'bug,auto-fix,workflow'
-          assignees: 'yhyub'
-          reviewers: 'yhyub'
+            console.log(`\nFixed ${fixedFiles} files`);
+            
+      - name: Commit and push fixes
+        run: |
+          # 检查是否有更改
+          if git diff --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          
+          # 添加更改
+          git add .github/workflows/
+          
+          # 提交更改
+          git commit -m "fix: auto-correct workflow configuration errors"
+          
+          # 推送更改
+          git push origin main
+          
+          echo "Changes committed and pushed to main branch"
