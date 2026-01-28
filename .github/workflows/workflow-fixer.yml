@@ -130,7 +130,7 @@ jobs:
               }
             });
             
-            console.log(`\nFixed ${fixedFiles} files`);
+            console.log(`\\nFixed ${fixedFiles} files`);
             
       - name: Commit and push fixes
         run: |
