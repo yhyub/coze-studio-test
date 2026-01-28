@@ -3,6 +3,14 @@ name: Workflow Auto-Fixer
 permissions:
   contents: write
   pull-requests: write
+  actions: read
+  checks: read
+  deployments: read
+  issues: read
+  packages: read
+  repository-projects: read
+  security-events: read
+  statuses: read
 
 on:
   workflow_dispatch:
@@ -117,3 +125,7 @@ jobs:
           body: 'Automatically fixed workflow errors found in the repository'
           branch: 'workflow-fixes'
           commit-message: 'fix: auto-correct workflow configuration errors'
+          labels: 'bug,auto-fix,workflow'
+          assignees: 'yhyub'
+          reviewers: 'yhyub'
+          token: ${{ secrets.GITHUB_TOKEN }}
