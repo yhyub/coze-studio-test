@@ -116,7 +116,11 @@ jobs:
                 content = content.replace(/actions\/setup-go@v4/g, 'actions/setup-go@v5');
                 
                 // 修复权限问题
-                content = content.replace(/permissions: {}/g, 'permissions: write-all');
+                content = content.replace(/permissions: {}/g, 'permissions:\n  contents: read\n  pull-requests: read\n  actions: read\n  checks: read\n  deployments: read\n  issues: read\n  packages: read\n  repository-projects: read\n  security-events: read\n  statuses: read');
+                
+                // 移除无效的workflows权限配置
+                content = content.replace(/workflows: write\n/g, '');
+                content = content.replace(/workflows: read\n/g, '');
                 
                 // 修复超时设置
                 content = content.replace(/timeout-minutes: 10/g, 'timeout-minutes: 30');
