@@ -19,7 +19,6 @@ on:
 
 permissions:
   contents: write
-  workflows: write
   pull-requests: read
   actions: read
   checks: read
@@ -148,6 +147,7 @@ jobs:
           git commit -m "fix: auto-correct workflow configuration errors"
           
           # 推送更改
-          git push origin main
+          # 使用 GITHUB_TOKEN 推送
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
           
           echo "Changes committed and pushed to main branch"
