@@ -1,0 +1,65 @@
+name: 'GitHub Actions Fixer'
+description: 'Automatically detects and fixes common GitHub Actions errors in workflow files'
+author: 'GitHub Actions Team'
+
+inputs:
+  workflows-directory:
+    description: 'Directory containing workflow files'
+    required: false
+    default: '.github/workflows'
+  
+  dry-run:
+    description: 'Run in dry run mode (no changes made)'
+    required: false
+    default: 'false'
+  
+  verbose:
+    description: 'Enable verbose output'
+    required: false
+    default: 'false'
+
+outputs:
+  fixed-files:
+    description: 'List of files that were fixed'
+    
+  errors-found:
+    description: 'List of errors encountered'
+    
+  status:
+    description: 'Status of the fixer run'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Make scripts executable
+      shell: bash
+      run: |
+        chmod +x "${{ github.action_path }}/run.sh"
+        chmod +x "${{ github.action_path }}/fixer.py"
+    
+    - name: Run GitHub Actions Fixer
+      id: run-fixer
+      shell: bash
+      run: |
+        # Prepare arguments
+        ARGS=()
+        if [ "${{ inputs.dry-run }}" = "true" ]; then
+          ARGS+=("--dry-run")
+        fi
+        
+        # Run the fixer
+        "${{ github.action_path }}/run.sh" "${{ inputs.workflows-directory }}" "${ARGS[@]}"
+        
+        # Capture output for summary
+        echo "status=success" >> $GITHUB_OUTPUT
+
+permissions:
+  contents: write
+  actions: read
+
+branding:
+  icon: 'shield-check'
+  color: 'green'
