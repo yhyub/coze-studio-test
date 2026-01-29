@@ -30,7 +30,7 @@ jobs:
       matrix_node_version: ${{ matrix.NodeVersion }}
       matrix_os: ${{ matrix.OS }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
@@ -67,11 +67,12 @@ jobs:
           echo "已生成缓存文件: changed-files-cache.json"
 
       - name: Config Git User
+        # should be turn to ci user
         run: |
-          git config --global user.name "flow_bot"
-          git config --global user.email "flow_bot@bytedance.com"
+          git config --local user.name "flow_bot"
+          git config --local user.email "flow_bot@bytedance.com"
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.NodeVersion }}
 
@@ -89,11 +90,11 @@ jobs:
     env:
       BUILD_BRANCH: ${{ github.head_ref || github.ref_name }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ needs.setup.outputs.matrix_node_version }}
 
@@ -130,11 +131,11 @@ jobs:
     runs-on: ${{ needs.setup.outputs.matrix_os }}
     name: Increment Test Coverage
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ needs.setup.outputs.matrix_node_version }}
 
@@ -179,11 +180,11 @@ jobs:
     runs-on: ${{ needs.setup.outputs.matrix_os }}
     name: Increment Lint
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ needs.setup.outputs.matrix_node_version }}
 
@@ -220,11 +221,11 @@ jobs:
     runs-on: ${{ needs.setup.outputs.matrix_os }}
     name: Increment TS Check
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ needs.setup.outputs.matrix_node_version }}
 
@@ -261,11 +262,11 @@ jobs:
     runs-on: ${{ needs.setup.outputs.matrix_os }}
     name: Increment Package Audit
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ needs.setup.outputs.matrix_node_version }}
 
@@ -296,4 +297,3 @@ jobs:
 
       - name: Increment Package Audit
         run: node common/scripts/install-run-rush.js increment --action package-audit -p "${{ needs.setup.outputs.cache_file }}"
-

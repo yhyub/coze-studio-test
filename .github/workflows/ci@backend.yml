@@ -123,4 +123,3 @@ jobs:
           for module in $modules; do go work use $module; list=$module"/... "$list; coverpkg=$module"/...,"$coverpkg; done
           go work sync
           go test -race -v -bench=. -benchmem -run=none -gcflags="all=-l -N" $list
-

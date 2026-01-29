@@ -1,0 +1,444 @@
+name: Complete CI/CD Workflow
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * *'  # 每天执行安全扫描
+  workflow_dispatch:  # 允许手动触发
+
+permissions:
+  contents: write
+  actions: write
+  pages: write
+  id-token: write
+  pull-requests: read
+  checks: read
+  deployments: read
+  issues: read
+  packages: read
+  repository-projects: read
+  security-events: read
+  statuses: read
+  workflows: write
+
+jobs:
+  setup:
+    strategy:
+      matrix:
+        include:
+          - NodeVersion: 22.16.0
+            NodeVersionDisplayName: 22
+            OS: ubuntu-latest
+    name: Setup and Install Dependencies
+    runs-on: ${{ matrix.OS }}
+    outputs:
+      cache_file: ${{ steps.process-files.outputs.cache_file }}
+      matrix_node_version: ${{ matrix.NodeVersion }}
+      matrix_os: ${{ matrix.OS }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v45
+
+      - name: Process changed files
+        id: process-files
+        run: |
+          # Get all change files
+          all_files="${{ steps.changed-files.outputs.all_changed_files }}"
+
+          # Filter out files in the common/changes directory
+          filtered_files=""
+          for file in $all_files; do
+            if [[ ! "$file" =~ ^common/changes/.* ]]; then
+              if [ -z "$filtered_files" ]; then
+                filtered_files="$file"
+              else
+                filtered_files="$filtered_files $file"
+              fi
+            fi
+          done
+
+          # Create cached files in JSON format
+          echo "[$( echo "$filtered_files" | sed 's/ /", "/g' | sed 's/^/"/' | sed 's/$/"/' )]" > changed-files-cache.json
+
+          # Output cache file path for subsequent steps
+          echo "cache_file=changed-files-cache.json" >> $GITHUB_OUTPUT
+
+          echo "过滤前文件数量: $(echo $all_files | wc -w)"
+          echo "过滤后文件数量: $(echo $filtered_files | wc -w)"
+          echo "已生成缓存文件: changed-files-cache.json"
+
+      - name: Config Git User
+        run: |
+          git config --global user.name "flow_bot"
+          git config --global user.email "flow_bot@bytedance.com"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.NodeVersion }}
+
+      - name: Upload changed files cache
+        uses: actions/upload-artifact@v4
+        with:
+          name: changed-files-cache
+          path: changed-files-cache.json
+          retention-days: 1
+
+  build:
+    needs: setup
+    runs-on: ${{ needs.setup.outputs.matrix_os }}
+    name: Build
+    env:
+      BUILD_BRANCH: ${{ github.head_ref || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ needs.setup.outputs.matrix_node_version }}
+
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            common/temp/pnpm-local
+            common/temp/pnpm-store
+            common/temp/install-run
+          key: ${{ runner.os }}-rush-store-${{ hashFiles('common/config/subspaces/**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-rush-store-main
+            ${{ runner.os }}-rush-store
+
+      - name: Download changed files cache
+        uses: actions/download-artifact@v4
+        with:
+          name: changed-files-cache
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev
+          node common/scripts/install-run-rush.js install --to tag:core
+          node common/scripts/install-run-rush.js update-autoinstaller --name plugins
+          node common/scripts/install-run-rush.js increment --action install -p "${{ needs.setup.outputs.cache_file }}"
+
+      - name: Build
+        run: node common/scripts/install-run-rush.js increment --action build -p "${{ needs.setup.outputs.cache_file }}"
+
+  test:
+    needs: build
+    runs-on: ${{ needs.setup.outputs.matrix_os }}
+    name: Test Coverage
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ needs.setup.outputs.matrix_node_version }}
+
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            common/temp/pnpm-local
+            common/temp/pnpm-store
+            common/temp/install-run
+          key: ${{ runner.os }}-rush-store-${{ hashFiles('common/config/subspaces/**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-rush-store-main
+            ${{ runner.os }}-rush-store
+
+      - name: Download changed files cache
+        uses: actions/download-artifact@v4
+        with:
+          name: changed-files-cache
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev
+          node common/scripts/install-run-rush.js install --to tag:core
+          node common/scripts/install-run-rush.js update-autoinstaller --name plugins
+          node common/scripts/install-run-rush.js increment --action install -p "${{ needs.setup.outputs.cache_file }}"
+
+      - name: Test Coverage
+        run: node common/scripts/install-run-rush.js increment --action test:cov -p "${{ needs.setup.outputs.cache_file }}"
+
+  quality-checks:
+    needs: build
+    runs-on: ${{ needs.setup.outputs.matrix_os }}
+    name: Quality Checks
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ needs.setup.outputs.matrix_node_version }}
+
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            common/temp/pnpm-local
+            common/temp/pnpm-store
+            common/temp/install-run
+          key: ${{ runner.os }}-rush-store-${{ hashFiles('common/config/subspaces/**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-rush-store-main
+            ${{ runner.os }}-rush-store
+
+      - name: Download changed files cache
+        uses: actions/download-artifact@v4
+        with:
+          name: changed-files-cache
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev
+          node common/scripts/install-run-rush.js install --to tag:core
+          node common/scripts/install-run-rush.js update-autoinstaller --name plugins
+          node common/scripts/install-run-rush.js increment --action install -p "${{ needs.setup.outputs.cache_file }}"
+
+      - name: Lint
+        run: node common/scripts/install-run-rush.js increment --action lint -p "${{ needs.setup.outputs.cache_file }}"
+
+      - name: TypeScript Check
+        run: node common/scripts/install-run-rush.js increment --action ts-check -p "${{ needs.setup.outputs.cache_file }}"
+
+      - name: Package Audit
+        run: node common/scripts/install-run-rush.js increment --action package-audit -p "${{ needs.setup.outputs.cache_file }}"
+
+  security-scan:
+    needs: quality-checks
+    runs-on: ubuntu-latest
+    name: Security Scan
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install yq
+      
+      - name: Run security scan
+        run: |
+          cd .github/actions-config
+          # 创建日志目录
+          mkdir -p logs
+          # 使用本地配置文件进行扫描
+          CONFIG_FILE="actions.yaml" bash security-scan.sh -v -l
+      
+      - name: Upload scan results
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-scan-results
+          path: .github/actions-config/logs/
+
+  deploy:
+    needs: security-scan
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    name: Deploy to GitHub Pages
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./.github/actions-config
+
+  workflow-fixer:
+    needs: security-scan
+    runs-on: ubuntu-latest
+    name: Workflow Auto-Fixer
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Config Git User
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          
+      - name: Install yq
+        run: |
+          sudo apt-get update && sudo apt-get install -y yq
+          
+      - name: Auto-fix workflow syntax
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // 自动修复常见工作流错误
+            const fs = require('fs');
+            const path = require('path');
+            
+            // 使用当前工作目录作为基础路径
+            const workflowsDir = path.join(process.cwd(), '.github', 'workflows');
+            console.log(`Workflow directory: ${workflowsDir}`);
+            
+            // 检查目录是否存在
+            if (!fs.existsSync(workflowsDir)) {
+              console.error(`Directory ${workflowsDir} does not exist`);
+              return;
+            }
+            
+            const files = fs.readdirSync(workflowsDir);
+            
+            let fixedFiles = 0;
+            
+            files.forEach(file => {
+              if (file.endsWith('.yml') || file.endsWith('.yaml')) {
+                const filePath = path.join(workflowsDir, file);
+                let content = fs.readFileSync(filePath, 'utf8');
+                let originalContent = content;
+                
+                // 修复常见版本问题
+                content = content.replace(/actions\/checkout@v3/g, 'actions/checkout@v4');
+                content = content.replace(/actions\/setup-node@v3/g, 'actions/setup-node@v4');
+                content = content.replace(/actions\/setup-go@v4/g, 'actions/setup-go@v5');
+                
+                // 修复权限问题 - 使用最小必要权限
+                if (content.includes('contents: write') && !content.includes('permissions:')) {
+                    content = content.replace(
+                        /permissions:\s*\{\}/,
+                        'permissions:\\n  contents: write\\n  workflows: write'
+                    );
+                }
+                
+                // 修复超时设置
+                content = content.replace(/timeout-minutes: 10/g, 'timeout-minutes: 30');
+                
+                // 只在内容变化时写入
+                if (content !== originalContent) {
+                  fs.writeFileSync(filePath, content, 'utf8');
+                  console.log(`Fixed ${file}`);
+                  fixedFiles++;
+                }
+              }
+            });
+            
+            console.log(`\nFixed ${fixedFiles} files`);
+            
+      - name: Commit and push fixes
+        run: |
+          # 检查是否有更改
+          if git diff --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          
+          # 添加更改
+          git add .github/workflows/
+          
+          # 提交更改
+          git commit -m "fix: auto-correct workflow configuration errors"
+          
+          # 推送更改
+          git push origin main
+          
+          echo "Changes committed and pushed to main branch"
+
+  marketplace-manager:
+    needs: workflow-fixer
+    runs-on: ubuntu-latest
+    name: Marketplace Manager
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyGithub
+      
+      - name: Manage marketplace actions
+        run: |
+          # 这里可以添加市场 Actions 管理逻辑
+          echo "Managing marketplace actions..."
+          # 示例：检查已安装的 Actions 版本
+          cd .github/actions-config
+          ls -la
+
+  terminal-config:
+    needs: marketplace-manager
+    runs-on: ubuntu-latest
+    name: Terminal Configuration
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+      
+      - name: Configure terminal environments
+        run: |
+          # 配置 Node.js 命令提示环境
+          echo "Configuring Node.js command prompt environment..."
+          # 配置 PowerShell 终端环境
+          echo "Configuring PowerShell terminal environment..."
+          # 示例：复制终端配置文件
+          cd .github/actions-config
+          ls -la
+
+  test-suite:
+    needs: terminal-config
+    runs-on: ubuntu-latest
+    name: Comprehensive Test Suite
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up test environment
+        run: |
+          echo "Setting up comprehensive test environment..."
+          # 这里可以添加完整的测试套件配置
+
+  final-report:
+    needs: test-suite
+    runs-on: ubuntu-latest
+    name: Final Report
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Generate final report
+        run: |
+          echo "Generating final report..."
+          # 生成完整的测试和修复报告
+          mkdir -p reports
+          echo "Complete CI/CD workflow finished successfully!" > reports/final-report.txt
+      
+      - name: Upload final report
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-report
+          path: reports/

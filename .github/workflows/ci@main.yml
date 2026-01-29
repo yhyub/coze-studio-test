@@ -27,7 +27,7 @@ jobs:
     name: Node.js v${{ matrix.NodeVersionDisplayName }} (${{ matrix.OS }})
     runs-on: ${{ matrix.OS }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
@@ -37,7 +37,7 @@ jobs:
           git config --local user.name "flow_bot"
           git config --local user.email "flow_bot@bytedance.com"
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.NodeVersion }}
 
@@ -74,4 +74,3 @@ jobs:
 
       - name: Lint all
         run: node common/scripts/install-run-rush.js lint --verbose
-

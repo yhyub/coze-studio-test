@@ -19,7 +19,6 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: 1.23
-          cache: false
 
       - name: Install license-eye
         run: |
@@ -30,31 +29,10 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Check for go.sum files
-        run: |
-          if [ -f "backend/go.sum" ]; then
-            echo "Found backend/go.sum"
-          else
-            echo "No go.sum file found in backend/"
-          fi
-          if [ -f "scripts/volcengine/go.sum" ]; then
-            echo "Found scripts/volcengine/go.sum"
-          else
-            echo "No go.sum file found in scripts/volcengine/"
-          fi
-
       - name: License Header Check
         run: |
-          if [ -f ".github/.licenserc.yaml" ]; then
-            license-eye header check -c .github/.licenserc.yaml || echo "License header check completed with warnings"
-          else
-            echo "No .licenserc.yaml found, skipping license header check"
-          fi
+          license-eye header check -c .github/.licenserc.yaml
 
       - name: License Dependency Check
         run: |
-          if [ -f ".github/.licenserc.yaml" ]; then
-            license-eye dependency check -c .github/.licenserc.yaml || echo "License dependency check completed with warnings"
-          else
-            echo "No .licenserc.yaml found, skipping license dependency check"
-          fi
+          license-eye dependency check -c .github/.licenserc.yaml
