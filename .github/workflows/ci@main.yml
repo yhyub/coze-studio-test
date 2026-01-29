@@ -68,9 +68,11 @@ jobs:
       - name: Upload coverage reports
         uses: codecov/codecov-action@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN || '' }}
+          fail_ci_if_error: false
           verbose: true
+          retry_count: 3
+          retry_interval_seconds: 10
 
       - name: Lint all
         run: node common/scripts/install-run-rush.js lint --verbose

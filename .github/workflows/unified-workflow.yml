@@ -59,7 +59,6 @@ permissions:
   repository-projects: read
   security-events: read
   statuses: read
-  workflows: write
   pages: write
   id-token: write
 
@@ -439,7 +438,7 @@ jobs:
 **执行环境**：GitHub Actions
 **触发方式**：${{ github.event_name }}
 **运行模式**：${{ github.event.inputs.run-mode }}
-EOF
+          EOF
 
       - name: Upload comprehensive report
         uses: actions/upload-artifact@v4

@@ -50,7 +50,7 @@ jobs:
           if [ ! -f ".github/actions-config/actions.yaml" ]; then
             echo "Warning: .github/actions-config/actions.yaml not found"
             echo "Creating minimal actions.yaml file..."
-            cat > .github/actions-config/actions.yaml << EOF
+            cat > .github/actions-config/actions.yaml << 'EOF'
 allowed_sources:
   - actions/checkout
   - actions/setup-node

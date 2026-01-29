@@ -57,7 +57,11 @@ jobs:
           done
 
           # Create cached files in JSON format
-          echo "[$( echo "$filtered_files" | sed 's/ /", "/g' | sed 's/^/"/' | sed 's/$/"/' )]" > changed-files-cache.json
+          if [ -z "$filtered_files" ]; then
+            echo "[]" > changed-files-cache.json
+          else
+            echo "[$( echo "$filtered_files" | sed 's/ /", "/g' | sed 's/^/"/' | sed 's/$/"/' )]" > changed-files-cache.json
+          fi
 
           # Output cache file path for subsequent steps
           echo "cache_file=changed-files-cache.json" >> $GITHUB_OUTPUT
