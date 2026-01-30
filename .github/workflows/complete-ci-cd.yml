@@ -326,9 +326,13 @@ jobs:
                 if (content.includes('contents: write') && !content.includes('permissions:')) {
                     content = content.replace(
                         /permissions:\s*\{\}/,
-                        'permissions:\\n  contents: write\\n  workflows: write'
+                        'permissions:\\n  contents: write'
                     );
                 }
+                
+                // 移除无效的workflows权限配置
+                content = content.replace(/workflows: write\\n/g, '');
+                content = content.replace(/workflows: read\\n/g, '');
                 
                 // 修复超时设置
                 content = content.replace(/timeout-minutes: 10/g, 'timeout-minutes: 30');
@@ -345,23 +349,79 @@ jobs:
             console.log(`\nFixed ${fixedFiles} files`);
             
       - name: Commit and push fixes
-        run: |
-          # 检查是否有更改
-          if git diff --quiet; then
-            echo "No changes to commit"
-            exit 0
-          fi
-          
-          # 添加更改
-          git add .github/workflows/
-          
-          # 提交更改
-          git commit -m "fix: auto-correct workflow configuration errors"
-          
-          # 推送更改
-          git push origin main
-          
-          echo "Changes committed and pushed to main branch"
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // 检查是否有更改
+            const { execSync } = require('child_process');
+            try {
+              execSync('git diff --quiet');
+              console.log('No changes to commit');
+              return;
+            } catch (error) {
+              // 有更改，继续执行
+            }
+            
+            // 获取当前提交信息
+            const currentCommit = execSync('git rev-parse HEAD').toString().trim();
+            const repository = process.env.GITHUB_REPOSITORY;
+            const branch = 'main';
+            
+            console.log('Changes detected, preparing to update files...');
+            
+            // 读取所有修改的文件
+            const files = execSync('git diff --name-only').toString().trim().split('\n');
+            
+            // 只处理工作流文件
+            const workflowFiles = files.filter(file => file.startsWith('.github/workflows/'));
+            
+            if (workflowFiles.length === 0) {
+              console.log('No workflow files changed');
+              return;
+            }
+            
+            console.log(`Updating ${workflowFiles.length} workflow files...`);
+            
+            // 使用 GitHub API 更新文件
+            const github = require('@actions/github');
+            const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+            
+            for (const file of workflowFiles) {
+              console.log(`Updating ${file}...`);
+              
+              // 读取文件内容
+              const fs = require('fs');
+              const content = fs.readFileSync(file, 'utf8');
+              
+              // 获取文件的当前 SHA
+              let sha;
+              try {
+                const response = await octokit.rest.repos.getContent({
+                  owner: repository.split('/')[0],
+                  repo: repository.split('/')[1],
+                  path: file,
+                  ref: branch
+                });
+                sha = response.data.sha;
+              } catch (error) {
+                console.log(`File ${file} doesn't exist, creating it...`);
+              }
+              
+              // 更新或创建文件
+              await octokit.rest.repos.createOrUpdateFileContents({
+                owner: repository.split('/')[0],
+                repo: repository.split('/')[1],
+                path: file,
+                message: 'fix: auto-correct workflow configuration errors',
+                content: Buffer.from(content).toString('base64'),
+                branch: branch,
+                sha: sha
+              });
+              
+              console.log(`Updated ${file}`);
+            }
+            
+            console.log('All workflow files updated successfully!');
 
   marketplace-manager:
     needs: workflow-fixer
