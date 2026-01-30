@@ -117,8 +117,9 @@ jobs:
           for file in .github/workflows/*.yml .github/workflows/*.yaml; do
             if grep -q 'if: steps\.' "$file"; then
               echo "Fixing expression syntax in $file..."
-              sed -i 's/if: steps\./if: ${{ steps\./g' "$file"
-              sed -i 's/!= ''/ != '' }}/g' "$file"
+              # 使用不同的分隔符避免转义问题
+              sed -i 's|if: steps\.|if: ${{ steps\. }}|g' "$file"
+              sed -i 's|!= ''| != '' }}|g' "$file"
             fi
           done
 
