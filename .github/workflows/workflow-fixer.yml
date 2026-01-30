@@ -171,8 +171,7 @@ jobs:
             console.log(`Updating ${workflowFiles.length} workflow files...`);
             
             // 使用 GitHub API 更新文件
-            const github = require('@actions/github');
-            const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+            // 注意：在 actions/github-script 中，github 变量是内置的，不需要重新声明
             
             for (const file of workflowFiles) {
               console.log(`Updating ${file}...`);
@@ -184,7 +183,7 @@ jobs:
               // 获取文件的当前 SHA
               let sha;
               try {
-                const response = await octokit.rest.repos.getContent({
+                const response = await github.rest.repos.getContent({
                   owner: repository.split('/')[0],
                   repo: repository.split('/')[1],
                   path: file,
@@ -196,7 +195,7 @@ jobs:
               }
               
               // 更新或创建文件
-              await octokit.rest.repos.createOrUpdateFileContents({
+              await github.rest.repos.createOrUpdateFileContents({
                 owner: repository.split('/')[0],
                 repo: repository.split('/')[1],
                 path: file,
