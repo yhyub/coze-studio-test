@@ -91,7 +91,7 @@ jobs:
 
   build:
     needs: setup
-    runs-on: ${{ needs.setup.outputs.matrix_os }}
+    runs-on: ubuntu-latest
     name: Build
     env:
       BUILD_BRANCH: ${{ github.head_ref || github.ref_name }}
@@ -133,8 +133,8 @@ jobs:
         run: node common/scripts/install-run-rush.js increment --action build -p "${{ needs.setup.outputs.cache_file }}"
 
   test:
-    needs: build
-    runs-on: ${{ needs.setup.outputs.matrix_os }}
+    needs: setup
+    runs-on: ubuntu-latest
     name: Test Coverage
     steps:
       - uses: actions/checkout@v4
@@ -174,8 +174,8 @@ jobs:
         run: node common/scripts/install-run-rush.js increment --action test:cov -p "${{ needs.setup.outputs.cache_file }}"
 
   quality-checks:
-    needs: build
-    runs-on: ${{ needs.setup.outputs.matrix_os }}
+    needs: setup
+    runs-on: ubuntu-latest
     name: Quality Checks
     steps:
       - uses: actions/checkout@v4
