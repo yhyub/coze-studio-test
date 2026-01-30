@@ -12,20 +12,21 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4        
+      - uses: actions/checkout@v4
+
       - name: Install yq
         run: |
           sudo apt-get update && sudo apt-get install -y yq
-          
-      - name: Validate workflow files    
+
+      - name: Validate workflow files
         run: |
           # 验证所有工作流文件的语法
           for file in .github/workflows/*.yml .github/workflows/*.yaml; do
             echo "Validating $file..."
-            if ! yq eval "$file" > /dev/null 2>&1; then
+            if ! yq '.' "$file" > /dev/null 2>&1; then
               echo "Error: Invalid YAML in $file"
               # 输出详细错误信息
-              yq eval "$file"
+              yq '.' "$file"
               exit 1
             fi
           done
