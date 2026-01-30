@@ -131,13 +131,13 @@ jobs:
             # 检查是否存在空权限部分
             if grep -q 'permissions: {}' "$file"; then
               echo "Fixing empty permissions in $file..."
-              sed -i 's/permissions: {}/permissions:\n  contents: read\n  actions: read\n  pull-requests: read\n  checks: read\n  deployments: read\n  issues: read\n  packages: read\n  repository-projects: read\n  security-events: read\n  statuses: read\n  workflows: read/g' "$file"
+              sed -i 's/permissions: {}/permissions:\n  contents: read\n  actions: read\n  pull-requests: read\n  checks: read\n  deployments: read\n  issues: read\n  packages: read\n  repository-projects: read\n  security-events: read\n  statuses: read/g' "$file"
             fi
             # 检查是否缺少必要的权限
             if ! grep -q 'permissions:' "$file"; then
               echo "Adding basic permissions to $file..."
               # 在jobs部分之前添加权限
-              sed -i '/jobs:/i \permissions:\n  contents: read\n  actions: read\n  pull-requests: read\n  checks: read\n  deployments: read\n  issues: read\n  packages: read\n  repository-projects: read\n  security-events: read\n  statuses: read\n  workflows: read\n' "$file"
+              sed -i '/jobs:/i \permissions:\n  contents: read\n  actions: read\n  pull-requests: read\n  checks: read\n  deployments: read\n  issues: read\n  packages: read\n  repository-projects: read\n  security-events: read\n  statuses: read\n' "$file"
             fi
           done
 
