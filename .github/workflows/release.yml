@@ -30,4 +30,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           action-path: .
-          publish-version: true
+          publish-version: true\n

@@ -1,0 +1,232 @@
+name: Workflow Error Auto-Fixer
+
+on:
+  # 1. 监听工作流失败事�?  workflow_run:
+    workflows: ["**"]  # 监控所有工作流
+    types:
+      - completed
+  # 2. 允许手动触发诊断
+  workflow_dispatch:
+    inputs:
+      workflow_run_id:
+        description: '失败的工作流运行ID'
+        required: true
+      force_fix:
+        description: '强制尝试修复'
+        required: false
+        default: 'false'
+
+jobs:
+  analyze-and-fix:
+    if: >-
+      github.event.workflow_run.conclusion == 'failure' ||
+      github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+      issues: write
+      workflows: write
+    steps:
+      - name: 收集失败工作流信�?        id: gather-info
+        run: |
+          # 获取工作流运行ID
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            RUN_ID="${{ github.event.inputs.workflow_run_id }}"
+            FORCE_FIX="${{ github.event.inputs.force_fix }}"
+          else
+            RUN_ID="${{ github.event.workflow_run.id }}"
+            FORCE_FIX="false"
+          fi
+          
+          echo "run_id=$RUN_ID" >> $GITHUB_OUTPUT
+          echo "force_fix=$FORCE_FIX" >> $GITHUB_OUTPUT
+          
+          # 获取失败工作流的详细信息
+          RESPONSE=$(gh api /repos/${{ github.repository }}/actions/runs/$RUN_ID)
+          echo "workflow_name=$(echo $RESPONSE | jq -r '.name')" >> $GITHUB_OUTPUT
+          echo "head_branch=$(echo $RESPONSE | jq -r '.head_branch')" >> $GITHUB_OUTPUT
+          echo "trigger_by=$(echo $RESPONSE | jq -r '.actor.login')" >> $GITHUB_OUTPUT
+
+      - name: 获取详细错误日志
+        id: get-logs
+        run: |
+          # 下载并分析日�?          gh run view ${{ steps.gather-info.outputs.run_id }} --log-failed > failed_logs.txt
+          
+          # 提取关键错误信息
+          ERROR_PATTERN=$(grep -i -E "error:|failed|syntax|permission|not found|command not found" failed_logs.txt | head -5)
+          echo "error_pattern=$ERROR_PATTERN" >> $GITHUB_OUTPUT
+          
+          # 分类错误类型
+          if echo "$ERROR_PATTERN" | grep -q -i "syntax\|YAML"; then
+            ERROR_TYPE="yaml_syntax"
+          elif echo "$ERROR_PATTERN" | grep -q -i "permission\|denied\|403\|401"; then
+            ERROR_TYPE="permission"
+          elif echo "$ERROR_PATTERN" | grep -q -i "not found\|command not found\|ENOENT"; then
+            ERROR_TYPE="dependency"
+          elif echo "$ERROR_PATTERN" | grep -q -i "timeout\|canceled"; then
+            ERROR_TYPE="timeout"
+          else
+            ERROR_TYPE="unknown"
+          fi
+          
+          echo "error_type=$ERROR_TYPE" >> $GITHUB_OUTPUT
+          cat failed_logs.txt >> $GITHUB_STEP_SUMMARY
+
+      - name: 智能诊断与修复建�?        id: diagnose
+        run: |
+          ERROR_TYPE="${{ steps.get-logs.outputs.error_type }}"
+          FIX_STRATEGY="none"
+          FIX_DESCRIPTION=""
+          
+          case $ERROR_TYPE in
+            yaml_syntax)
+              FIX_STRATEGY="patch_yaml"
+              FIX_DESCRIPTION="检测到YAML语法错误，将尝试自动修复"
+              ;;
+            permission)
+              FIX_STRATEGY="update_permissions"
+              FIX_DESCRIPTION="检测到权限问题，将调整工作流权�?
+              ;;
+            dependency)
+              FIX_STRATEGY="update_dependencies"
+              FIX_DESCRIPTION="检测到依赖问题，将更新依赖配置"
+              ;;
+            timeout)
+              FIX_STRATEGY="increase_timeout"
+              FIX_DESCRIPTION="检测到超时问题，将增加超时时间"
+              ;;
+            *)
+              FIX_STRATEGY="manual_review"
+              FIX_DESCRIPTION="无法自动诊断，需要人工检�?
+              ;;
+          esac
+          
+          echo "fix_strategy=$FIX_STRATEGY" >> $GITHUB_OUTPUT
+          echo "fix_description=$FIX_DESCRIPTION" >> $GITHUB_OUTPUT
+          
+          # 生成诊断报告
+          echo "## 🩺 工作流错误诊断报�? >> $GITHUB_STEP_SUMMARY
+          echo "**失败工作�?*: ${{ steps.gather-info.outputs.workflow_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**错误类型**: $ERROR_TYPE" >> $GITHUB_STEP_SUMMARY
+          echo "**修复策略**: $FIX_STRATEGY" >> $GITHUB_STEP_SUMMARY
+          echo "**修复描述**: $FIX_DESCRIPTION" >> $GITHUB_STEP_SUMMARY
+
+      - name: 执行自动修复
+        if: steps.diagnose.outputs.fix_strategy != 'manual_review' && (steps.diagnose.outputs.fix_strategy != 'none' || steps.gather-info.outputs.force_fix == 'true')
+        run: |
+          mkdir -p fixes
+          WORKFLOW_PATH=".github/workflows/${{ steps.gather-info.outputs.workflow_name }}"
+          
+          case "${{ steps.diagnose.outputs.fix_strategy }}" in
+            patch_yaml)
+              # 修复常见的YAML语法错误
+              echo "正在修复YAML语法..."
+              python3 << 'EOF'
+              # 这里放置YAML修复逻辑
+              print("YAML修复逻辑待实�?)
+              EOF
+              ;;
+            
+            update_permissions)
+              # 更新工作流权�?              echo "更新工作流权�?.."
+              cat > fixes/permissions_patch.yaml << 'EOF'
+              # 建议的权限更�?              permissions:
+                contents: write
+                actions: read
+                checks: write
+              EOF
+              ;;
+            
+            update_dependencies)
+              # 更新依赖版本
+              echo "更新依赖配置..."
+              cat > fixes/dependencies_fix.sh << 'EOF'
+              # 自动更新常见依赖
+              sed -i 's/actions\/checkout@v2/actions\/checkout@v4/g' $WORKFLOW_PATH
+              sed -i 's/node-version: 14/node-version: 20/g' $WORKFLOW_PATH
+              EOF
+              ;;
+          esac
+          
+          echo "修复脚本已生成到 fixes/ 目录"
+
+      - name: 创建修复PR
+        if: steps.diagnose.outputs.fix_strategy != 'manual_review' && steps.diagnose.outputs.fix_strategy != 'none'
+        run: |
+          # 创建新分�?          BRANCH_NAME="fix/workflow-${{ steps.gather-info.outputs.run_id }}-$(date +%s)"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git checkout -b $BRANCH_NAME
+          
+          # 应用修复
+          if [ -f fixes/dependencies_fix.sh ]; then
+            bash fixes/dependencies_fix.sh
+          fi
+          
+          # 提交更改
+          git add .
+          git commit -m "fix(workflow): 自动修复 ${{ steps.gather-info.outputs.workflow_name }} 工作流错�?          
+          错误类型: ${{ steps.diagnose.outputs.error_type }}
+          修复策略: ${{ steps.diagnose.outputs.fix_strategy }}
+          原始运行ID: ${{ steps.gather-info.outputs.run_id }}"
+          
+          git push origin $BRANCH_NAME
+          
+          # 创建PR
+          gh pr create \
+            --title "🔧 自动修复: ${{ steps.gather-info.outputs.workflow_name }} 工作流错�? \
+            --body "## 自动修复工作流错�?            此PR由工作流错误自动修复系统创建
+            
+            **详细信息:**
+            - 失败工作�? ${{ steps.gather-info.outputs.workflow_name }}
+            - 运行ID: ${{ steps.gather-info.outputs.run_id }}
+            - 错误类型: ${{ steps.diagnose.outputs.error_type }}
+            - 修复策略: ${{ steps.diagnose.outputs.fix_strategy }}
+            
+            **更改摘要:**
+            $(find fixes -type f -exec echo '- {}' \;)"
+          
+          echo "PR已创�? $BRANCH_NAME"
+
+      - name: 创建问题工单（需要人工干预时�?        if: steps.diagnose.outputs.fix_strategy == 'manual_review'
+        run: |
+          gh issue create \
+            --title "需要人工检�? ${{ steps.gather-info.outputs.workflow_name }} 工作流失�? \
+            --body "工作�?${{ steps.gather-info.outputs.workflow_name }} 运行失败，但无法自动修复�?            
+            运行ID: ${{ steps.gather-info.outputs.run_id }}
+            触发�? ${{ steps.gather-info.outputs.trigger_by }}
+            分支: ${{ steps.gather-info.outputs.head_branch }}
+            
+            错误摘要:
+            \`\`\`
+            ${{ steps.get-logs.outputs.error_pattern }}
+            \`\`\`
+            
+            请检查日志并手动修复�? \
+            --label "workflow-error,needs-triage"
+
+      - name: 发送通知
+        run: |
+          # 发送到Slack/Teams等（可选）
+          echo "通知已发�?
+          # 实际实现可能需要webhook
+          
+          # 总结报告
+          echo "## 📋 修复执行总结" >> $GITHUB_STEP_SUMMARY
+          echo "- 诊断完成: ${{ steps.diagnose.outputs.fix_strategy }}" >> $GITHUB_STEP_SUMMARY
+          echo "- 修复尝试: ${{ steps.diagnose.outputs.fix_description }}" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "�?修复流程完成" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ 修复流程遇到问题" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: 上传修复报告
+        uses: actions/upload-artifact@v4
+        with:
+          name: workflow-fix-report-${{ steps.gather-info.outputs.run_id }}
+          path: |
+            fixes/
+            failed_logs.txt\n

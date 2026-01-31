@@ -139,7 +139,7 @@ jobs:
                 if (!content.includes('permissions:')) {
                   const onEndIndex = content.indexOf('\njobs:');
                   if (onEndIndex !== -1) {
-                    const permissionsConfig = `\npermissions:\n  contents: read\n  actions: read\n  pull-requests: read\n  checks: read\n  deployments: read\n  issues: read\n  packages: read\n  repository-projects: read\n  security-events: read\n  statuses: read\n  workflows: read`;
+                    const permissionsConfig = `\npermissions:\n  contents: read\n  actions: read\n  pull-requests: read\n  checks: read\n  deployments: read\n  issues: read\n  packages: read\n  repository-projects: read\n  security-events: read\n  statuses: read`;
                     content = content.substring(0, onEndIndex) + permissionsConfig + content.substring(onEndIndex);
                   }
                 }

@@ -39,40 +39,33 @@ installed_actions:
     version: v4
     source: actions/checkout
     usage: 每天使用
-    security: 已审核
-    workflows: [ci-cd.yml, deploy.yml]
-    description: 检出仓库代码
-  
+    security: 已审�?    workflows: [ci-cd.yml, deploy.yml]
+    description: 检出仓库代�?  
   - name: actions/setup-node
     version: v5
     source: actions/setup-node
     usage: 每周使用
-    security: 已审核
-    workflows: [deploy.yml]
+    security: 已审�?    workflows: [deploy.yml]
     description: 设置Node.js环境
   
   - name: actions/setup-python
     version: v5
     source: actions/setup-python
     usage: 每月使用
-    security: 已审核
-    workflows: [security-scan.yml]
+    security: 已审�?    workflows: [security-scan.yml]
     description: 设置Python环境
   
   - name: peaceiris/actions-gh-pages
     version: v4
     source: peaceiris/actions-gh-pages
-    usage: 每季度使用
-    security: 已审核
-    workflows: [deploy.yml]
+    usage: 每季度使�?    security: 已审�?    workflows: [deploy.yml]
     description: 部署到GitHub Pages
   
   - name: actions/upload-artifact
     version: v4
     source: actions/upload-artifact
     usage: 每年使用
-    security: 已审核
-    workflows: [security-scan.yml]
+    security: 已审�?    workflows: [security-scan.yml]
     description: 上传构建产物
 
 # 自定义Action配置
@@ -81,6 +74,5 @@ custom_actions:
     version: v1
     source: my-org/my-repo
     usage: 测试使用
-    security: 待审核
-    workflows: [test.yml]
-    description: 自定义Action
+    security: 待审�?    workflows: [test.yml]
+    description: 自定义Action\n

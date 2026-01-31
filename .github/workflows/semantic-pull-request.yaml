@@ -71,4 +71,4 @@ jobs:
           #
           #     [fix][test] flaky test V1_ProxyAuthenticationTest.anonymousSocketTest
           # headerPattern: '^\[(\w*?)\](?:\[(.*?)\])?(?:\s*)(.*)$'
-          headerPatternCorrespondence: type, scope, subject
+          headerPatternCorrespondence: type, scope, subject\n

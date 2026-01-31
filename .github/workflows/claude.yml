@@ -45,4 +45,4 @@ jobs:
           #   .githubusercontent.com
           #   bun.sh
           #   registry.npmjs.org
-          #   .blob.core.windows.net
+          #   .blob.core.windows.net\n

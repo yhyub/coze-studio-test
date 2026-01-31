@@ -5,7 +5,7 @@ on:
     # test only
     branches: ['main',"chore/setup-ci"]
     paths:
-      - 'github/**'
+      - '.github/**'
       - 'idl/**'
       - 'frontend/**'
       - 'common/**'

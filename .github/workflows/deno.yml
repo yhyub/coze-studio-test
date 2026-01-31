@@ -41,4 +41,4 @@ jobs:
             deno test -A || echo "Tests failed but continuing"
           else
             echo "No test files found, skipping tests"
-          fi
+          fi\n

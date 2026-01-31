@@ -3,7 +3,7 @@ on:
   pull_request:
     branches: ['main']
     paths:
-      - 'github/**'
+      - '.github/**'
       - 'idl/**'
       - 'frontend/**'
       - 'common/**'
@@ -14,6 +14,9 @@ on:
 permissions:
   contents: read
   actions: read
+  issues: read
+  pull-requests: read
+  workflows: read
 
 jobs:
   setup:
@@ -66,9 +69,9 @@ jobs:
           # Output cache file path for subsequent steps
           echo "cache_file=changed-files-cache.json" >> $GITHUB_OUTPUT
 
-          echo "过滤前文件数量: $(echo $all_files | wc -w)"
-          echo "过滤后文件数量: $(echo $filtered_files | wc -w)"
-          echo "已生成缓存文件: changed-files-cache.json"
+          echo "过滤前文件数�? $(echo $all_files | wc -w)"
+          echo "过滤后文件数�? $(echo $filtered_files | wc -w)"
+          echo "已生成缓存文�? changed-files-cache.json"
 
       - name: Config Git User
         # should be turn to ci user
@@ -300,4 +303,4 @@ jobs:
           node common/scripts/install-run-rush.js increment --action install -p "${{ needs.setup.outputs.cache_file }}"
 
       - name: Increment Package Audit
-        run: node common/scripts/install-run-rush.js increment --action package-audit -p "${{ needs.setup.outputs.cache_file }}"
+        run: node common/scripts/install-run-rush.js increment --action package-audit -p "${{ needs.setup.outputs.cache_file }}"\n

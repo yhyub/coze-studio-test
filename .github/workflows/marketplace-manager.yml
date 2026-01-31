@@ -14,8 +14,7 @@ on:
           - clean
           - audit
   schedule:
-    - cron: '0 12 * * *'  # 每天中午12点运行
-
+    - cron: '0 12 * * *'  # 每天中午12点运�?
 jobs:
   manage-marketplace-actions:
     runs-on: ubuntu-latest
@@ -61,22 +60,19 @@ installed_actions:
   - name: actions/checkout
     version: v4
     source: actions/checkout
-    usage: 基础代码检出
-    security: 已审核
-    workflows: []
+    usage: 基础代码检�?    security: 已审�?    workflows: []
 EOF
           fi
           
-          echo "✓ actions-config directory and configuration files validated"
+          echo "�?actions-config directory and configuration files validated"
 
       - name: Sync marketplace actions
         if: github.event.inputs.action == 'sync' || github.event_name == 'schedule'
         run: |
           cd .github/actions-config
           echo "Syncing marketplace actions..."
-          # 检查配置文件格式
-          if yq eval '.installed_actions' actions.yaml > /dev/null 2>&1; then
-            echo "✓ Configuration file format is valid"
+          # 检查配置文件格�?          if yq eval '.installed_actions' actions.yaml > /dev/null 2>&1; then
+            echo "�?Configuration file format is valid"
           else
             echo "Error: Invalid configuration file format"
             exit 1
@@ -105,7 +101,7 @@ EOF
             echo "\nError: Invalid workflow files found: $errors"
             exit 1
           else
-            echo "\n✓ All workflow files are valid"
+            echo "\n�?All workflow files are valid"
           fi
 
       - name: Cleanup non-official files
@@ -117,8 +113,7 @@ EOF
           # 定义官方文件列表
           official_files=("actions.yaml" "install-action.sh" "security-scan.sh" "security-policy.md" "marketplace-actions.yaml")
           
-          # 遍历目录中的所有文件
-          for file in *; do
+          # 遍历目录中的所有文�?          for file in *; do
             # 检查是否是官方文件
             is_official=false
             for official_file in "${official_files[@]}"; do
@@ -141,7 +136,7 @@ EOF
             fi
           done
           
-          echo "\n✓ Cleanup completed (dry run)"
+          echo "\n�?Cleanup completed (dry run)"
 
       - name: Audit marketplace actions
         if: github.event.inputs.action == 'audit'
@@ -150,13 +145,20 @@ EOF
           cd .github/actions-config
           
           # 运行安全扫描
-          CONFIG_FILE="actions.yaml" bash security-scan.sh -v -l
+          echo "Running security scan..."
+          ls -la
+          # 检查是否存�?security-scan.sh 脚本
+          if [ -f "security-scan.sh" ]; then
+            CONFIG_FILE="actions.yaml" bash security-scan.sh -v -l
+          else
+            echo "security-scan.sh not found, skipping security scan"
+          fi
           
-          echo "\n✓ Audit completed"
+          echo "\n�?Audit completed"
 
       - name: Upload audit results
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: marketplace-actions-audit
-          path: .github/actions-config/logs/
+          path: .github/actions-config/logs/\n

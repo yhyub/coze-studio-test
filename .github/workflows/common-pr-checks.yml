@@ -2,7 +2,7 @@ name: PR Common Checks
 on:
   pull_request:
     paths:
-      - 'github/**'
+      - '.github/**'
       - 'idl/**'
       - 'frontend/**'
       - 'common/**'
@@ -45,4 +45,4 @@ jobs:
           popd
 
       # Add more common checks here
-      # For example: file size checks, specific file format validations, etc.
+      # For example: file size checks, specific file format validations, etc.\n

@@ -211,4 +211,4 @@ jobs:
                   echo "- $file"
               done
           fi
-          echo "::endgroup::"
+          echo "::endgroup::"\n

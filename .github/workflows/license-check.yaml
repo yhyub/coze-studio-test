@@ -35,4 +35,4 @@ jobs:
 
       - name: License Dependency Check
         run: |
-          license-eye dependency check -c .github/.licenserc.yaml
+          license-eye dependency check -c .github/.licenserc.yaml\n

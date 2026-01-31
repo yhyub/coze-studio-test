@@ -58,4 +58,4 @@ jobs:
                 public: true
               }
             });
-            console.log('Submitted to Marketplace:', result.data);
+            console.log('Submitted to Marketplace:', result.data);\n

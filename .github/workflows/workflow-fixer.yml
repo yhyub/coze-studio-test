@@ -28,6 +28,7 @@ permissions:
   repository-projects: read
   security-events: read
   statuses: read
+  workflows: write
 
 jobs:
   analyze-workflows:
@@ -86,16 +87,14 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            // 自动修复常见工作流错误
-            const fs = require('fs');
+            // 自动修复常见工作流错�?            const fs = require('fs');
             const path = require('path');
             
             // 使用当前工作目录作为基础路径
             const workflowsDir = path.join(process.cwd(), '.github', 'workflows');
             console.log(`Workflow directory: ${workflowsDir}`);
             
-            // 检查目录是否存在
-            if (!fs.existsSync(workflowsDir)) {
+            // 检查目录是否存�?            if (!fs.existsSync(workflowsDir)) {
               console.error(`Directory ${workflowsDir} does not exist`);
               return;
             }
@@ -125,8 +124,7 @@ jobs:
                 // 修复超时设置
                 content = content.replace(/timeout-minutes: 10/g, 'timeout-minutes: 30');
                 
-                // 只在内容变化时写入
-                if (content !== originalContent) {
+                // 只在内容变化时写�?                if (content !== originalContent) {
                   fs.writeFileSync(filePath, content, 'utf8');
                   console.log(`Fixed ${file}`);
                   fixedFiles++;
@@ -171,8 +169,7 @@ jobs:
             console.log(`Updating ${workflowFiles.length} workflow files...`);
             
             // 使用 GitHub API 更新文件
-            // 注意：在 actions/github-script 中，github 变量是内置的，不需要重新声明
-            
+            // 注意：在 actions/github-script 中，github 变量是内置的，不需要重新声�?            
             for (const file of workflowFiles) {
               console.log(`Updating ${file}...`);
               
@@ -180,7 +177,7 @@ jobs:
               const fs = require('fs');
               const content = fs.readFileSync(file, 'utf8');
               
-              // 获取文件的当前 SHA
+              // 获取文件的当�?SHA
               let sha;
               try {
                 const response = await github.rest.repos.getContent({
@@ -191,11 +188,10 @@ jobs:
                 });
                 sha = response.data.sha;
               } catch (error) {
-                console.log(`File ${file} doesn't exist, creating it...`);
+                console.log("File " + file + " doesn't exist, creating it...");
               }
               
-              // 更新或创建文件
-              await github.rest.repos.createOrUpdateFileContents({
+              // 更新或创建文�?              await github.rest.repos.createOrUpdateFileContents({
                 owner: repository.split('/')[0],
                 repo: repository.split('/')[1],
                 path: file,
@@ -208,4 +204,4 @@ jobs:
               console.log(`Updated ${file}`);
             }
             
-            console.log('All workflow files updated successfully!');
+            console.log('All workflow files updated successfully!');\n

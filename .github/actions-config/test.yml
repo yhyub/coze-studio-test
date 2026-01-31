@@ -90,4 +90,4 @@ jobs:
           echo "Test workflow completed successfully!"
           echo "Run time: $(date)"
           echo "Repository: ${{ github.repository }}"
-          echo "All test cases passed!"
+          echo "All test cases passed!"\n

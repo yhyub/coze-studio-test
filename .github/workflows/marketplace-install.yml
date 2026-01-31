@@ -26,8 +26,7 @@ jobs:
     - name: Install Marketplace Actions
       run: |
         cd .github/actions-config
-        # 检查配置文件是否存在
-        if [ -f "actions.yaml" ]; then
+        # 检查配置文件是否存�?        if [ -f "actions.yaml" ]; then
           echo "配置文件存在，开始安装Actions..."
           # 这里可以添加具体的Action安装命令
           # 例如：bash install-action.sh actions/checkout v4
@@ -40,9 +39,8 @@ jobs:
         cd .github/actions-config
         # 创建日志目录
         mkdir -p logs
-        # 检查配置文件是否存在
-        if [ -f "actions.yaml" ]; then
-          echo "配置文件存在，开始安全扫描..."
+        # 检查配置文件是否存�?        if [ -f "actions.yaml" ]; then
+          echo "配置文件存在，开始安全扫�?.."
           # 使用本地配置文件进行扫描
           CONFIG_FILE="actions.yaml" bash security-scan.sh -v -l
         else
@@ -56,4 +54,4 @@ jobs:
       with:
         name: marketplace-actions-results
         path: .github/actions-config/logs/
-        if-no-files-found: warn
+        if-no-files-found: warn\n

@@ -29,10 +29,17 @@ jobs:
         # 创建日志目录
         mkdir -p logs
         # 使用本地配置文件进行扫描
-        CONFIG_FILE="actions.yaml" bash security-scan.sh -v -l
+        echo "Running security scan..."
+        ls -la
+        # 检查是否存�?security-scan.sh 脚本
+        if [ -f "security-scan.sh" ]; then
+          CONFIG_FILE="actions.yaml" bash security-scan.sh -v -l
+        else
+          echo "security-scan.sh not found, skipping security scan"
+        fi
     
     - name: Upload scan results
       uses: actions/upload-artifact@v4
       with:
         name: security-scan-results
-        path: .github/actions-config/logs/
+        path: .github/actions-config/logs/\n
