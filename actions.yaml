@@ -193,6 +193,13 @@ installed_actions:
     workflows: [ci-cd.yml]
 
 terminal_configurations:
+  - name: unified-terminal
+    file: unified-terminal.yml
+    description: 统一终端配置，同时支持 PowerShell 和 Node.js 命令提示符
+    usage: 用于在 GitHub Actions 中执行 PowerShell 和 Node.js 命令
+    security: 已审核
+    workflows: []
+  
   - name: powershell-terminal
     file: powershell-terminal.yml
     description: 完美复刻本地 Windows PowerShell 终端的使用体验
@@ -206,6 +213,13 @@ terminal_configurations:
     usage: 用于在 GitHub Actions 中执行 Node.js 命令
     security: 已审核
     workflows: [terminal-examples.yml]
+  
+  - name: terminal-examples
+    file: terminal-examples.yml
+    description: 终端使用示例工作流
+    usage: 用于测试终端配置文件的功能
+    security: 已审核
+    workflows: []
 
 custom_actions:
   # 存放自定义Action的目录

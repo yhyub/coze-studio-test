@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Action 安全扫描终端</title>
+    <title>Unified Terminal</title>
     <style>
         * {
             margin: 0;
@@ -42,6 +42,63 @@
         .header p {
             color: #8b949e;
             font-size: 14px;
+        }
+
+        .terminal-selector {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .terminal-tab {
+            background-color: #21262d;
+            color: #8b949e;
+            border: 1px solid #30363d;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .terminal-tab.active {
+            background-color: #238636;
+            color: white;
+            border-color: #238636;
+        }
+
+        .terminal-tab:hover {
+            background-color: #30363d;
+            color: #c9d1d9;
+        }
+
+        .button-section {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: #238636;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .btn:hover {
+            background-color: #2ea043;
+        }
+
+        .btn:disabled {
+            background-color: #30363d;
+            cursor: not-allowed;
         }
 
         .terminal {
@@ -92,6 +149,7 @@
             line-height: 1.5;
             white-space: pre-wrap;
             word-wrap: break-word;
+            min-height: 300px;
         }
 
         .terminal-input {
@@ -116,34 +174,6 @@
             color: #c9d1d9;
             font-family: 'Courier New', Courier, monospace;
             font-size: 14px;
-        }
-
-        .button-section {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            background-color: #238636;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        .btn:hover {
-            background-color: #2ea043;
-        }
-
-        .btn:disabled {
-            background-color: #30363d;
-            cursor: not-allowed;
         }
 
         .results {
@@ -196,13 +226,19 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>GitHub Action 安全扫描终端</h1>
-            <p>检查GitHub Actions的安全状态，确保使用固定版本和合法来源</p>
+            <h1>Unified Terminal</h1>
+            <p>统一终端配置，同时支持 PowerShell 和 Node.js 命令提示符</p>
+        </div>
+
+        <div class="terminal-selector">
+            <div class="terminal-tab active" onclick="switchTerminal('powershell')">PowerShell</div>
+            <div class="terminal-tab" onclick="switchTerminal('nodejs')">Node.js</div>
         </div>
 
         <div class="button-section">
-            <button class="btn" onclick="runScan()">开始安全扫描</button>
+            <button class="btn" onclick="runTerminalTest()">运行终端测试</button>
             <button class="btn" onclick="clearTerminal()">清空终端</button>
+            <button class="btn" onclick="showHelp()">显示帮助</button>
         </div>
 
         <div class="terminal">
@@ -210,86 +246,120 @@
                 <div class="terminal-dot red"></div>
                 <div class="terminal-dot yellow"></div>
                 <div class="terminal-dot green"></div>
-                <div class="terminal-title">security-scan-terminal</div>
+                <div class="terminal-title" id="terminalTitle">powershell-terminal</div>
             </div>
             <div class="terminal-content" id="terminalContent">
-                欢迎使用GitHub Action安全扫描终端
-                输入命令或点击按钮开始扫描
+                欢迎使用统一终端
+                选择终端类型或输入命令开始
             </div>
             <div class="terminal-input">
-                <span class="terminal-prompt">$</span>
+                <span class="terminal-prompt" id="terminalPrompt">PS></span>
                 <input type="text" class="terminal-input-field" id="commandInput" placeholder="输入命令..." onkeypress="handleKeyPress(event)">
             </div>
         </div>
 
         <div class="results" id="resultsSection" style="display: none;">
-            <h2>扫描结果</h2>
+            <h2>测试结果</h2>
             <div id="resultsContainer"></div>
         </div>
     </div>
 
     <script>
-        let isScanning = false;
+        let currentTerminal = 'powershell';
+        let isTesting = false;
 
-        function runScan() {
-            if (isScanning) return;
-            isScanning = true;
+        function switchTerminal(terminalType) {
+            currentTerminal = terminalType;
+            
+            // 更新标签状态
+            document.querySelectorAll('.terminal-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[onclick="switchTerminal('${terminalType}')"]`).classList.add('active');
+            
+            // 更新终端标题和提示符
+            const terminalTitle = document.getElementById('terminalTitle');
+            const terminalPrompt = document.getElementById('terminalPrompt');
+            const terminalContent = document.getElementById('terminalContent');
+            
+            if (terminalType === 'powershell') {
+                terminalTitle.textContent = 'powershell-terminal';
+                terminalPrompt.textContent = 'PS>';
+                terminalContent.textContent += `\n切换到 PowerShell 终端\nPS> `;
+            } else if (terminalType === 'nodejs') {
+                terminalTitle.textContent = 'nodejs-terminal';
+                terminalPrompt.textContent = '>';
+                terminalContent.textContent += `\n切换到 Node.js 终端\n> `;
+            }
+        }
+
+        function runTerminalTest() {
+            if (isTesting) return;
+            isTesting = true;
 
             const terminalContent = document.getElementById('terminalContent');
             const resultsSection = document.getElementById('resultsSection');
             const resultsContainer = document.getElementById('resultsContainer');
 
-            terminalContent.textContent = '开始安全扫描...\n';
+            terminalContent.textContent = `开始 ${currentTerminal} 终端测试...\n`;
             resultsSection.style.display = 'none';
             resultsContainer.innerHTML = '';
 
-            // 模拟扫描过程
+            // 模拟测试过程
             setTimeout(() => {
-                terminalContent.textContent += '正在下载配置文件...\n';
+                terminalContent.textContent += '正在设置终端环境...\n';
             }, 500);
 
             setTimeout(() => {
-                terminalContent.textContent += '找到 5 个已安装的Actions\n';
+                terminalContent.textContent += `正在运行 ${currentTerminal} 基本命令...\n`;
             }, 1000);
 
             setTimeout(() => {
-                terminalContent.textContent += '正在逐一扫描...\n';
+                terminalContent.textContent += `正在运行 ${currentTerminal} 高级命令...\n`;
             }, 1500);
 
             setTimeout(() => {
-                terminalContent.textContent += '扫描完成\n';
+                terminalContent.textContent += `正在运行 ${currentTerminal} 安全命令...\n`;
+            }, 2000);
 
-                // 显示扫描结果
+            setTimeout(() => {
+                terminalContent.textContent += '测试完成\n';
+
+                // 显示测试结果
                 resultsSection.style.display = 'block';
                 resultsContainer.innerHTML = `
                     <div class="result-item info">
-                        <h3>扫描开始</h3>
-                        <p>2024-01-28 10:00:00</p>
+                        <h3>测试开始</h3>
+                        <p>${new Date().toLocaleString()}</p>
                     </div>
                     <div class="result-item info">
-                        <h3>找到 5 个已安装的Actions</h3>
-                        <p>正在逐一扫描...</p>
-                    </div>
-                    <div class="result-item warn">
-                        <h3>Action "actions/checkout" 使用动态版本 "latest"</h3>
-                        <p>建议使用固定版本</p>
+                        <h3>终端类型</h3>
+                        <p>${currentTerminal === 'powershell' ? 'PowerShell' : 'Node.js'}</p>
                     </div>
                     <div class="result-item info">
-                        <h3>Action "actions/setup-node" 使用固定版本 "v4"</h3>
-                        <p>安全状态良好</p>
-                    </div>
-                    <div class="result-item error">
-                        <h3>Action "unknown/action" 来源不合法</h3>
-                        <p>不在允许列表中</p>
+                        <h3>环境设置</h3>
+                        <p>终端环境设置成功</p>
                     </div>
                     <div class="result-item info">
-                        <h3>扫描完成</h3>
-                        <p>共 5 个Actions，其中 2 个存在安全问题</p>
+                        <h3>基本命令</h3>
+                        <p>基本命令执行成功</p>
+                    </div>
+                    <div class="result-item info">
+                        <h3>高级命令</h3>
+                        <p>高级命令执行成功</p>
+                    </div>
+                    <div class="result-item info">
+                        <h3>安全命令</h3>
+                        <p>安全命令执行成功</p>
+                    </div>
+                    <div class="result-item info">
+                        <h3>测试完成</h3>
+                        <p>所有测试通过</p>
                     </div>
                 `;
 
-                isScanning = false;
-            }, 2000);
+                isTesting = false;
+            }, 2500);
         }
 
         function clearTerminal() {
@@ -297,9 +367,22 @@
             const resultsSection = document.getElementById('resultsSection');
             const resultsContainer = document.getElementById('resultsContainer');
 
-            terminalContent.textContent = '终端已清空\n';
+            terminalContent.textContent = `终端已清空\n${currentTerminal === 'powershell' ? 'PS>' : '>'} `;
             resultsSection.style.display = 'none';
             resultsContainer.innerHTML = '';
+        }
+
+        function showHelp() {
+            const terminalContent = document.getElementById('terminalContent');
+            
+            terminalContent.textContent += `\n=== 命令帮助 ===\n`;
+            terminalContent.textContent += `测试命令:\n`;
+            terminalContent.textContent += `  test - 运行终端测试\n`;
+            terminalContent.textContent += `  clear - 清空终端\n`;
+            terminalContent.textContent += `  help - 显示帮助\n`;
+            terminalContent.textContent += `  powershell - 切换到 PowerShell 终端\n`;
+            terminalContent.textContent += `  nodejs - 切换到 Node.js 终端\n`;
+            terminalContent.textContent += `\n${currentTerminal === 'powershell' ? 'PS>' : '>'} `;
         }
 
         function handleKeyPress(event) {
@@ -309,24 +392,26 @@
                 const terminalContent = document.getElementById('terminalContent');
 
                 if (command) {
-                    terminalContent.textContent += `$ ${command}\n`;
+                    terminalContent.textContent += `${command}\n`;
                     
-                    if (command === 'scan') {
-                        runScan();
+                    if (command === 'test') {
+                        runTerminalTest();
                     } else if (command === 'clear') {
                         clearTerminal();
                     } else if (command === 'help') {
-                        terminalContent.textContent += '可用命令:\n';
-                        terminalContent.textContent += '  scan - 开始安全扫描\n';
-                        terminalContent.textContent += '  clear - 清空终端\n';
-                        terminalContent.textContent += '  help - 显示帮助\n';
+                        showHelp();
+                    } else if (command === 'powershell') {
+                        switchTerminal('powershell');
+                    } else if (command === 'nodejs') {
+                        switchTerminal('nodejs');
                     } else {
                         terminalContent.textContent += `未知命令: ${command}\n`;
-                        terminalContent.textContent += '输入 help 查看可用命令\n';
+                        terminalContent.textContent += `输入 help 查看可用命令\n`;
                     }
                 }
 
                 input.value = '';
+                terminalContent.textContent += `${currentTerminal === 'powershell' ? 'PS>' : '>'} `;
             }
         }
     </script>
