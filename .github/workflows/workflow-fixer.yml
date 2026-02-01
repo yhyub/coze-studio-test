@@ -194,17 +194,26 @@ jobs:
               }
               
               // 更新或创建文件
-              await github.rest.repos.createOrUpdateFileContents({
-                owner: repository.split('/')[0],
-                repo: repository.split('/')[1],
-                path: file,
-                message: 'fix: auto-correct workflow configuration errors',
-                content: Buffer.from(content).toString('base64'),
-                branch: branch,
-                sha: sha
-              });
-              
-              console.log(`Updated ${file}`);
+              try {
+                await github.rest.repos.createOrUpdateFileContents({
+                  owner: repository.split('/')[0],
+                  repo: repository.split('/')[1],
+                  path: file,
+                  message: 'fix: auto-correct workflow configuration errors',
+                  content: Buffer.from(content).toString('base64'),
+                  branch: branch,
+                  sha: sha
+                });
+                
+                console.log(`Updated ${file}`);
+              } catch (error) {
+                console.error(`Error updating ${file}: ${error.message}`);
+                if (error.message.includes('without `workflows` permission')) {
+                  console.error('\n🚨 Permission Error: GitHub App lacks workflows permission');
+                  console.error('Please update GitHub App permissions to include "Workflows: Read and write"');
+                  console.error('Steps: Settings → Developer settings → GitHub Apps → Your App → Permissions → Workflows');
+                }
+              }
             }
             
             console.log('All workflow files updated successfully!');\n
