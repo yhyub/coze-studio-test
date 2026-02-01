@@ -1,0 +1,214 @@
+name: Auto Fix Workflows
+
+run-name: ${{ github.actor }} - Auto Fixing Workflow Errors
+
+on:
+  push:
+    branches: [ main, master ]
+    paths: [ '.github/workflows/**/*.yml', '.github/workflows/**/*.yaml' ]
+  pull_request:
+    branches: [ main, master ]
+    paths: [ '.github/workflows/**/*.yml', '.github/workflows/**/*.yaml' ]
+  workflow_dispatch:
+    inputs:
+      debug:
+        description: 'Enable debug mode'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  auto-fix-workflows:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    env:
+      DEBUG_MODE: ${{ github.event.inputs.debug || 'false' }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref || github.ref }}
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install yamllint pyyaml requests
+      
+      - name: Detect workflow syntax errors
+        id: detect-errors
+        run: |
+          echo "::group::Detecting workflow syntax errors"
+          mkdir -p .github/workflows/scripts
+          
+          cat > .github/workflows/scripts/detect_workflow_errors.py << 'EOF'
+          import yaml
+          import os
+          import sys
+          
+          def detect_yaml_errors(directory):
+              errors = []
+              for root, dirs, files in os.walk(directory):
+                  for file in files:
+                      if file.endswith(('.yml', '.yaml')):
+                          file_path = os.path.join(root, file)
+                          try:
+                              with open(file_path, 'r', encoding='utf-8') as f:
+                                  yaml.safe_load_all(f)
+                          except yaml.YAMLError as e:
+                              errors.append(f"{file_path}: {e}")
+                          except Exception as e:
+                              errors.append(f"{file_path}: Unexpected error: {e}")
+              return errors
+          
+          def main():
+              workflow_dir = '.github/workflows'
+              errors = detect_yaml_errors(workflow_dir)
+              
+              if errors:
+                  print("Found syntax errors in workflows:")
+                  for error in errors:
+                      print(f"- {error}")
+                  sys.exit(1)
+              else:
+                  print("No syntax errors found.")
+                  sys.exit(0)
+          
+          if __name__ == "__main__":
+              main()
+          EOF
+          
+          python .github/workflows/scripts/detect_workflow_errors.py
+          if [ $? -ne 0 ]; then
+              echo "errors_found=true" >> $GITHUB_OUTPUT
+          else
+              echo "errors_found=false" >> $GITHUB_OUTPUT
+          fi
+          echo "::endgroup::"
+      
+      - name: Auto fix workflow errors
+        id: auto-fix
+        if: steps.detect-errors.outputs.errors_found == 'true'
+        run: |
+          echo "::group::Auto fixing workflow errors"
+          
+          cat > .github/workflows/scripts/auto_fix_workflows.py << 'EOF'
+          import yaml
+          import os
+          import re
+          
+          def fix_workflow_file(file_path):
+              try:
+                  with open(file_path, 'r', encoding='utf-8') as f:
+                      content = f.read()
+                  
+                  fixed_content = content
+                  fixed_content = re.sub(r'\r\n?', '\n', fixed_content)
+                  fixed_content = re.sub(r':\s+(\S+)', r': \1', fixed_content)
+                  fixed_content = re.sub(r'if: \$\{\{\s*(github\.event\.inputs\.[^\}]+\s*(==|!=|<=|>=|<|>|&&|\|\|)[^\}]+)\s*\}\}', 
+                                       r'if: ${{ github.event_name == "workflow_dispatch" && \1 }}', 
+                                       fixed_content)
+                  fixed_content = re.sub(r'environment: \$\{\{\s*(github\.event\.inputs\.[^\}]+\s*\|\|\s*[^\}]+)\s*\}\}', 
+                                       r'environment: ${{ github.event_name == "workflow_dispatch" && \1 }}', 
+                                       fixed_content)
+                  fixed_content = re.sub(r'on:\s*\n\s*push:\s*\n\s*branches:\s*\[([^\]]+)\]', 
+                                       r'on:\n  push:\n    branches: [\1]', 
+                                       fixed_content)
+                  fixed_content = re.sub(r'needs:\s*\[(\s*[^\]]+\s*)\]', 
+                                       r'needs: [\1]', 
+                                       fixed_content)
+                  
+                  if fixed_content != content:
+                      with open(file_path, 'w', encoding='utf-8') as f:
+                          f.write(fixed_content)
+                      return True
+                  else:
+                      return False
+                      
+              except Exception as e:
+                  print(f"Error fixing {file_path}: {e}")
+                  return False
+          
+          def main():
+              workflow_dir = '.github/workflows'
+              fixed_files = []
+              
+              for root, dirs, files in os.walk(workflow_dir):
+                  for file in files:
+                      if file.endswith(('.yml', '.yaml')):
+                          file_path = os.path.join(root, file)
+                          if fix_workflow_file(file_path):
+                              fixed_files.append(file_path)
+              
+              print(f"Fixed {len(fixed_files)} files:")
+              for file in fixed_files:
+                  print(f"- {file}")
+              
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+                  f.write(f"fixed_files={','.join(fixed_files)}")
+          
+          if __name__ == "__main__":
+              main()
+          EOF
+          
+          python .github/workflows/scripts/auto_fix_workflows.py
+          echo "::endgroup::"
+      
+      - name: Validate fixed workflows
+        id: validate-fixed
+        if: steps.detect-errors.outputs.errors_found == 'true'
+        run: |
+          echo "::group::Validating fixed workflows"
+          python .github/workflows/scripts/detect_workflow_errors.py
+          echo "::endgroup::"
+      
+      - name: Commit and push fixes
+        if: steps.auto-fix.outputs.fixed_files != ''
+        run: |
+          echo "::group::Committing and pushing fixes"
+          
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+              git add ${{ steps.auto-fix.outputs.fixed_files }}
+              git commit -m "Auto fix workflow syntax errors"
+              git push origin ${{ github.head_ref || github.ref }}
+          else
+              BRANCH_NAME="auto-fix-workflows-${{ github.run_id }}"
+              git checkout -b $BRANCH_NAME
+              git add ${{ steps.auto-fix.outputs.fixed_files }}
+              git commit -m "Auto fix workflow syntax errors"
+              git push -u origin $BRANCH_NAME
+              
+              gh pr create --title "Auto fix workflow syntax errors" --body "This PR automatically fixes syntax errors in GitHub Actions workflows." --base main --head $BRANCH_NAME
+          fi
+          echo "::endgroup::"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Notify results
+        if: always()
+        run: |
+          echo "::group::Workflow auto-fix results"
+          if [ "${{ steps.detect-errors.outputs.errors_found }}" = "false" ]; then
+              echo "No syntax errors found in workflows."
+          elif [ "${{ steps.auto-fix.outputs.fixed_files }}" = "" ]; then
+              echo "Found syntax errors but could not automatically fix them."
+          else
+              echo "Successfully fixed syntax errors in workflows:"
+              echo "${{ steps.auto-fix.outputs.fixed_files }}" | tr ',' '\n' | while read file; do
+                  echo "- $file"
+              done
+          fi
+          echo "::endgroup::"\n
