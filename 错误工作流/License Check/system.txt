@@ -1,0 +1,9 @@
+2026-01-30T04:12:47.4270000Z Requested labels: ubuntu-latest
+2026-01-30T04:12:47.4270000Z Job defined at: yhyub/coze-studio-test/.github/workflows/license-check.yaml@refs/heads/main
+2026-01-30T04:12:47.4270000Z Waiting for a runner to pick up this job...
+2026-01-30T04:12:47.4250000Z Evaluating license-check.if
+2026-01-30T04:12:47.4250000Z Evaluating: success()
+2026-01-30T04:12:47.4250000Z Result: true
+2026-01-30T04:12:47.4440000Z Job is about to start running on the hosted runner: GitHub Actions 1000001333
+2026-01-30T04:12:47.4440000Z Job is waiting for a hosted runner to come online.
+

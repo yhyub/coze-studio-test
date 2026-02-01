@@ -1,0 +1,18 @@
+﻿2026-01-30T04:36:51.7735859Z ##[group]Run actions/download-artifact@v4
+2026-01-30T04:36:51.7736170Z with:
+2026-01-30T04:36:51.7736371Z   name: changed-files-cache
+2026-01-30T04:36:51.7736603Z   merge-multiple: false
+2026-01-30T04:36:51.7736829Z   repository: yhyub/coze-studio-test
+2026-01-30T04:36:51.7737077Z   run-id: 21504559246
+2026-01-30T04:36:51.7737263Z ##[endgroup]
+2026-01-30T04:36:51.9813129Z Downloading single artifact
+2026-01-30T04:36:52.1357676Z Preparing to download the following artifacts:
+2026-01-30T04:36:52.1359447Z - changed-files-cache (ID: 5313851479, Size: 205, Expected Digest: sha256:913da7fa8c103c96cc41ee5dd5b6620bd45a668fbcddf6638502be82d800fa89)
+2026-01-30T04:36:52.2246483Z Redirecting to blob download url: https://productionresultssa14.blob.core.windows.net/actions-results/2fe568a6-8fc2-43c0-94b8-ddbd1f5a1fa4/workflow-job-run-70a90337-fef2-5c27-9451-9e8abd973be4/artifacts/da4fb7a0ed6fb65afb70767834554658b8597283c481239f4ac086cef2b34106.zip
+2026-01-30T04:36:52.2249535Z Starting download of artifact to: /home/runner/work/coze-studio-test/coze-studio-test
+2026-01-30T04:36:52.3239080Z (node:2866) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-01-30T04:36:52.3241197Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-01-30T04:36:52.3285658Z SHA256 digest of downloaded artifact is 913da7fa8c103c96cc41ee5dd5b6620bd45a668fbcddf6638502be82d800fa89
+2026-01-30T04:36:52.3286866Z Artifact download completed successfully.
+2026-01-30T04:36:52.3287570Z Total of 1 artifact(s) downloaded
+2026-01-30T04:36:52.3292623Z Download artifact has finished successfully

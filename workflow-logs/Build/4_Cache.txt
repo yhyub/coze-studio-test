@@ -1,0 +1,29 @@
+﻿2026-01-30T04:36:40.2705318Z ##[group]Run actions/cache@v4
+2026-01-30T04:36:40.2705599Z with:
+2026-01-30T04:36:40.2705928Z   path: common/temp/pnpm-local
+common/temp/pnpm-store
+common/temp/install-run
+
+2026-01-30T04:36:40.2706502Z   key: Linux-rush-store-475797a05827809f17d0a4c587cf4c709e4a62dc66ef0afd3b013a485a799b8b
+2026-01-30T04:36:40.2707001Z   restore-keys: Linux-rush-store-main
+Linux-rush-store
+
+2026-01-30T04:36:40.2707328Z   enableCrossOsArchive: false
+2026-01-30T04:36:40.2707562Z   fail-on-cache-miss: false
+2026-01-30T04:36:40.2707785Z   lookup-only: false
+2026-01-30T04:36:40.2707986Z   save-always: false
+2026-01-30T04:36:40.2708161Z env:
+2026-01-30T04:36:40.2708310Z   BUILD_BRANCH: main
+2026-01-30T04:36:40.2708491Z ##[endgroup]
+2026-01-30T04:36:40.6911580Z Cache hit for: Linux-rush-store-475797a05827809f17d0a4c587cf4c709e4a62dc66ef0afd3b013a485a799b8b
+2026-01-30T04:36:41.9561513Z Received 4194304 of 636424087 (0.7%), 4.0 MBs/sec
+2026-01-30T04:36:42.9561088Z Received 125829120 of 636424087 (19.8%), 60.0 MBs/sec
+2026-01-30T04:36:43.9561230Z Received 251658240 of 636424087 (39.5%), 80.0 MBs/sec
+2026-01-30T04:36:44.9563838Z Received 398458880 of 636424087 (62.6%), 95.0 MBs/sec
+2026-01-30T04:36:45.9560899Z Received 532676608 of 636424087 (83.7%), 101.6 MBs/sec
+2026-01-30T04:36:46.9565408Z Received 532676608 of 636424087 (83.7%), 84.7 MBs/sec
+2026-01-30T04:36:47.8319617Z Received 636424087 of 636424087 (100.0%), 88.3 MBs/sec
+2026-01-30T04:36:47.8321633Z Cache Size: ~607 MB (636424087 B)
+2026-01-30T04:36:47.8433542Z [command]/usr/bin/tar -xf /home/runner/work/_temp/1f237197-8e1a-411f-8879-6cc8fdf4b7d5/cache.tzst -P -C /home/runner/work/coze-studio-test/coze-studio-test --use-compress-program unzstd
+2026-01-30T04:36:57.0634697Z Cache restored successfully
+2026-01-30T04:36:57.1839863Z Cache restored from key: Linux-rush-store-475797a05827809f17d0a4c587cf4c709e4a62dc66ef0afd3b013a485a799b8b

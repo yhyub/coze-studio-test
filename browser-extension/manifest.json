@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "安全浏览器修复器",
+  "version": "2.0.0",
+  "description": "修复GitHub访问问题，使用安全域名访问模式，避免IP地址SSL证书问题，提供急速访问体验和实时进度条",
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "tabs",
+    "scripting",
+    "downloads",
+    "downloads.shelf"
+  ],
+  "host_permissions": [
+    "*://*.github.com/*",
+    "*://*.docker.com/*",
+    "*://*.docker.io/*",
+    "*://*.dockerhub.com/*",
+    "*://*.2345.com/*",
+    "*://*.2345soft.com/*",
+    "*://*.2345.net/*",
+    "*://*.2345cdn.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.github.com/*",
+        "*://*.docker.com/*",
+        "*://*.docker.io/*",
+        "*://*.dockerhub.com/*",
+        "*://*.2345.com/*",
+        "*://*.2345soft.com/*",
+        "*://*.2345.net/*",
+        "*://*.2345cdn.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.css", "popup.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

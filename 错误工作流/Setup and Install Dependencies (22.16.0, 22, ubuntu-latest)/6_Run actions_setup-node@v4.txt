@@ -1,0 +1,17 @@
+﻿2026-01-30T04:36:18.9649652Z ##[group]Run actions/setup-node@v4
+2026-01-30T04:36:18.9649929Z with:
+2026-01-30T04:36:18.9650125Z   node-version: 22.16.0
+2026-01-30T04:36:18.9650349Z   always-auth: false
+2026-01-30T04:36:18.9650950Z   check-latest: false
+2026-01-30T04:36:18.9651284Z   token: ***
+2026-01-30T04:36:18.9651487Z ##[endgroup]
+2026-01-30T04:36:19.1340136Z Attempting to download 22.16.0...
+2026-01-30T04:36:20.0488168Z Acquiring 22.16.0 - x64 from https://github.com/actions/node-versions/releases/download/22.16.0-15177438473/node-22.16.0-linux-x64.tar.gz
+2026-01-30T04:36:20.7417518Z Extracting ...
+2026-01-30T04:36:20.7526937Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/1c1f5576-6a73-4d86-a21a-08c13a2c3bbf -f /home/runner/work/_temp/a4b83fbd-3008-4afa-9f2c-c26030a6e546
+2026-01-30T04:36:21.8824003Z Adding to the cache ...
+2026-01-30T04:36:23.7701944Z ##[group]Environment details
+2026-01-30T04:36:24.0770856Z node: v22.16.0
+2026-01-30T04:36:24.0771390Z npm: 10.9.2
+2026-01-30T04:36:24.0771775Z yarn: 1.22.22
+2026-01-30T04:36:24.0772411Z ##[endgroup]

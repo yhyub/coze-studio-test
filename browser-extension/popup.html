@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub网络修复器</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>GitHub网络修复器</h1>
+            <p>一键解决GitHub访问问题</p>
+        </div>
+        
+        <div class="status-section">
+            <h2>🔍 网络状态</h2>
+            <div id="status-content">
+                <div class="status-item">
+                    <span class="status-label">GitHub主站:</span>
+                    <span class="status-value" id="github-status">检查中...</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">GitHub API:</span>
+                    <span class="status-value" id="api-status">检查中...</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">SSL证书:</span>
+                    <span class="status-value" id="ssl-status">检查中...</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">访问模式:</span>
+                    <span class="status-value" id="access-mode">安全域名访问</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">上次修复:</span>
+                    <span class="status-value" id="last-fix">未执行</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">修复次数:</span>
+                    <span class="status-value" id="fix-count">0</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="action-section">
+            <h2>⚡ 快速修复</h2>
+            <button id="fix-btn" class="primary-btn">
+                <span id="fix-btn-text">开始网络修复</span>
+            </button>
+            <div id="fix-progress" class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+                <div class="progress-text" id="progress-text">准备就绪</div>
+            </div>
+        </div>
+        
+        <div class="features-section">
+            <h2>✅ 修复功能</h2>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <span class="feature-icon">🔧</span>
+                    <span class="feature-text">深度网络诊断</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📡</span>
+                    <span class="feature-text">DNS服务器优化</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🗑️</span>
+                    <span class="feature-text">浏览器缓存清理</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">⏰</span>
+                    <span class="feature-text">系统时间同步</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🌐</span>
+                    <span class="feature-text">2345浏览器解决方案</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✅</span>
+                    <span class="feature-text">网络状态验证</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tips-section">
+            <h2>💡 优化建议</h2>
+            <div class="tips-list">
+                <div class="tip-item">
+                    <span class="tip-icon">1.</span>
+                    <span class="tip-text">使用2345浏览器访问GitHub</span>
+                </div>
+                <div class="tip-item">
+                    <span class="tip-icon">2.</span>
+                    <span class="tip-text">定期执行网络修复操作</span>
+                </div>
+                <div class="tip-item">
+                    <span class="tip-icon">3.</span>
+                    <span class="tip-text">保持系统时间准确</span>
+                </div>
+                <div class="tip-item">
+                    <span class="tip-icon">4.</span>
+                    <span class="tip-text">清除浏览器缓存和Cookie</span>
+                </div>
+                <div class="tip-item">
+                    <span class="tip-icon">5.</span>
+                    <span class="tip-text">使用稳定的网络连接</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>版本: 1.1.1</p>
+            <p>GitHub网络修复器 © 2026</p>
+        </div>
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+﻿2026-01-30T04:37:36.2293947Z ##[group]Run python -m pip install --upgrade pip
+2026-01-30T04:37:36.2294411Z [36;1mpython -m pip install --upgrade pip[0m
+2026-01-30T04:37:36.2294708Z [36;1mpip install yq[0m
+2026-01-30T04:37:36.2344553Z shell: /usr/bin/bash -e {0}
+2026-01-30T04:37:36.2344875Z env:
+2026-01-30T04:37:36.2345152Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:36.2345594Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-01-30T04:37:36.2346030Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:36.2346398Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:36.2346761Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:36.2347122Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-01-30T04:37:36.2347692Z ##[endgroup]
+2026-01-30T04:37:36.9152840Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (25.3)
+2026-01-30T04:37:37.6924990Z Collecting yq
+2026-01-30T04:37:37.8004696Z   Downloading yq-3.4.3-py3-none-any.whl.metadata (9.0 kB)
+2026-01-30T04:37:37.8810042Z Collecting PyYAML>=5.3.1 (from yq)
+2026-01-30T04:37:37.9006084Z   Downloading pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+2026-01-30T04:37:37.9347867Z Collecting xmltodict>=0.11.0 (from yq)
+2026-01-30T04:37:37.9544306Z   Downloading xmltodict-1.0.2-py3-none-any.whl.metadata (15 kB)
+2026-01-30T04:37:37.9953093Z Collecting tomlkit>=0.11.6 (from yq)
+2026-01-30T04:37:38.0149017Z   Downloading tomlkit-0.14.0-py3-none-any.whl.metadata (2.8 kB)
+2026-01-30T04:37:38.0585602Z Collecting argcomplete>=1.8.1 (from yq)
+2026-01-30T04:37:38.0784686Z   Downloading argcomplete-3.6.3-py3-none-any.whl.metadata (16 kB)
+2026-01-30T04:37:38.1099697Z Downloading yq-3.4.3-py3-none-any.whl (18 kB)
+2026-01-30T04:37:38.1346046Z Downloading argcomplete-3.6.3-py3-none-any.whl (43 kB)
+2026-01-30T04:37:38.1731653Z Downloading pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (806 kB)
+2026-01-30T04:37:38.2330135Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 806.6/806.6 kB 22.7 MB/s  0:00:00
+2026-01-30T04:37:38.2530426Z Downloading tomlkit-0.14.0-py3-none-any.whl (39 kB)
+2026-01-30T04:37:38.2744262Z Downloading xmltodict-1.0.2-py3-none-any.whl (13 kB)
+2026-01-30T04:37:38.3112466Z Installing collected packages: xmltodict, tomlkit, PyYAML, argcomplete, yq
+2026-01-30T04:37:38.4436148Z 
+2026-01-30T04:37:38.4447033Z Successfully installed PyYAML-6.0.3 argcomplete-3.6.3 tomlkit-0.14.0 xmltodict-1.0.2 yq-3.4.3

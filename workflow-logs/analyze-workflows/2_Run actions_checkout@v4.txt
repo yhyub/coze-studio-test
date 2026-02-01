@@ -1,0 +1,72 @@
+﻿2026-01-30T04:13:04.5679695Z ##[group]Run actions/checkout@v4
+2026-01-30T04:13:04.5680655Z with:
+2026-01-30T04:13:04.5681081Z   repository: yhyub/coze-studio-test
+2026-01-30T04:13:04.5681741Z   token: ***
+2026-01-30T04:13:04.5682128Z   ssh-strict: true
+2026-01-30T04:13:04.5682684Z   ssh-user: git
+2026-01-30T04:13:04.5683097Z   persist-credentials: true
+2026-01-30T04:13:04.5683551Z   clean: true
+2026-01-30T04:13:04.5683957Z   sparse-checkout-cone-mode: true
+2026-01-30T04:13:04.5684432Z   fetch-depth: 1
+2026-01-30T04:13:04.5684811Z   fetch-tags: false
+2026-01-30T04:13:04.5685218Z   show-progress: true
+2026-01-30T04:13:04.5685618Z   lfs: false
+2026-01-30T04:13:04.5685985Z   submodules: false
+2026-01-30T04:13:04.5686389Z   set-safe-directory: true
+2026-01-30T04:13:04.5687118Z ##[endgroup]
+2026-01-30T04:13:04.6738728Z Syncing repository: yhyub/coze-studio-test
+2026-01-30T04:13:04.6740460Z ##[group]Getting Git version info
+2026-01-30T04:13:04.6741245Z Working directory is '/home/runner/work/coze-studio-test/coze-studio-test'
+2026-01-30T04:13:04.6742353Z [command]/usr/bin/git version
+2026-01-30T04:13:04.6840037Z git version 2.52.0
+2026-01-30T04:13:04.6866132Z ##[endgroup]
+2026-01-30T04:13:04.6881801Z Temporarily overriding HOME='/home/runner/work/_temp/f952f2c9-ba1b-40a6-a680-c25e2f5cb694' before making global git config changes
+2026-01-30T04:13:04.6884483Z Adding repository directory to the temporary git global config as a safe directory
+2026-01-30T04:13:04.6888713Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/coze-studio-test/coze-studio-test
+2026-01-30T04:13:04.6929829Z Deleting the contents of '/home/runner/work/coze-studio-test/coze-studio-test'
+2026-01-30T04:13:04.6933947Z ##[group]Initializing the repository
+2026-01-30T04:13:04.6938841Z [command]/usr/bin/git init /home/runner/work/coze-studio-test/coze-studio-test
+2026-01-30T04:13:04.7049263Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-01-30T04:13:04.7050610Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-01-30T04:13:04.7051681Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-01-30T04:13:04.7052365Z hint: call:
+2026-01-30T04:13:04.7052942Z hint:
+2026-01-30T04:13:04.7053593Z hint: 	git config --global init.defaultBranch <name>
+2026-01-30T04:13:04.7054601Z hint:
+2026-01-30T04:13:04.7055182Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-01-30T04:13:04.7056640Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-01-30T04:13:04.7057933Z hint:
+2026-01-30T04:13:04.7058632Z hint: 	git branch -m <name>
+2026-01-30T04:13:04.7059423Z hint:
+2026-01-30T04:13:04.7060498Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-01-30T04:13:04.7062464Z Initialized empty Git repository in /home/runner/work/coze-studio-test/coze-studio-test/.git/
+2026-01-30T04:13:04.7068097Z [command]/usr/bin/git remote add origin https://github.com/yhyub/coze-studio-test
+2026-01-30T04:13:04.7102858Z ##[endgroup]
+2026-01-30T04:13:04.7104174Z ##[group]Disabling automatic garbage collection
+2026-01-30T04:13:04.7107663Z [command]/usr/bin/git config --local gc.auto 0
+2026-01-30T04:13:04.7135884Z ##[endgroup]
+2026-01-30T04:13:04.7137112Z ##[group]Setting up auth
+2026-01-30T04:13:04.7143479Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-01-30T04:13:04.7173600Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-01-30T04:13:04.7530809Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-01-30T04:13:04.7561000Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-01-30T04:13:04.7800341Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-01-30T04:13:04.7839139Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-01-30T04:13:04.8065275Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-01-30T04:13:04.8103602Z ##[endgroup]
+2026-01-30T04:13:04.8104683Z ##[group]Fetching the repository
+2026-01-30T04:13:04.8115593Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +dd76fd20fa591b5675a6752e918b18be01468c6b:refs/remotes/origin/main
+2026-01-30T04:13:05.9148810Z From https://github.com/yhyub/coze-studio-test
+2026-01-30T04:13:05.9184888Z  * [new ref]           dd76fd20fa591b5675a6752e918b18be01468c6b -> origin/main
+2026-01-30T04:13:05.9188127Z ##[endgroup]
+2026-01-30T04:13:05.9189413Z ##[group]Determining the checkout info
+2026-01-30T04:13:05.9190855Z ##[endgroup]
+2026-01-30T04:13:05.9194896Z [command]/usr/bin/git sparse-checkout disable
+2026-01-30T04:13:05.9238785Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-01-30T04:13:05.9266769Z ##[group]Checking out the ref
+2026-01-30T04:13:05.9269858Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-01-30T04:13:06.8191330Z Switched to a new branch 'main'
+2026-01-30T04:13:06.8192274Z branch 'main' set up to track 'origin/main'.
+2026-01-30T04:13:06.8224229Z ##[endgroup]
+2026-01-30T04:13:06.8266627Z [command]/usr/bin/git log -1 --format=%H
+2026-01-30T04:13:06.8288096Z dd76fd20fa591b5675a6752e918b18be01468c6b

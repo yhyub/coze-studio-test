@@ -1,0 +1,31 @@
+﻿2026-01-30T04:12:52.5820761Z ##[group]Run go install github.com/apache/skywalking-eyes/cmd/license-eye@v0.4.0
+2026-01-30T04:12:52.5821478Z [36;1mgo install github.com/apache/skywalking-eyes/cmd/license-eye@v0.4.0[0m
+2026-01-30T04:12:52.5858948Z shell: /usr/bin/bash -e {0}
+2026-01-30T04:12:52.5859309Z ##[endgroup]
+2026-01-30T04:12:52.6825421Z go: downloading github.com/apache/skywalking-eyes v0.4.0
+2026-01-30T04:12:54.9598966Z go: downloading github.com/sirupsen/logrus v1.8.1
+2026-01-30T04:12:54.9599725Z go: downloading gopkg.in/yaml.v3 v3.0.0-20220512140231-539c8e751b99
+2026-01-30T04:12:54.9756803Z go: downloading github.com/spf13/cobra v1.4.0
+2026-01-30T04:12:55.1990924Z go: downloading github.com/Masterminds/sprig/v3 v3.2.2
+2026-01-30T04:12:55.2111921Z go: downloading github.com/bmatcuk/doublestar/v2 v2.0.4
+2026-01-30T04:12:55.2397330Z go: downloading golang.org/x/net v0.0.0-20220517181318-183a9ca12b87
+2026-01-30T04:12:55.2466935Z go: downloading golang.org/x/tools v0.1.10
+2026-01-30T04:12:55.5107857Z go: downloading github.com/google/go-github/v33 v33.0.0
+2026-01-30T04:12:55.5164021Z go: downloading golang.org/x/oauth2 v0.0.0-20220411215720-9780585627b5
+2026-01-30T04:12:55.6513075Z go: downloading golang.org/x/sys v0.0.0-20220517195934-5e4e11fc645e
+2026-01-30T04:12:55.8001121Z go: downloading github.com/spf13/pflag v1.0.5
+2026-01-30T04:12:56.5125506Z go: downloading github.com/Masterminds/goutils v1.1.1
+2026-01-30T04:12:56.5198925Z go: downloading github.com/Masterminds/semver/v3 v3.1.1
+2026-01-30T04:12:56.5271485Z go: downloading github.com/google/uuid v1.1.1
+2026-01-30T04:12:56.5334176Z go: downloading github.com/huandu/xstrings v1.3.1
+2026-01-30T04:12:56.5398814Z go: downloading github.com/imdario/mergo v0.3.11
+2026-01-30T04:12:56.5508202Z go: downloading github.com/mitchellh/copystructure v1.0.0
+2026-01-30T04:12:56.5554700Z go: downloading github.com/shopspring/decimal v1.2.0
+2026-01-30T04:12:56.5621472Z go: downloading github.com/spf13/cast v1.3.1
+2026-01-30T04:12:56.5701645Z go: downloading golang.org/x/crypto v0.0.0-20220518034528-6f7dac969898
+2026-01-30T04:12:57.0017041Z go: downloading github.com/google/licensecheck v0.3.1
+2026-01-30T04:12:57.5628580Z go: downloading golang.org/x/text v0.3.7
+2026-01-30T04:12:58.0419399Z go: downloading github.com/google/go-querystring v1.1.0
+2026-01-30T04:12:58.0643186Z go: downloading golang.org/x/xerrors v0.0.0-20220517211312-f3a8303e98df
+2026-01-30T04:12:58.3528845Z go: downloading github.com/mitchellh/reflectwalk v1.0.0
+2026-01-30T04:12:58.4374142Z go: downloading golang.org/x/mod v0.6.0-dev.0.20220106191415-9b9b3d81d5e3

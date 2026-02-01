@@ -1,0 +1,5 @@
+﻿2026-01-30T04:13:32.7079738Z ##[group]Run git config --global user.name "GitHub Actions"
+2026-01-30T04:13:32.7081681Z [36;1mgit config --global user.name "GitHub Actions"[0m
+2026-01-30T04:13:32.7083491Z [36;1mgit config --global user.email "actions@github.com"[0m
+2026-01-30T04:13:32.7121211Z shell: /usr/bin/bash -e {0}
+2026-01-30T04:13:32.7122667Z ##[endgroup]

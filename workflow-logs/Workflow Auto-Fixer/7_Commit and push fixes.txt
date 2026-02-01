@@ -1,0 +1,140 @@
+﻿2026-01-30T04:38:04.2291032Z ##[group]Run actions/github-script@v7
+2026-01-30T04:38:04.2291312Z with:
+2026-01-30T04:38:04.2297081Z   script: // 检查是否有更改
+const { execSync } = require('child_process');
+try {
+  execSync('git diff --quiet');
+  console.log('No changes to commit');
+  return;
+} catch (error) {
+  // 有更改，继续执行
+}
+
+// 获取当前提交信息
+const currentCommit = execSync('git rev-parse HEAD').toString().trim();
+const repository = process.env.GITHUB_REPOSITORY;
+const branch = 'main';
+
+console.log('Changes detected, preparing to update files...');
+
+// 读取所有修改的文件
+const files = execSync('git diff --name-only').toString().trim().split('\n');
+
+// 只处理工作流文件
+const workflowFiles = files.filter(file => file.startsWith('.github/workflows/'));
+
+if (workflowFiles.length === 0) {
+  console.log('No workflow files changed');
+  return;
+}
+
+console.log(`Updating ${workflowFiles.length} workflow files...`);
+
+// 使用 GitHub API 更新文件
+// 注意：在 actions/github-script 中，github 变量是内置的，不需要重新声明
+
+for (const file of workflowFiles) {
+  console.log(`Updating ${file}...`);
+  
+  // 读取文件内容
+  const fs = require('fs');
+  const content = fs.readFileSync(file, 'utf8');
+  
+  // 获取文件的当前 SHA
+  let sha;
+  try {
+    const response = await github.rest.repos.getContent({
+      owner: repository.split('/')[0],
+      repo: repository.split('/')[1],
+      path: file,
+      ref: branch
+    });
+    sha = response.data.sha;
+  } catch (error) {
+    console.log(`File ${file} doesn't exist, creating it...`);
+  }
+  
+  // 更新或创建文件
+  await github.rest.repos.createOrUpdateFileContents({
+    owner: repository.split('/')[0],
+    repo: repository.split('/')[1],
+    path: file,
+    message: 'fix: auto-correct workflow configuration errors',
+    content: Buffer.from(content).toString('base64'),
+    branch: branch,
+    sha: sha
+  });
+  
+  console.log(`Updated ${file}`);
+}
+
+console.log('All workflow files updated successfully!');
+
+2026-01-30T04:38:04.2303338Z   github-token: ***
+2026-01-30T04:38:04.2303543Z   debug: false
+2026-01-30T04:38:04.2303735Z   user-agent: actions/github-script
+2026-01-30T04:38:04.2303983Z   result-encoding: json
+2026-01-30T04:38:04.2304185Z   retries: 0
+2026-01-30T04:38:04.2304400Z   retry-exempt-status-codes: 400,401,403,404,422
+2026-01-30T04:38:04.2304682Z ##[endgroup]
+2026-01-30T04:38:04.6069331Z Changes detected, preparing to update files...
+2026-01-30T04:38:04.8649790Z Updating 7 workflow files...
+2026-01-30T04:38:04.8650487Z Updating .github/workflows/all-in-one-fixer.yml...
+2026-01-30T04:38:05.9787041Z RequestError [HttpError]: refusing to allow a GitHub App to create or update workflow `.github/workflows/all-in-one-fixer.yml` without `workflows` permission
+2026-01-30T04:38:05.9788412Z     at /home/runner/work/_actions/actions/github-script/v7/dist/index.js:9537:21
+2026-01-30T04:38:05.9789590Z     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-30T04:38:05.9790664Z     at async eval (eval at callAsyncFunction (/home/runner/work/_actions/actions/github-script/v7/dist/index.js:36187:16), <anonymous>:58:3)
+2026-01-30T04:38:05.9791908Z     at async main (/home/runner/work/_actions/actions/github-script/v7/dist/index.js:36285:20) {
+2026-01-30T04:38:05.9792461Z   status: 403,
+2026-01-30T04:38:05.9792693Z   response: {
+2026-01-30T04:38:05.9793347Z     url: 'https://api.github.com/repos/yhyub/coze-studio-test/contents/.github%2Fworkflows%2Fall-in-one-fixer.yml',
+2026-01-30T04:38:05.9794003Z     status: 403,
+2026-01-30T04:38:05.9794231Z     headers: {
+2026-01-30T04:38:05.9794513Z       'access-control-allow-origin': '*',
+2026-01-30T04:38:05.9796366Z       'access-control-expose-headers': 'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset',
+2026-01-30T04:38:05.9797865Z       'content-encoding': 'gzip',
+2026-01-30T04:38:05.9798179Z       'content-security-policy': "default-src 'none'",
+2026-01-30T04:38:05.9798561Z       'content-type': 'application/json; charset=utf-8',
+2026-01-30T04:38:05.9799215Z       date: 'Fri, 30 Jan 2026 04:38:05 GMT',
+2026-01-30T04:38:05.9799670Z       'referrer-policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
+2026-01-30T04:38:05.9800101Z       server: 'github.com',
+2026-01-30T04:38:05.9800509Z       'strict-transport-security': 'max-age=31536000; includeSubdomains; preload',
+2026-01-30T04:38:05.9800941Z       'transfer-encoding': 'chunked',
+2026-01-30T04:38:05.9801273Z       vary: 'Accept-Encoding, Accept, X-Requested-With',
+2026-01-30T04:38:05.9801899Z       'x-accepted-github-permissions': 'contents=write; contents=write,workflows=write',
+2026-01-30T04:38:05.9802371Z       'x-content-type-options': 'nosniff',
+2026-01-30T04:38:05.9802663Z       'x-frame-options': 'deny',
+2026-01-30T04:38:05.9802968Z       'x-github-api-version-selected': '2022-11-28',
+2026-01-30T04:38:05.9803324Z       'x-github-media-type': 'github.v3; format=json',
+2026-01-30T04:38:05.9803727Z       'x-github-request-id': 'A440:20B51:114AE61:11A8A33:697C35AD',
+2026-01-30T04:38:05.9804093Z       'x-ratelimit-limit': '5000',
+2026-01-30T04:38:05.9804368Z       'x-ratelimit-remaining': '4962',
+2026-01-30T04:38:05.9804798Z       'x-ratelimit-reset': '1769748714',
+2026-01-30T04:38:05.9805082Z       'x-ratelimit-resource': 'core',
+2026-01-30T04:38:05.9805361Z       'x-ratelimit-used': '38',
+2026-01-30T04:38:05.9805603Z       'x-xss-protection': '0'
+2026-01-30T04:38:05.9805820Z     },
+2026-01-30T04:38:05.9805989Z     data: {
+2026-01-30T04:38:05.9806616Z       message: 'refusing to allow a GitHub App to create or update workflow `.github/workflows/all-in-one-fixer.yml` without `workflows` permission',
+2026-01-30T04:38:05.9807517Z       documentation_url: 'https://docs.github.com/rest/repos/contents#create-or-update-file-contents',
+2026-01-30T04:38:05.9807998Z       status: '403'
+2026-01-30T04:38:05.9808183Z     }
+2026-01-30T04:38:05.9808337Z   },
+2026-01-30T04:38:05.9808502Z   request: {
+2026-01-30T04:38:05.9808679Z     method: 'PUT',
+2026-01-30T04:38:05.9809198Z     url: 'https://api.github.com/repos/yhyub/coze-studio-test/contents/.github%2Fworkflows%2Fall-in-one-fixer.yml',
+2026-01-30T04:38:05.9810482Z     headers: {
+2026-01-30T04:38:05.9810750Z       accept: 'application/vnd.github.v3+json',
+2026-01-30T04:38:05.9811262Z       'user-agent': 'actions/github-script octokit-core.js/5.0.1 Node.js/20.19.6 (linux; x64)',
+2026-01-30T04:38:05.9811943Z       authorization: 'token [REDACTED]',
+2026-01-30T04:38:05.9812274Z       'content-type': 'application/json; charset=utf-8'
+2026-01-30T04:38:05.9812557Z     },
+2026-01-30T04:38:06.0050193Z     body: '{"message":"fix: auto-correct workflow configuration errors","content":"bmFtZTogQWxsLWluLU9uZSBXb3JrZmxvdyBGaXhlcgoKb246CiAgd29ya2Zsb3dfZGlzcGF0Y2g6CiAgICBpbnB1dHM6CiAgICAgIGZpeC10eXBlOgogICAgICAgIGRlc2NyaXB0aW9uOiAnVHlwZSBvZiBmaXggdG8gYXBwbHknCiAgICAgICAgcmVxdWlyZWQ6IHRydWUKICAgICAgICBkZWZhdWx0OiAnYWxsJwogICAgICAgIHR5cGU6IGNob2ljZQogICAgICAgIG9wdGlvbnM6CiAgICAgICAgICAtIGFsbAogICAgICAgICAgLSBzeW50YXgKICAgICAgICAgIC0gcGVybWlzc2lvbnMKICAgICAgICAgIC0gc2VjdXJpdHkKICAgICAgICAgIC0gZGVwbG95bWVudAogICAgICAgICAgLSBkZXBlbmRlbmNpZXMKICAgICAgICAgIC0gcGVyZm9ybWFuY2UKICAgICAgICAgIC0gZG9jdW1lbnRhdGlvbgogIHB1c2g6CiAgICBicmFuY2hlczoKICAgICAgLSBtYWluCiAgICBwYXRoczoKICAgICAgLSAnLmdpdGh1Yi93b3JrZmxvd3MvKionCiAgICAgIC0gJy5naXRodWIvYWN0aW9ucy1jb25maWcvKionCiAgc2NoZWR1bGU6CiAgICAtIGNyb246ICcwIDEyICogKiAqJyAgIyDmr4/lpKnkuK3ljYgxMueCuei/kOihjAoKcGVybWlzc2lvbnM6CiAgY29udGVudHM6IHdyaXRlCiAgYWN0aW9uczogd3JpdGUKICBwdWxsLXJlcXVlc3RzOiB3cml0ZQogIGNoZWNrczogd3JpdGUKICBkZXBsb3ltZW50czogd3JpdGUKICBpc3N1ZXM6IHdyaXRlCiAgcGFja2FnZXM6IHdyaXRlCiAgcmVwb3NpdG9yeS1wcm9qZWN0czogd3JpdGUKICBzZWN1cml0eS1ldmVudHM6IHdyaXRlCiAgc3RhdHVzZXM6IHdyaXRlCgpqb2JzOgogIGFuYWx5emUtYW5kLWZpeDoKICAgIHJ1bnMtb246IHVidW50dS1sYXRlc3QKICAgIHN0ZXBzOgogICAgICAtIG5hbWU6IENoZWNrb3V0IGNvZGUKICAgICAgICB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHY0CiAgICAgICAgd2l0aDoKICAgICAgICAgIGZldGNoLWRlcHRoOiAwCiAgICAgICAgICB0b2tlbjogJHt7IHNlY3JldHMuUEFUIHx8IHNlY3JldHMuR0lUSFVCX1RPS0VOIH19CgogICAgICAtIG5hbWU6IFNldCB1cCBOb2RlLmpzCiAgICAgICAgdXNlczogYWN0aW9ucy9zZXR1cC1ub2RlQHY1CiAgICAgICAgd2l0aDoKICAgICAgICAgIG5vZGUtdmVyc2lvbjogJzIwJwoKICAgICAgLSBuYW1lOiBTZXQgdXAgUHl0aG9uCiAgICAgICAgdXNlczogYWN0aW9ucy9zZXR1cC1weXRob25AdjUKICAgICAgICB3aXRoOgogICAgICAgICAgcHl0aG9uLXZlcnNpb246ICczLjExJwoKICAgICAgLSBuYW1lOiBJbnN0YWxsIGRlcGVuZGVuY2llcwogICAgICAgIHJ1bjogfAogICAgICAgICAgcHl0aG9uIC1tIHBpcCBpbnN0YWxsIC0tdXBncmFkZSBwaXAKICAgICAgICAgIHBpcCBpbnN0YWxsIHlxIHB5eWFtbCByZXF1ZXN0cwogICAgICAgICAgbnBtIGluc3RhbGwgLWcgeWFtbC1saW50CgogICAgICAtIG5hbWU6IFZhbGlkYXRlIGFjdGlvbnMtY29uZmlnIGRpcmVjdG9yeQogICAgICAgIHJ1bjogfAogICAgICAgICAgaWYgWyAhIC1kICIuZ2l0aHViL2FjdGlvbnMtY29uZmlnIiBdOyB0aGVuCiAgICAgICAgICAgIGVjaG8gIkNyZWF0aW5nIGFjdGlvbnMtY29uZmlnIGRpcmVjdG9yeS4uLiIKICAgICAgICAgICAgbWtkaXIgLXAgLmdpdGh1Yi9hY3Rpb25zLWNvbmZpZwogICAgICAgICAgZmkKICAgICAgICAgIAogICAgICAgICAgaWYgWyAhIC1mICIuZ2l0aHViL2FjdGlvbnMtY29uZmlnL2FjdGlvbnMueWFtbCIgXTsgdGhlbgogICAgICAgICAgICBlY2hvICJDcmVhdGluZyBhY3Rpb25zLnlhbWwgZmlsZS4uLiIKICAgICAgICAgICAgIyDkvb/nlKhlY2hv5ZG95Luk5Yib5bu65paH5Lu277yM6YG/5YWNaGVyZWRvY+ivreazlemXrumimAogICAgICAgICAgICBlY2hvICJhbGxvd2VkX3NvdXJjZXM6IgogICAgICAgICAgICBlY2hvICIgIC0gYWN0aW9ucy9jaGVja291dCIKICAgICAgICAgICAgZWNobyAiICAtIGFjdGlvbnMvc2V0dXAtbm9kZSIKICAgICAgICAgICAgZWNobyAiICAtIGFjdGlvbnMvc2V0dXAtcHl0aG9uIgogICAgICAgICAgICBlY2hvICIgIC0gYWN0aW9ucy9jYWNoZSIKICAgICAgICAgICAgZWNobyAiICAtIGFjdGlvbnMvdXBsb2FkLWFydGlmYWN0IgogICAgICAgICAgICBlY2hvICIgIC0gYWN0aW9ucy9kb3dubG9hZC1hcnRpZmFjdCIKICAgICAgICAgICAgZWNobyAiICAtIGdpdGh1Yi9jb2RlcWwtYWN0aW9uIgogICAgICAgICAgICBlY2hvICIgIC0gYWN0aW9ucy9kZXBlbmRlbmN5LXJldmlldy1hY3Rpb24iCiAgICAgICAgICAgIGVjaG8gIiAgLSByZXZpZXdkb2cvcmV2aWV3ZG9nIgogICAgICAgICAgICBlY2hvICIgIC0gY29kZWNvdi9jb2RlY292LWFjdGlvbiIKICAgICAgICAgICAgZWNobyAiICAtIDgzOThhNy9hY3Rpb24tc2xhY2siCiAgICAgICAgICAgIGVjaG8gIiAgLSBhY3Rpb25zL2dpdGh1Yi1zY3JpcHQiCiAgICAgICAgICAgIGVjaG8gIiIKICAgICAgICAgICAgZWNobyAiaW5zdGFsbGVkX2FjdGlvbnM6IgogICAgICAgICAgICBlY2hvICIgIC0gbmFtZTogYWN0aW9ucy9jaGVja291dCIKICAgICAgICAgICAgZWNobyAiICAgIHZlcnNpb246IHY0IgogICAgICAgICAgICBlY2hvICIgICAgc291cmNlOiBhY3Rpb25zL2NoZWNrb3V0IgogICAgICAgICAgICBlY2hvICIgICAgdXNhZ2U6IOavj+WkqeS9v+eUqCIKICAgICAgICAgICAgZWNobyAiICAgIHNlY3VyaXR5OiDlt7LlrqHmoLgiCiAgICAgICAgICAgIGVjaG8gIiAgICB3b3JrZmxvd3M6IFtdIgogICAgICAgICAgICBlY2hvICIiCiAgICAgICAgICAgIGVjaG8gImN1c3RvbV9hY3Rpb25zOiIKICAgICAgICAgICAgZWNobyAnICBkaXJlY3Rvcnk6ICIuZ2l0aHViL2FjdGlvbnMiJwogICAgICAgICAgICBlY2hvICIgIGxpc3Q6IFtdIgogICAgICAgICAgICAjIOazqOaEj++8muS4iumdoueahOWRveS7pOmcgOimgemAmui/h+mHjeWumuWQkeWGmeWFpeaWh+S7tgogICAgICAgICAgICAjIOeUseS6jueOr+Wig+mZkOWItu+8jOaIkeS7rOS9v+eUqOabtOeugOWNleeahOaWueW8jwogICAgICAgICAgICBwcmludGYgJ2FsbG93ZWRfc291cmNlczpcbiAgLSBhY3Rpb25zL2NoZWNrb3V0XG4gIC0gYWN0aW9ucy9zZXR1cC1ub2RlXG4gIC0gYWN0aW9ucy9zZXR1cC1weXRob25cbiAgLSBhY3Rpb25zL2NhY2hlXG4gIC0gYWN0aW9ucy91cGxvYWQtYXJ0aWZhY3RcbiAgLSBhY3Rpb25zL2Rvd25sb2FkLWFydGlmYWN0XG4gIC0gZ2l0aHViL2NvZGVxbC1hY3Rpb25cbiAgLSBhY3Rpb25zL2RlcGVuZGVuY3ktcmV2aWV3LWFjdGlvblxuICAtIHJldmlld2RvZy9yZXZpZXdkb2dcbiAgLSBjb2RlY292L2NvZGVjb3YtYWN0aW9uXG4gIC0gODM5OGE3L2FjdGlvbi1zbGFja1xuICAtIGFjdGlvbnMvZ2l0aHViLXNjcmlwdFxuXG5pbnN0YWxsZWRfYWN0aW9uczpcbiAgLSBuYW1lOiBhY3Rpb25zL2NoZWNrb3V0XG4gICAgdmVyc2lvbjogdjRcbiAgICBzb3VyY2U6IGFjdGlvbnMvY2hlY2tvdXRcbiAgICB1c2FnZTog5q+P5aSp5L2/55SoXG4gICAgc2VjdXJpdHk6IOW3suWuoeaguFxuICAgIHdvcmtmbG93czogW11cblxuY3VzdG9tX2FjdGlvbnM6XG4gIGRpcmVjdG9yeTogIi5naXRodWIvYWN0aW9ucyJcbiAgbGlzdDogW11cbicgPiAuZ2l0aHViL2FjdGlvbnMtY29uZmlnL2FjdGlvbnMueWFtbAogICAgICAgICAgZmkKCiAgICAgIC0gbmFtZTogRml4IHdvcmtmbG93IHN5bnRheCBlcnJvcnMKICAgICAgICBpZjogZ2l0aHViLmV2ZW50LmlucHV0cy5maXgtdHlwZSA9PSAnYWxsJyB8fCBnaXRodWIuZXZlbnQuaW5wdXRzLmZpeC10eXBlID09ICdzeW50YXgnCiAgICAgICAgdXNlczogcmV2aWV3ZG9nL3Jldmlld2RvZ0B2MC4xNi4wCiAgICAgICAgd2l0aDoKICAgICAgICAgIHJlcG9ydGVyOiBnaXRodWItcHItcmV2aWV3CiAgICAgICAgICBsZXZlbDogZXJyb3IKICAgICAgICAgIHdvcmtkaXI6IC5naXRodWIvd29ya2Zsb3dzLwoKICAgICAgLSBuYW1lOiBGaXggZXhwcmVzc2lvbiBzeW50YXggKHN0ZXBzLmFuYWx5emUub3V0cHV0cy5lcnJvcnMgaXNzdWUpCiAgICAgICAgcnVuOiB8CiAgICAgICAgICBmb3IgZmlsZSBpbiAuZ2l0aHViL3dvcmtmbG93cy8qLnltbCAuZ2l0aHViL3dvcmtmbG93cy8qLnlhbWw7IGRvCiAgICAgICAgICAgIGlmIGdyZXAgLXEgJ2lmOiBzdGVwc1wuJyAiJGZpbGUiOyB0aGVuCiAgICAgICAgICAgICAgZWNobyAiRml4aW5nIGV4cHJlc3Npb24gc3ludGF4IGluICRmaWxlLi4uIgogICAgICAgICAgICAgICMg5L2/55So5LiN5ZCM55qE5YiG6ZqU56ym6YG/5YWN6L2s5LmJ6Zeu6aKYCiAgICAgICAgICAgICAgc2VkIC1pICdzfGlmOiBzdGVwc1wufGlmOiAke3sgc3RlcHNcLiB9fXxnJyAiJGZpbGUiCiAgICAgICAgICAgICAgc2VkIC1pICdzfCE9ICcnfCAhPSAnJyB9fXxnJyAiJGZpbGUiCiAgICAgICAgICAgIGZpCiAgICAgICAgICBkb25lCgogICAgICAtIG5hbWU6IEZpeCBwZXJtaXNzaW9uIGlzc3VlcwogICAgICAgIGlmOiBnaXRodWIuZXZlbnQuaW5wdXRzLmZpeC10eXBlID09ICdhbGwnIHx8IGdpdGh1Yi5ldmVudC5pbnB1dHMuZml4LXR5cGUgPT0gJ3Blcm1pc3Npb25zJwogICAgICAgIHJ1bjogfAogICAgICAgICAgZm9yIGZpbGUgaW4gLmdpdGh1Yi93b3JrZmxvd3MvKi55bWwgLmdpdGh1Yi93b3JrZmxvd3MvKi55YW1sOyBkbwogICAgICAgICAgICBlY2hvICJDaGVja2luZyBwZXJtaXNzaW9ucyBpbiAkZmlsZS4uLiIKICAgICAgICAgICAgIyDmo4Dmn6XmmK/lkKblrZjlnKjnqbrmnYPpmZDpg6jliIYKICAgICAgICAgICAgaWYgZ3JlcCAtcSAncGVybWlzc2lvbnM6IHt9JyAiJGZpbGUiOyB0aGVuCiAgICAgICAgICAgICAgZWNobyAiRml4aW5nIGVtcHR5IHBlcm1pc3Npb25zIGluICRmaWxlLi4uIgogICAgICAgICAgICAgIHNlZCAtaSAncy9wZXJtaXNzaW9uczoge30vcGVybWlzc2lvbnM6XG4gIGNvbnRlbnRzOiByZWFkXG4gIGFjdGlvbnM6IHJlYWRcbiAgcHVsbC1yZXF1ZXN0czogcmVhZFxuICBjaGVja3M6IHJlYWRcbiAgZGVwbG95bWVudHM6IHJlYWRcbiAgaXNzdWVzOiByZWFkXG4gIHBhY2thZ2VzOiByZWFkXG4gIHJlcG9zaXRvcnktcHJvamVjdHM6IHJlYWRcbiAgc2VjdXJpdHktZXZlbnRzOiByZWFkXG4gIHN0YXR1c2VzOiByZWFkXG4gIHdvcmtmbG93czogcmVhZC9nJyAiJGZpbGUiCiAgICAgICAgICAgIGZpCiAgICAgICAgICAgICMg5qOA5p+l5piv5ZCm57y65bCR5b+F6KaB55qE5p2D6ZmQCiAgICAgICAgICAgIGlmICEgZ3JlcCAtcSAncGVybWlzc2lvbnM6JyAiJGZpbGUiOyB0aGVuCiAgICAgICAgICAgICAgZWNobyAiQWRkaW5nIGJhc2ljIHBlcm1pc3Npb25zIHRvICRmaWxlLi4uIgogICAgICAgICAgICAgICMg5Zyoam9ic+mDqOWIhuS5i+WJjea3u+WKoOadg+mZkAogICAgICAgICAgICAgIHNlZCAtaSAnL2pvYnM6L2kgXHBlcm1pc3Npb25zOlxuICBjb250ZW50czogcmVhZFxuICBhY3Rpb25zOiByZWFkXG4gIHB1bGwtcmVxdWVzdHM6IHJlYWRcbiAgY2hlY2tzOiByZWFkXG4gIGRlcGxveW1lbnRzOiByZWFkXG4gIGlzc3VlczogcmVhZFxuICBwYWNrYWdlczogcmVhZFxuICByZXBvc2l0b3J5LXByb2plY3RzOiByZWFkXG4gIHNlY3VyaXR5LWV2ZW50czogcmVhZFxuICBzdGF0dXNlczogcmVhZFxuICAnICIkZmlsZSIKICAgICAgICAgICAgZmkKICAgICAgICAgIGRvbmUKCiAgICAgIC0gbmFtZTogUnVuIHNlY3VyaXR5IHNjYW4KICAgICAgICBpZjogZ2l0aHViLmV2ZW50LmlucHV0cy5maXgtdHlwZSA9PSAnYWxsJyB8fCBnaXRodWIuZXZlbnQuaW5wdXRzLmZpeC10eXBlID09ICdzZWN1cml0eScKICAgICAgICB1c2VzOiBnaXRodWIvY29kZXFsLWFjdGlvbi9pbml0QHYzCiAgICAgICAgd2l0aDoKICAgICAgICAgIGxhbmd1YWdlczogamF2YXNjcmlwdCwgcHl0aG9uLCBnbwoKICAgICAgLSBuYW1lOiBBbmFseXplIGNvZGUKICAgICAgICBpZjogZ2l0aHViLmV2ZW50LmlucHV0cy5maXgtdHlwZSA9PSAnYWxsJyB8fCBnaXRodWIuZXZlbnQuaW5wdXRzLmZpeC10eXBlID09ICdzZWN1cml0eScKICAgICAgICB1c2VzOiBnaXRodWIvY29kZXFsLWFjdGlvbi9hbmFseXplQHYzCgogICAgICAtIG5hbWU6IERlcGVuZGVuY3kgcmV2aWV3CiAgICAgICAgaWY6IGdpdGh1Yi5ldmVudC5pbnB1dHMuZml4LXR5cGUgPT0gJ2FsbCcgfHwgZ2l0aHViLmV2ZW50LmlucHV0cy5maXgtdHlwZSA9PSAnZGVwZW5kZW5jaWVzJwogICAgICAgIHVzZXM6IGFjdGlvbnMvZGVwZW5kZW5jeS1yZXZpZXctYWN0aW9uQHY0CgogICAgICAtIG5hbWU6IFVwZGF0ZSBBY3Rpb24gdmVyc2lvbnMKICAgICAgICBpZjogZ2l0aHViLmV2ZW50LmlucHV0cy5maXgtdHlwZSA9PSAnYWxsJyB8fCBnaXRodWIuZXZlbnQuaW5wdXRzLmZpeC10eXBlID09ICdkZXBlbmRlbmNpZXMnCiAgICAgICAgcnVuOiB8CiAgICAgICAgICAjIOabtOaWsOW4uOingUFjdGlvbueJiOacrAogICAgICAgICAgZm9yIGZpbGUgaW4gLmdpdGh1Yi93b3JrZmxvd3MvKi55bWwgLmdpdGh1Yi93b3JrZmxvd3MvKi55YW1sOyBkbwogICAgICAgICAgICBlY2hvICJVcGRhdGluZyBBY3Rpb24gdmVyc2lvbnMgaW4gJGZpbGUuLi4iCiAgICAgICAgICAgICMg5pu05pawYWN0aW9ucy9jaGVja291dAogICAgICAgICAgICBzZWQgLWkgJ3MvYWN0aW9uc1wvY2hlY2tvdXRAdlswLTldXCsvYWN0aW9uc1wvY2hlY2tvdXRAdjQvZycgIiRmaWxlIgogICAgICAgICAgICAjIOabtOaWsGFjdGlvbnMvc2V0dXAtbm9kZQogICAgICAgICAgICBzZWQgLWkgJ3MvYWN0aW9uc1wvc2V0dXAtbm9kZUB2WzAtOV1cKy9hY3Rpb25zXC9zZXR1cC1ub2RlQHY1L2cnICIkZmlsZSIKICAgICAgICAgICAgIyDmm7TmlrBhY3Rpb25zL3NldHVwLXB5dGhvbgogICAgICAgICAgICBzZWQgLWkgJ3MvYWN0aW9uc1wvc2V0dXAtcHl0aG9uQHZbMC05XVwrL2FjdGlvbnNcL3NldHVwLXB5dGhvbkB2NS9nJyAiJGZpbGUiCiAgICAgICAgICAgICMg5pu05pawYWN0aW9ucy9jYWNoZQogICAgICAgICAgICBzZWQgLWkgJ3MvYWN0aW9uc1wvY2FjaGVAdlswLTldXCsvYWN0aW9uc1wvY2FjaGVAdjQvZycgIiRmaWxlIgogICAgICAgICAgICAjIOabtOaWsGFjdGlvbnMvdXBsb2FkLWFydGlmYWN0CiAgICAgICAgICAgIHNlZCAtaSAncy9hY3Rpb25zXC91cGxvYWQtYXJ0aWZhY3RAdlswLTldXCsvYWN0aW9uc1wvdXBsb2FkLWFydGlmYWN0QHY0L2cnICIkZmlsZSIKICAgICAgICAgICAgIyDmm7TmlrBhY3Rpb25zL2Rvd25sb2FkLWFydGlmYWN0CiAgICAgICAgICAgIHNlZCAtaSAncy9hY3Rpb25zXC9kb3dubG9hZC1hcnRpZmFjdEB2WzAtOV1cKy9hY3Rpb25zXC9kb3dubG9hZC1hcnRpZmFjdEB2NC9nJyAiJGZpbGUiCiAgICAgICAgICBkb25lCgogICAgICAtIG5hbWU6IE9wdGltaXplIHdvcmtmbG93IHBlcmZvcm1hbmNlCiAgICAgICAgaWY6IGdpdGh1Yi5ldmVudC5pbnB1dHMuZml4LXR5cGUgPT0gJ2FsbCcgfHwgZ2l0aHViLmV2ZW50LmlucHV0cy5maXgtdHlwZSA9PSAn'... 21371 more characters,
+2026-01-30T04:38:06.0264987Z     request: {
+2026-01-30T04:38:06.0265187Z       agent: [Agent],
+2026-01-30T04:38:06.0265433Z       fetch: [Function: proxyFetch],
+2026-01-30T04:38:06.0265734Z       hook: [Function: bound bound register]
+2026-01-30T04:38:06.0265984Z     }
+2026-01-30T04:38:06.0266147Z   }
+2026-01-30T04:38:06.0266302Z }
+2026-01-30T04:38:06.0284569Z ##[error]Unhandled error: HttpError: refusing to allow a GitHub App to create or update workflow `.github/workflows/all-in-one-fixer.yml` without `workflows` permission

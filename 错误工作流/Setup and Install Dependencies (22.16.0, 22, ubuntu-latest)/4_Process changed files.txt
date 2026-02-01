@@ -1,0 +1,30 @@
+﻿2026-01-30T04:36:18.9199804Z ##[group]Run # Get all change files
+2026-01-30T04:36:18.9200166Z [36;1m# Get all change files[0m
+2026-01-30T04:36:18.9200642Z [36;1mall_files=".github/workflows/complete-ci-cd.yml"[0m
+2026-01-30T04:36:18.9200962Z [36;1m[0m
+2026-01-30T04:36:18.9201211Z [36;1m# Filter out files in the common/changes directory[0m
+2026-01-30T04:36:18.9201536Z [36;1mfiltered_files=""[0m
+2026-01-30T04:36:18.9201778Z [36;1mfor file in $all_files; do[0m
+2026-01-30T04:36:18.9202064Z [36;1m  if [[ ! "$file" =~ ^common/changes/.* ]]; then[0m
+2026-01-30T04:36:18.9202391Z [36;1m    if [ -z "$filtered_files" ]; then[0m
+2026-01-30T04:36:18.9202852Z [36;1m      filtered_files="$file"[0m
+2026-01-30T04:36:18.9203094Z [36;1m    else[0m
+2026-01-30T04:36:18.9203315Z [36;1m      filtered_files="$filtered_files $file"[0m
+2026-01-30T04:36:18.9203588Z [36;1m    fi[0m
+2026-01-30T04:36:18.9203762Z [36;1m  fi[0m
+2026-01-30T04:36:18.9203940Z [36;1mdone[0m
+2026-01-30T04:36:18.9204111Z [36;1m[0m
+2026-01-30T04:36:18.9204308Z [36;1m# Create cached files in JSON format[0m
+2026-01-30T04:36:18.9204815Z [36;1mecho "[$( echo "$filtered_files" | sed 's/ /", "/g' | sed 's/^/"/' | sed 's/$/"/' )]" > changed-files-cache.json[0m
+2026-01-30T04:36:18.9205261Z [36;1m[0m
+2026-01-30T04:36:18.9205488Z [36;1m# Output cache file path for subsequent steps[0m
+2026-01-30T04:36:18.9205881Z [36;1mecho "cache_file=changed-files-cache.json" >> $GITHUB_OUTPUT[0m
+2026-01-30T04:36:18.9206222Z [36;1m[0m
+2026-01-30T04:36:18.9206431Z [36;1mecho "过滤前文件数量: $(echo $all_files | wc -w)"[0m
+2026-01-30T04:36:18.9206771Z [36;1mecho "过滤后文件数量: $(echo $filtered_files | wc -w)"[0m
+2026-01-30T04:36:18.9207117Z [36;1mecho "已生成缓存文件: changed-files-cache.json"[0m
+2026-01-30T04:36:18.9243082Z shell: /usr/bin/bash -e {0}
+2026-01-30T04:36:18.9243351Z ##[endgroup]
+2026-01-30T04:36:18.9422259Z 过滤前文件数量: 1
+2026-01-30T04:36:18.9437956Z 过滤后文件数量: 1
+2026-01-30T04:36:18.9438379Z 已生成缓存文件: changed-files-cache.json

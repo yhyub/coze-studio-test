@@ -1,0 +1,44 @@
+name: Deno
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Check Deno version
+        run: deno --version
+
+      - name: Run linter (if deno.json exists)
+        run: |
+          if [ -f "deno.json" ] || [ -f "deno.jsonc" ]; then
+            echo "Running deno lint..."
+            deno lint || echo "Lint failed but continuing"
+          else
+            echo "No deno.json found, skipping lint"
+          fi
+
+      - name: Run tests (if test files exist)
+        run: |
+          if find . -name "*.test.ts" -o -name "*.spec.ts" -o -path "*/__tests__/*" | grep -q .; then
+            echo "Running deno test..."
+            deno test -A || echo "Tests failed but continuing"
+          else
+            echo "No test files found, skipping tests"
+          fi

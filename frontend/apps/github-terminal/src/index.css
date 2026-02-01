@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --terminal-bg: #012456;
+  --terminal-text: #ffffff;
+  --terminal-cursor: #ffffff;
+  --terminal-header: #e6e6e6;
+  --terminal-header-text: #000000;
+  --terminal-header-button: #ff0000;
+  --terminal-header-button-hover: #ff6666;
+  --terminal-border: #808080;
+  --terminal-command: #00ff00;
+  --terminal-error: #ff0000;
+  --terminal-info: #ffff00;
+}
+
+body {
+  font-family: 'Consolas', monospace;
+  background-color: var(--terminal-bg);
+  color: var(--terminal-text);
+}
+
+.terminal-header {
+  background-color: var(--terminal-header);
+  color: var(--terminal-header-text);
+  border-bottom: 1px solid var(--terminal-border);
+}
+
+.terminal-header-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.terminal-header-button-close {
+  background-color: var(--terminal-header-button);
+}
+
+.terminal-header-button-close:hover {
+  background-color: var(--terminal-header-button-hover);
+}
+
+.terminal-body {
+  background-color: var(--terminal-bg);
+  color: var(--terminal-text);
+  font-family: 'Consolas', monospace;
+  line-height: 1.4;
+}
+
+.terminal-command {
+  color: var(--terminal-command);
+}
+
+.terminal-error {
+  color: var(--terminal-error);
+}
+
+.terminal-info {
+  color: var(--terminal-info);
+}
+
+.terminal-input {
+  outline: none;
+  background: transparent;
+  border: none;
+  color: var(--terminal-text);
+  font-family: 'Consolas', monospace;
+  flex: 1;
+}
+
+.terminal-prompt {
+  color: var(--terminal-command);
+}
+
+.terminal-window {
+  border: 1px solid var(--terminal-border);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.xterm {
+  font-family: 'Consolas', monospace !important;
+}
+
+.xterm-viewport {
+  background-color: var(--terminal-bg) !important;
+}
+
+.xterm-rows {
+  color: var(--terminal-text) !important;
+}
+
+.xterm-cursor {
+  background-color: var(--terminal-cursor) !important;
+}
+
+/* Windows PowerShell 特有样式 */
+.powershell-title {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.powershell-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #c0c0c0;
+  border: 1px solid #808080;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #808080;
+  border: 1px solid #c0c0c0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #606060;
+}
+
+/* 菜单样式 */
+.menu-bar {
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #808080;
+}
+
+.menu-item {
+  color: #000000;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background-color: #000080;
+  color: #ffffff;
+}
+
+/* 标签栏样式 */
+.tab-bar {
+  background-color: #c0c0c0;
+  border-bottom: 1px solid #808080;
+}
+
+.tab {
+  background-color: #e6e6e6;
+  border: 1px solid #808080;
+  border-bottom: none;
+  color: #000000;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+
+.tab.active {
+  background-color: var(--terminal-bg);
+  color: var(--terminal-text);
+  border-bottom: 1px solid var(--terminal-bg);
+}
+
+/* 工具提示样式 */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

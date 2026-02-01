@@ -1,0 +1,311 @@
+﻿2026-01-30T04:36:52.3405379Z ##[group]Run sudo apt-get update
+2026-01-30T04:36:52.3405763Z [36;1msudo apt-get update[0m
+2026-01-30T04:36:52.3406062Z [36;1msudo apt-get install -y libasound2-dev[0m
+2026-01-30T04:36:52.3406487Z [36;1mnode common/scripts/install-run-rush.js install --to tag:core[0m
+2026-01-30T04:36:52.3407013Z [36;1mnode common/scripts/install-run-rush.js update-autoinstaller --name plugins[0m
+2026-01-30T04:36:52.3407694Z [36;1mnode common/scripts/install-run-rush.js increment --action install -p "changed-files-cache.json"[0m
+2026-01-30T04:36:52.3444335Z shell: /usr/bin/bash -e {0}
+2026-01-30T04:36:52.3444600Z ##[endgroup]
+2026-01-30T04:36:52.7097203Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-01-30T04:36:52.7673663Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-01-30T04:36:52.7687145Z Hit:6 https://packages.microsoft.com/repos/azure-cli noble InRelease
+2026-01-30T04:36:52.7692551Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-01-30T04:36:52.7751852Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-01-30T04:36:52.7873740Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-01-30T04:36:52.7914020Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-01-30T04:36:52.9575697Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1717 kB]
+2026-01-30T04:36:52.9780133Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [317 kB]
+2026-01-30T04:36:52.9813834Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [175 kB]
+2026-01-30T04:36:52.9839117Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 c-n-f Metadata [16.0 kB]
+2026-01-30T04:36:52.9856453Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1526 kB]
+2026-01-30T04:36:52.9940705Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [312 kB]
+2026-01-30T04:36:52.9969760Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [386 kB]
+2026-01-30T04:36:52.9997934Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 c-n-f Metadata [31.8 kB]
+2026-01-30T04:36:53.0008766Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [2536 kB]
+2026-01-30T04:36:53.0143225Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [580 kB]
+2026-01-30T04:36:53.0603927Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Components [212 B]
+2026-01-30T04:36:53.0610539Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 c-n-f Metadata [556 B]
+2026-01-30T04:36:53.0638284Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [32.1 kB]
+2026-01-30T04:36:53.0652434Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [6816 B]
+2026-01-30T04:36:53.0665008Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+2026-01-30T04:36:53.0674989Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 c-n-f Metadata [496 B]
+2026-01-30T04:36:53.0683874Z Get:28 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [67.5 kB]
+2026-01-30T04:36:53.0689606Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [7316 B]
+2026-01-30T04:36:53.0715027Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [10.5 kB]
+2026-01-30T04:36:53.0724511Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-backports/restricted amd64 Components [216 B]
+2026-01-30T04:36:53.0743998Z Get:29 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [87.6 kB]
+2026-01-30T04:36:53.0752331Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Components [212 B]
+2026-01-30T04:36:53.1271497Z Get:30 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1410 kB]
+2026-01-30T04:36:53.1350794Z Get:31 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [229 kB]
+2026-01-30T04:36:53.1373968Z Get:32 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [21.5 kB]
+2026-01-30T04:36:53.1393381Z Get:33 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 c-n-f Metadata [9820 B]
+2026-01-30T04:36:53.1838063Z Get:34 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [925 kB]
+2026-01-30T04:36:53.1900645Z Get:35 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [209 kB]
+2026-01-30T04:36:53.1922175Z Get:36 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [74.2 kB]
+2026-01-30T04:36:53.1936944Z Get:37 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 c-n-f Metadata [19.7 kB]
+2026-01-30T04:36:53.1949468Z Get:38 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [2369 kB]
+2026-01-30T04:36:53.2091917Z Get:39 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [543 kB]
+2026-01-30T04:36:53.2126505Z Get:40 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Components [212 B]
+2026-01-30T04:36:53.2135452Z Get:41 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 c-n-f Metadata [536 B]
+2026-01-30T04:36:53.2145590Z Get:42 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse amd64 Packages [28.8 kB]
+2026-01-30T04:36:53.2157889Z Get:43 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [6492 B]
+2026-01-30T04:36:53.2167552Z Get:44 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse amd64 Components [212 B]
+2026-01-30T04:36:53.2175033Z Get:45 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse amd64 c-n-f Metadata [396 B]
+2026-01-30T04:37:02.0464846Z Fetched 14.0 MB in 2s (8151 kB/s)
+2026-01-30T04:37:02.8437617Z Reading package lists...
+2026-01-30T04:37:02.8767682Z Reading package lists...
+2026-01-30T04:37:03.0791187Z Building dependency tree...
+2026-01-30T04:37:03.0798998Z Reading state information...
+2026-01-30T04:37:03.2484472Z Suggested packages:
+2026-01-30T04:37:03.2484901Z   libasound2-doc
+2026-01-30T04:37:03.2641409Z The following NEW packages will be installed:
+2026-01-30T04:37:03.2648380Z   libasound2-dev
+2026-01-30T04:37:03.2835366Z 0 upgraded, 1 newly installed, 0 to remove and 86 not upgraded.
+2026-01-30T04:37:03.2836145Z Need to get 115 kB of archives.
+2026-01-30T04:37:03.2836589Z After this operation, 715 kB of additional disk space will be used.
+2026-01-30T04:37:03.2837105Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-01-30T04:37:03.3233510Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libasound2-dev amd64 1.2.11-1ubuntu0.1 [115 kB]
+2026-01-30T04:37:03.5917631Z Fetched 115 kB in 0s (2218 kB/s)
+2026-01-30T04:37:03.6138374Z Selecting previously unselected package libasound2-dev:amd64.
+2026-01-30T04:37:03.6397475Z (Reading database ... 
+2026-01-30T04:37:03.6398000Z (Reading database ... 5%
+2026-01-30T04:37:03.6398599Z (Reading database ... 10%
+2026-01-30T04:37:03.6399024Z (Reading database ... 15%
+2026-01-30T04:37:03.6399589Z (Reading database ... 20%
+2026-01-30T04:37:03.6400032Z (Reading database ... 25%
+2026-01-30T04:37:03.6400437Z (Reading database ... 30%
+2026-01-30T04:37:03.6401110Z (Reading database ... 35%
+2026-01-30T04:37:03.6401371Z (Reading database ... 40%
+2026-01-30T04:37:03.6401611Z (Reading database ... 45%
+2026-01-30T04:37:03.6401841Z (Reading database ... 50%
+2026-01-30T04:37:03.6493119Z (Reading database ... 55%
+2026-01-30T04:37:03.7504890Z (Reading database ... 60%
+2026-01-30T04:37:03.8272811Z (Reading database ... 65%
+2026-01-30T04:37:03.8590068Z (Reading database ... 70%
+2026-01-30T04:37:03.8949986Z (Reading database ... 75%
+2026-01-30T04:37:03.9999860Z (Reading database ... 80%
+2026-01-30T04:37:04.0871714Z (Reading database ... 85%
+2026-01-30T04:37:04.1522062Z (Reading database ... 90%
+2026-01-30T04:37:04.3091413Z (Reading database ... 95%
+2026-01-30T04:37:04.3091987Z (Reading database ... 100%
+2026-01-30T04:37:04.3092789Z (Reading database ... 217639 files and directories currently installed.)
+2026-01-30T04:37:04.3138388Z Preparing to unpack .../libasound2-dev_1.2.11-1ubuntu0.1_amd64.deb ...
+2026-01-30T04:37:04.3188044Z Unpacking libasound2-dev:amd64 (1.2.11-1ubuntu0.1) ...
+2026-01-30T04:37:04.3710266Z Setting up libasound2-dev:amd64 (1.2.11-1ubuntu0.1) ...
+2026-01-30T04:37:05.0150823Z 
+2026-01-30T04:37:05.0151502Z Running kernel seems to be up-to-date.
+2026-01-30T04:37:05.0151867Z 
+2026-01-30T04:37:05.0152046Z No services need to be restarted.
+2026-01-30T04:37:05.0152256Z 
+2026-01-30T04:37:05.0152436Z No containers need to be restarted.
+2026-01-30T04:37:05.0152650Z 
+2026-01-30T04:37:05.0152853Z No user sessions are running outdated binaries.
+2026-01-30T04:37:05.0153108Z 
+2026-01-30T04:37:05.0153452Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-01-30T04:37:06.1135723Z The rush.json configuration requests Rush version 5.147.1
+2026-01-30T04:37:06.1141780Z 
+2026-01-30T04:37:06.1142091Z Invoking "rush install --to tag:core"
+2026-01-30T04:37:06.1142679Z -------------------------------------
+2026-01-30T04:37:06.1142969Z 
+2026-01-30T04:37:06.3810394Z Found configuration in /home/runner/work/coze-studio-test/coze-studio-test/rush.json
+2026-01-30T04:37:06.3811850Z 
+2026-01-30T04:37:06.3866451Z 
+2026-01-30T04:37:06.3867683Z [1mRush Multi-Project Build Tool 5.147.1[33m[39m[22m[36m - https://rushjs.io[39m
+2026-01-30T04:37:06.3868361Z Node.js version is 22.16.0 (LTS)
+2026-01-30T04:37:06.3868780Z 
+2026-01-30T04:37:06.3882991Z 
+2026-01-30T04:37:06.6405335Z Creating /home/runner/.rush/node-v22.16.0
+2026-01-30T04:37:06.6409484Z Trying to acquire lock for pnpm-8.15.8
+2026-01-30T04:37:06.6526819Z Acquired lock for pnpm-8.15.8
+2026-01-30T04:37:06.6534579Z [1mInstalling pnpm version 8.15.8
+2026-01-30T04:37:06.6535168Z [22m
+2026-01-30T04:37:06.6549465Z 
+2026-01-30T04:37:06.6550036Z Running "npm install" in /home/runner/.rush/node-v22.16.0/pnpm-8.15.8
+2026-01-30T04:37:07.8117033Z 
+2026-01-30T04:37:07.8117774Z added 1 package, and audited 2 packages in 1s
+2026-01-30T04:37:07.8118276Z 
+2026-01-30T04:37:07.8118759Z 1 package is looking for funding
+2026-01-30T04:37:07.8119285Z   run `npm fund` for details
+2026-01-30T04:37:07.8263435Z 
+2026-01-30T04:37:07.8263902Z 1 high severity vulnerability
+2026-01-30T04:37:07.8264304Z 
+2026-01-30T04:37:07.8264721Z To address all issues (including breaking changes), run:
+2026-01-30T04:37:07.8265366Z   npm audit fix --force
+2026-01-30T04:37:07.8265630Z 
+2026-01-30T04:37:07.8265839Z Run `npm audit` for details.
+2026-01-30T04:37:07.8737153Z Successfully installed pnpm version 8.15.8
+2026-01-30T04:37:07.8743487Z 
+2026-01-30T04:37:07.8744422Z Symlinking "/home/runner/work/coze-studio-test/coze-studio-test/common/temp/pnpm-local"
+2026-01-30T04:37:07.8745631Z   --> "/home/runner/.rush/node-v22.16.0/pnpm-8.15.8"
+2026-01-30T04:37:07.8753261Z Acquiring lock for "common/autoinstallers/plugins" folder...
+2026-01-30T04:37:07.8853682Z Installing dependencies under /home/runner/work/coze-studio-test/coze-studio-test/common/autoinstallers/plugins...
+2026-01-30T04:37:07.8854581Z 
+2026-01-30T04:37:08.3176429Z Lockfile is up to date, resolution step is skipped
+2026-01-30T04:37:08.3670320Z Progress: resolved 1, reused 0, downloaded 0, added 0
+2026-01-30T04:37:08.4912785Z Packages: +640
+2026-01-30T04:37:08.4916972Z ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2026-01-30T04:37:09.3684382Z Progress: resolved 640, reused 0, downloaded 193, added 192
+2026-01-30T04:37:10.3689143Z Progress: resolved 640, reused 0, downloaded 481, added 479
+2026-01-30T04:37:11.3692462Z Progress: resolved 640, reused 0, downloaded 640, added 639
+2026-01-30T04:37:11.4430192Z Progress: resolved 640, reused 0, downloaded 640, added 640, done
+2026-01-30T04:37:11.6276419Z .../node_modules/core-js-pure postinstall$ node -e "try{require('./postinstall')}catch(e){}"
+2026-01-30T04:37:11.6280020Z .../node_modules/highlight.js postinstall$ node deprecated.js
+2026-01-30T04:37:11.6594637Z .../node_modules/core-js-pure postinstall: Done
+2026-01-30T04:37:11.6681367Z .../node_modules/highlight.js postinstall: [41m[37m-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*[0m
+2026-01-30T04:37:11.6683221Z .../node_modules/highlight.js postinstall: [1m[37m
+2026-01-30T04:37:11.6685810Z .../node_modules/highlight.js postinstall:   Verion 9 of Highlight.js has reached EOL.  It will no longer
+2026-01-30T04:37:11.6687701Z .../node_modules/highlight.js postinstall:   be supported or receive security updates in the future.
+2026-01-30T04:37:11.6689534Z .../node_modules/highlight.js postinstall:   Please upgrade to version 10 or encourage your indirect
+2026-01-30T04:37:11.6690945Z .../node_modules/highlight.js postinstall:   dependencies to do so.
+2026-01-30T04:37:11.6692393Z .../node_modules/highlight.js postinstall:   For more info:
+2026-01-30T04:37:11.6694116Z .../node_modules/highlight.js postinstall:   [34m
+2026-01-30T04:37:11.6696783Z .../node_modules/highlight.js postinstall:   https://github.com/highlightjs/highlight.js/issues/2877
+2026-01-30T04:37:11.6698758Z .../node_modules/highlight.js postinstall:   https://github.com/highlightjs/highlight.js/blob/master/VERSION_10_UPGRADE.md
+2026-01-30T04:37:11.6705147Z .../node_modules/highlight.js postinstall:  [41m[37m
+2026-01-30T04:37:11.6706577Z .../node_modules/highlight.js postinstall: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*[0m
+2026-01-30T04:37:11.6709567Z .../node_modules/highlight.js postinstall: Done
+2026-01-30T04:37:11.9314287Z 
+2026-01-30T04:37:11.9315902Z dependencies:
+2026-01-30T04:37:11.9316635Z + @coze-arch/rush-clear-build-cache-plugin 0.0.1-alpha.a8d5b5
+2026-01-30T04:37:11.9317417Z + @coze-arch/rush-dep-level-check-plugin 0.0.1-alpha.f89072
+2026-01-30T04:37:11.9318199Z + @coze-arch/rush-fix-ts-refers-plugin 0.0.1-alpha.bf1426
+2026-01-30T04:37:11.9319207Z + @coze-arch/rush-increment-run-plugin 0.0.2-alpha.88b122
+2026-01-30T04:37:11.9319839Z + @coze-arch/rush-publish-plugin 0.0.3-alpha.f72758
+2026-01-30T04:37:11.9320245Z + @coze-arch/rush-run-tsc-plugin 0.0.1-alpha.5f6259
+2026-01-30T04:37:11.9320782Z + json5 2.2.3
+2026-01-30T04:37:11.9321098Z + rush-init-project-plugin 0.11.1
+2026-01-30T04:37:11.9321371Z + typescript 5.8.3
+2026-01-30T04:37:11.9321508Z 
+2026-01-30T04:37:11.9321606Z devDependencies:
+2026-01-30T04:37:11.9321828Z + @types/node 18.19.112
+2026-01-30T04:37:11.9321960Z 
+2026-01-30T04:37:11.9406505Z Done in 4s
+2026-01-30T04:37:11.9794471Z Auto install completed successfully
+2026-01-30T04:37:11.9794788Z 
+2026-01-30T04:37:12.0966108Z Starting "rush install"
+2026-01-30T04:37:12.0966376Z 
+2026-01-30T04:37:12.1991833Z [32mInstalling for subspace: default[39m
+2026-01-30T04:37:12.2123041Z Validating package manager shrinkwrap file.
+2026-01-30T04:37:12.2123552Z 
+2026-01-30T04:37:12.3459534Z 
+2026-01-30T04:37:12.3460638Z [1mFound files in the "common/git-hooks" folder.[22m
+2026-01-30T04:37:12.3531070Z Successfully installed these Git hook scripts: commit-msg, post-checkout, post-commit, post-merge, pre-commit, pre-push
+2026-01-30T04:37:12.3531920Z 
+2026-01-30T04:37:12.3532143Z Trying to acquire lock for pnpm-8.15.8
+2026-01-30T04:37:12.3622920Z Acquired lock for pnpm-8.15.8
+2026-01-30T04:37:12.3628001Z Found pnpm version 8.15.8 in /home/runner/.rush/node-v22.16.0/pnpm-8.15.8
+2026-01-30T04:37:12.3631669Z 
+2026-01-30T04:37:12.3632399Z Symlinking "/home/runner/work/coze-studio-test/coze-studio-test/common/temp/pnpm-local"
+2026-01-30T04:37:12.3633372Z   --> "/home/runner/.rush/node-v22.16.0/pnpm-8.15.8"
+2026-01-30T04:37:12.4396546Z Transforming /home/runner/work/coze-studio-test/coze-studio-test/common/config/subspaces/default/.npmrc
+2026-01-30T04:37:12.4397938Z   --> "/home/runner/work/coze-studio-test/coze-studio-test/common/temp/default/.npmrc"
+2026-01-30T04:37:12.5045750Z 
+2026-01-30T04:37:12.5047761Z [1mUpdating workspace files in /home/runner/work/coze-studio-test/coze-studio-test/common/temp/default[22m
+2026-01-30T04:37:12.8960000Z Copying "/home/runner/work/coze-studio-test/coze-studio-test/common/config/subspaces/default/pnpm-lock.yaml"
+2026-01-30T04:37:12.8961537Z   --> "/home/runner/work/coze-studio-test/coze-studio-test/common/temp/default/pnpm-lock.yaml"
+2026-01-30T04:37:12.8987972Z Copying "/home/runner/work/coze-studio-test/coze-studio-test/common/config/subspaces/default/pnpm-lock.yaml"
+2026-01-30T04:37:12.8989764Z   --> "/home/runner/work/coze-studio-test/coze-studio-test/common/temp/default/pnpm-lock-preinstall.yaml"
+2026-01-30T04:37:12.9006457Z 
+2026-01-30T04:37:12.9007410Z [1mChecking installation in "/home/runner/work/coze-studio-test/coze-studio-test/common/temp/default"[22m
+2026-01-30T04:37:12.9009884Z 
+2026-01-30T04:37:13.1624442Z [34m[INFO][0m [RushDepLevelPlugin] Validating dependency levels for 259 projects...
+2026-01-30T04:37:13.2519737Z [34m[INFO][0m [RushDepLevelPlugin] Dependency level validation completed in 89.42ms
+2026-01-30T04:37:13.2521837Z 
+2026-01-30T04:37:13.2522598Z Processing definition for environment variable: NODE_OPTIONS
+2026-01-30T04:37:13.2530472Z 
+2026-01-30T04:37:13.2531445Z [1mRunning "pnpm install" in /home/runner/work/coze-studio-test/coze-studio-test/common/temp/default[22m
+2026-01-30T04:37:13.2532190Z 
+2026-01-30T04:37:14.2447007Z Lockfile is up to date, resolution step is skipped
+2026-01-30T04:37:14.3713692Z Progress: resolved 1, reused 0, downloaded 0, added 0
+2026-01-30T04:37:14.3919130Z .                                        |  +89 +++++++++
+2026-01-30T04:37:14.5690720Z Progress: resolved 89, reused 89, downloaded 0, added 89, done
+2026-01-30T04:37:14.7303515Z Done in 1.4s
+2026-01-30T04:37:14.7636038Z 
+2026-01-30T04:37:15.1172971Z 
+2026-01-30T04:37:15.1189802Z 
+2026-01-30T04:37:15.1190802Z [32mExecuting event hooks for postRushInstall[39m
+2026-01-30T04:37:15.1317551Z 
+2026-01-30T04:37:15.1318289Z [32mEvent hooks finished. (0.01 seconds)[39m
+2026-01-30T04:37:15.1318798Z 
+2026-01-30T04:37:15.1752824Z [32mRush install finished successfully. (2.94 seconds)[39m
+2026-01-30T04:37:15.1753789Z The rush.json configuration requests Rush version 5.147.1
+2026-01-30T04:37:15.1759601Z 
+2026-01-30T04:37:15.1760175Z Invoking "rush update-autoinstaller --name plugins"
+2026-01-30T04:37:15.1760960Z ---------------------------------------------------
+2026-01-30T04:37:15.1761364Z 
+2026-01-30T04:37:15.4320568Z Found configuration in /home/runner/work/coze-studio-test/coze-studio-test/rush.json
+2026-01-30T04:37:15.4321541Z 
+2026-01-30T04:37:15.4374211Z 
+2026-01-30T04:37:15.4375551Z [1mRush Multi-Project Build Tool 5.147.1[33m[39m[22m[36m - https://rushjs.io[39m
+2026-01-30T04:37:15.4376223Z Node.js version is 22.16.0 (LTS)
+2026-01-30T04:37:15.4376444Z 
+2026-01-30T04:37:15.4389582Z 
+2026-01-30T04:37:15.6855602Z Trying to acquire lock for pnpm-8.15.8
+2026-01-30T04:37:15.6971353Z Acquired lock for pnpm-8.15.8
+2026-01-30T04:37:15.6982745Z Found pnpm version 8.15.8 in /home/runner/.rush/node-v22.16.0/pnpm-8.15.8
+2026-01-30T04:37:15.6993208Z 
+2026-01-30T04:37:15.6993862Z Symlinking "/home/runner/work/coze-studio-test/coze-studio-test/common/temp/pnpm-local"
+2026-01-30T04:37:15.6994800Z   --> "/home/runner/.rush/node-v22.16.0/pnpm-8.15.8"
+2026-01-30T04:37:15.7003683Z Acquiring lock for "common/autoinstallers/plugins" folder...
+2026-01-30T04:37:15.7097862Z Autoinstaller folder is already up to date
+2026-01-30T04:37:15.7098657Z 
+2026-01-30T04:37:15.8309771Z Starting "rush update-autoinstaller"
+2026-01-30T04:37:15.8310201Z 
+2026-01-30T04:37:15.8312382Z Trying to acquire lock for pnpm-8.15.8
+2026-01-30T04:37:15.8398304Z Acquired lock for pnpm-8.15.8
+2026-01-30T04:37:15.8402295Z Found pnpm version 8.15.8 in /home/runner/.rush/node-v22.16.0/pnpm-8.15.8
+2026-01-30T04:37:15.8406528Z 
+2026-01-30T04:37:15.8407167Z Symlinking "/home/runner/work/coze-studio-test/coze-studio-test/common/temp/pnpm-local"
+2026-01-30T04:37:15.8407870Z   --> "/home/runner/.rush/node-v22.16.0/pnpm-8.15.8"
+2026-01-30T04:37:15.8411192Z Updating autoinstaller package: /home/runner/work/coze-studio-test/coze-studio-test/common/autoinstallers/plugins/package.json
+2026-01-30T04:37:15.8420948Z Deleting /home/runner/work/coze-studio-test/coze-studio-test/common/autoinstallers/plugins/pnpm-lock.yaml
+2026-01-30T04:37:15.8429649Z 
+2026-01-30T04:37:16.3496713Z Progress: resolved 1, reused 0, downloaded 0, added 0
+2026-01-30T04:37:17.3506893Z Progress: resolved 134, reused 116, downloaded 15, added 0
+2026-01-30T04:37:18.3510567Z Progress: resolved 511, reused 468, downloaded 41, added 0
+2026-01-30T04:37:18.8283845Z  WARN  14 deprecated subdependencies found: @types/minimatch@6.0.0, glob@7.2.3, gulp-header@1.8.12, highlight.js@9.18.5, inflight@1.0.6, lodash.get@4.4.2, lodash.isequal@4.5.0, lodash.template@4.5.0, q@1.5.1, resolve-url@0.2.1, rimraf@3.0.2, source-map-resolve@0.5.3, source-map-url@0.4.1, urix@0.1.0
+2026-01-30T04:37:18.8460681Z Packages: +649
+2026-01-30T04:37:18.8461383Z ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2026-01-30T04:37:19.3519662Z Progress: resolved 649, reused 596, downloaded 53, added 58
+2026-01-30T04:37:19.4209778Z Progress: resolved 649, reused 596, downloaded 53, added 59, done
+2026-01-30T04:37:19.5472783Z .../node_modules/core-js-pure postinstall$ node -e "try{require('./postinstall')}catch(e){}"
+2026-01-30T04:37:19.5763393Z .../node_modules/core-js-pure postinstall: Done
+2026-01-30T04:37:20.2563209Z 
+2026-01-30T04:37:20.2563746Z dependencies:
+2026-01-30T04:37:20.2564716Z + @coze-arch/rush-dep-level-check-plugin 0.0.1-alpha.f89072 (0.0.1 is available)
+2026-01-30T04:37:20.2565937Z + @coze-arch/rush-publish-plugin 0.0.5-alpha.a2c426 (0.0.5 is available)
+2026-01-30T04:37:20.2566702Z + rush-init-project-plugin 0.11.1
+2026-01-30T04:37:20.2566942Z 
+2026-01-30T04:37:20.2567050Z devDependencies:
+2026-01-30T04:37:20.2567406Z + @types/node 18.19.130 (25.1.0 is available)
+2026-01-30T04:37:20.2567664Z 
+2026-01-30T04:37:20.2569717Z Done in 4.3s
+2026-01-30T04:37:20.2983708Z 
+2026-01-30T04:37:20.2993834Z [32mThe shrinkwrap file has been updated.[39m  Please commit the updated file:
+2026-01-30T04:37:20.2994502Z 
+2026-01-30T04:37:20.2995180Z   /home/runner/work/coze-studio-test/coze-studio-test/common/autoinstallers/plugins/pnpm-lock.yaml
+2026-01-30T04:37:20.2995933Z 
+2026-01-30T04:37:20.2996107Z Success.
+2026-01-30T04:37:20.3357117Z The rush.json configuration requests Rush version 5.147.1
+2026-01-30T04:37:20.3363534Z 
+2026-01-30T04:37:20.3364158Z Invoking "rush increment --action install -p changed-files-cache.json"
+2026-01-30T04:37:20.3364838Z ----------------------------------------------------------------------
+2026-01-30T04:37:20.3365148Z 
+2026-01-30T04:37:20.5897620Z Found configuration in /home/runner/work/coze-studio-test/coze-studio-test/rush.json
+2026-01-30T04:37:20.5898667Z 
+2026-01-30T04:37:20.5945546Z 
+2026-01-30T04:37:20.5946650Z [1mRush Multi-Project Build Tool 5.147.1[33m[39m[22m[36m - https://rushjs.io[39m
+2026-01-30T04:37:20.5947482Z Node.js version is 22.16.0 (LTS)
+2026-01-30T04:37:20.5947777Z 
+2026-01-30T04:37:20.5961236Z 
+2026-01-30T04:37:20.8295629Z Trying to acquire lock for pnpm-8.15.8
+2026-01-30T04:37:20.8415415Z Acquired lock for pnpm-8.15.8
+2026-01-30T04:37:20.8426982Z Found pnpm version 8.15.8 in /home/runner/.rush/node-v22.16.0/pnpm-8.15.8
+2026-01-30T04:37:20.8436666Z 
+2026-01-30T04:37:20.8437233Z Symlinking "/home/runner/work/coze-studio-test/coze-studio-test/common/temp/pnpm-local"
+2026-01-30T04:37:20.8438262Z   --> "/home/runner/.rush/node-v22.16.0/pnpm-8.15.8"
+2026-01-30T04:37:20.8448092Z Acquiring lock for "common/autoinstallers/plugins" folder...
+2026-01-30T04:37:20.8536755Z Autoinstaller folder is already up to date
+2026-01-30T04:37:20.8537057Z 
+2026-01-30T04:37:20.9563624Z Starting "rush increment"
+2026-01-30T04:37:20.9563924Z 

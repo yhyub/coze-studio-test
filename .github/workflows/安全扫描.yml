@@ -1,0 +1,45 @@
+name: Security Scan
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install yq
+    
+    - name: Run security scan
+      run: |
+        cd .github/actions-config
+        # 创建日志目录
+        mkdir -p logs
+        # 使用本地配置文件进行扫描
+        echo "Running security scan..."
+        ls -la
+        # 检查是否存在security-scan.sh 脚本
+        if [ -f "security-scan.sh" ]; then
+          CONFIG_FILE="actions.yaml" bash security-scan.sh -v -l
+        else
+          echo "security-scan.sh not found, skipping security scan"
+        fi
+    
+    - name: Upload scan results
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-scan-results
+        path: .github/actions-config/logs/

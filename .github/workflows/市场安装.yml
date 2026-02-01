@@ -1,0 +1,57 @@
+name: Install Marketplace Actions
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  install-actions:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install yq
+    
+    - name: Install Marketplace Actions
+      run: |
+        cd .github/actions-config
+        # 检查配置文件是否存在        if [ -f "actions.yaml" ]; then
+          echo "配置文件存在，开始安装Actions..."
+          # 这里可以添加具体的Action安装命令
+          # 例如：bash install-action.sh actions/checkout v4
+        else
+          echo "配置文件不存在，跳过安装步骤"
+        fi
+    
+    - name: Run security scan
+      run: |
+        cd .github/actions-config
+        # 创建日志目录
+        mkdir -p logs
+        # 检查配置文件是否存在        if [ -f "actions.yaml" ]; then
+          echo "配置文件存在，开始安全扫描.."
+          # 使用本地配置文件进行扫描
+          CONFIG_FILE="actions.yaml" bash security-scan.sh -v -l
+        else
+          echo "配置文件不存在，跳过安全扫描步骤"
+          # 创建空的扫描结果文件
+          echo "No security scan performed: configuration file not found" > logs/scan-results.txt
+        fi
+    
+    - name: Upload scan results
+      uses: actions/upload-artifact@v4
+      with:
+        name: marketplace-actions-results
+        path: .github/actions-config/logs/
+        if-no-files-found: warn

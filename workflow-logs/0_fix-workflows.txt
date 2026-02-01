@@ -1,0 +1,301 @@
+﻿2026-01-30T04:13:28.6579586Z Current runner version: '2.331.0'
+2026-01-30T04:13:28.6604746Z ##[group]Runner Image Provisioner
+2026-01-30T04:13:28.6605892Z Hosted Compute Agent
+2026-01-30T04:13:28.6606515Z Version: 20260123.484
+2026-01-30T04:13:28.6607082Z Commit: 6bd6555ca37d84114959e1c76d2c01448ff61c5d
+2026-01-30T04:13:28.6607839Z Build Date: 2026-01-23T19:41:17Z
+2026-01-30T04:13:28.6608475Z Worker ID: {0c152b44-be4c-4984-b197-e2dd43598b9f}
+2026-01-30T04:13:28.6609195Z Azure Region: eastus2
+2026-01-30T04:13:28.6609679Z ##[endgroup]
+2026-01-30T04:13:28.6611174Z ##[group]Operating System
+2026-01-30T04:13:28.6611754Z Ubuntu
+2026-01-30T04:13:28.6612204Z 24.04.3
+2026-01-30T04:13:28.6612751Z LTS
+2026-01-30T04:13:28.6613254Z ##[endgroup]
+2026-01-30T04:13:28.6613735Z ##[group]Runner Image
+2026-01-30T04:13:28.6614308Z Image: ubuntu-24.04
+2026-01-30T04:13:28.6614838Z Version: 20260126.10.1
+2026-01-30T04:13:28.6616172Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260126.10/images/ubuntu/Ubuntu2404-Readme.md
+2026-01-30T04:13:28.6617670Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260126.10
+2026-01-30T04:13:28.6618548Z ##[endgroup]
+2026-01-30T04:13:28.6620610Z ##[group]GITHUB_TOKEN Permissions
+2026-01-30T04:13:28.6622762Z Actions: read
+2026-01-30T04:13:28.6623403Z Checks: read
+2026-01-30T04:13:28.6623874Z Contents: write
+2026-01-30T04:13:28.6624377Z Deployments: read
+2026-01-30T04:13:28.6624880Z Issues: read
+2026-01-30T04:13:28.6625523Z Metadata: read
+2026-01-30T04:13:28.6626031Z Packages: read
+2026-01-30T04:13:28.6626717Z PullRequests: read
+2026-01-30T04:13:28.6627563Z RepositoryProjects: read
+2026-01-30T04:13:28.6628290Z SecurityEvents: read
+2026-01-30T04:13:28.6628768Z Statuses: read
+2026-01-30T04:13:28.6629376Z ##[endgroup]
+2026-01-30T04:13:28.6631562Z Secret source: Actions
+2026-01-30T04:13:28.6632579Z Prepare workflow directory
+2026-01-30T04:13:28.6950793Z Prepare all required actions
+2026-01-30T04:13:28.6988749Z Getting action download info
+2026-01-30T04:13:29.0041775Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-01-30T04:13:29.0952811Z Download action repository 'actions/github-script@v7' (SHA:f28e40c7f34bde8b3046d885e986cb6290c5673b)
+2026-01-30T04:13:29.4101959Z Complete job name: fix-workflows
+2026-01-30T04:13:29.4806747Z ##[group]Run actions/checkout@v4
+2026-01-30T04:13:29.4807645Z with:
+2026-01-30T04:13:29.4808030Z   fetch-depth: 0
+2026-01-30T04:13:29.4808668Z   token: ***
+2026-01-30T04:13:29.4809084Z   repository: yhyub/coze-studio-test
+2026-01-30T04:13:29.4809592Z   ssh-strict: true
+2026-01-30T04:13:29.4809985Z   ssh-user: git
+2026-01-30T04:13:29.4810382Z   persist-credentials: true
+2026-01-30T04:13:29.4810817Z   clean: true
+2026-01-30T04:13:29.4811217Z   sparse-checkout-cone-mode: true
+2026-01-30T04:13:29.4811692Z   fetch-tags: false
+2026-01-30T04:13:29.4812099Z   show-progress: true
+2026-01-30T04:13:29.4812510Z   lfs: false
+2026-01-30T04:13:29.4812873Z   submodules: false
+2026-01-30T04:13:29.4813273Z   set-safe-directory: true
+2026-01-30T04:13:29.4813954Z ##[endgroup]
+2026-01-30T04:13:29.5904315Z Syncing repository: yhyub/coze-studio-test
+2026-01-30T04:13:29.5906939Z ##[group]Getting Git version info
+2026-01-30T04:13:29.5908385Z Working directory is '/home/runner/work/coze-studio-test/coze-studio-test'
+2026-01-30T04:13:29.5910256Z [command]/usr/bin/git version
+2026-01-30T04:13:29.5991597Z git version 2.52.0
+2026-01-30T04:13:29.6018639Z ##[endgroup]
+2026-01-30T04:13:29.6034069Z Temporarily overriding HOME='/home/runner/work/_temp/d3b09b57-bdb7-449f-8516-b73ba6cfd310' before making global git config changes
+2026-01-30T04:13:29.6036667Z Adding repository directory to the temporary git global config as a safe directory
+2026-01-30T04:13:29.6040815Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/coze-studio-test/coze-studio-test
+2026-01-30T04:13:29.6080044Z Deleting the contents of '/home/runner/work/coze-studio-test/coze-studio-test'
+2026-01-30T04:13:29.6083816Z ##[group]Initializing the repository
+2026-01-30T04:13:29.6088807Z [command]/usr/bin/git init /home/runner/work/coze-studio-test/coze-studio-test
+2026-01-30T04:13:29.6204598Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-01-30T04:13:29.6206198Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-01-30T04:13:29.6207119Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-01-30T04:13:29.6207916Z hint: call:
+2026-01-30T04:13:29.6208585Z hint:
+2026-01-30T04:13:29.6209298Z hint: 	git config --global init.defaultBranch <name>
+2026-01-30T04:13:29.6209881Z hint:
+2026-01-30T04:13:29.6210837Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-01-30T04:13:29.6212504Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-01-30T04:13:29.6213798Z hint:
+2026-01-30T04:13:29.6214486Z hint: 	git branch -m <name>
+2026-01-30T04:13:29.6215313Z hint:
+2026-01-30T04:13:29.6216617Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-01-30T04:13:29.6218505Z Initialized empty Git repository in /home/runner/work/coze-studio-test/coze-studio-test/.git/
+2026-01-30T04:13:29.6223058Z [command]/usr/bin/git remote add origin https://github.com/yhyub/coze-studio-test
+2026-01-30T04:13:29.6256369Z ##[endgroup]
+2026-01-30T04:13:29.6257566Z ##[group]Disabling automatic garbage collection
+2026-01-30T04:13:29.6261252Z [command]/usr/bin/git config --local gc.auto 0
+2026-01-30T04:13:29.6293433Z ##[endgroup]
+2026-01-30T04:13:29.6294637Z ##[group]Setting up auth
+2026-01-30T04:13:29.6302268Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-01-30T04:13:29.6335757Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-01-30T04:13:29.6699551Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-01-30T04:13:29.6733237Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-01-30T04:13:29.6984588Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-01-30T04:13:29.7020727Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-01-30T04:13:29.7260597Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-01-30T04:13:29.7294480Z ##[endgroup]
+2026-01-30T04:13:29.7295964Z ##[group]Fetching the repository
+2026-01-30T04:13:29.7304032Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-01-30T04:13:31.7394828Z From https://github.com/yhyub/coze-studio-test
+2026-01-30T04:13:31.7396286Z  * [new branch]        gh-pages   -> origin/gh-pages
+2026-01-30T04:13:31.7397012Z  * [new branch]        main       -> origin/main
+2026-01-30T04:13:31.7397646Z  * [new branch]        master     -> origin/master
+2026-01-30T04:13:31.7398360Z  * [new tag]           v1.0.0     -> v1.0.0
+2026-01-30T04:13:31.7398945Z  * [new tag]           v1.0.1     -> v1.0.1
+2026-01-30T04:13:31.7441448Z [command]/usr/bin/git branch --list --remote origin/main
+2026-01-30T04:13:31.7466720Z   origin/main
+2026-01-30T04:13:31.7475126Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2026-01-30T04:13:31.7496592Z dd76fd20fa591b5675a6752e918b18be01468c6b
+2026-01-30T04:13:31.7502138Z ##[endgroup]
+2026-01-30T04:13:31.7503656Z ##[group]Determining the checkout info
+2026-01-30T04:13:31.7505197Z ##[endgroup]
+2026-01-30T04:13:31.7508707Z [command]/usr/bin/git sparse-checkout disable
+2026-01-30T04:13:31.7549638Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-01-30T04:13:31.7576728Z ##[group]Checking out the ref
+2026-01-30T04:13:31.7581814Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-01-30T04:13:32.6755861Z Switched to a new branch 'main'
+2026-01-30T04:13:32.6757186Z branch 'main' set up to track 'origin/main'.
+2026-01-30T04:13:32.6808316Z ##[endgroup]
+2026-01-30T04:13:32.6847832Z [command]/usr/bin/git log -1 --format=%H
+2026-01-30T04:13:32.6870385Z dd76fd20fa591b5675a6752e918b18be01468c6b
+2026-01-30T04:13:32.7079761Z ##[group]Run git config --global user.name "GitHub Actions"
+2026-01-30T04:13:32.7081688Z [36;1mgit config --global user.name "GitHub Actions"[0m
+2026-01-30T04:13:32.7083495Z [36;1mgit config --global user.email "actions@github.com"[0m
+2026-01-30T04:13:32.7121242Z shell: /usr/bin/bash -e {0}
+2026-01-30T04:13:32.7122676Z ##[endgroup]
+2026-01-30T04:13:32.7396943Z ##[group]Run actions/github-script@v7
+2026-01-30T04:13:32.7398079Z with:
+2026-01-30T04:13:32.7419324Z   script: // 自动修复常见工作流错误
+const fs = require('fs');
+const path = require('path');
+
+// 使用当前工作目录作为基础路径
+const workflowsDir = path.join(process.cwd(), '.github', 'workflows');
+console.log(`Workflow directory: ${workflowsDir}`);
+
+// 检查目录是否存在
+if (!fs.existsSync(workflowsDir)) {
+  console.error(`Directory ${workflowsDir} does not exist`);
+  return;
+}
+
+const files = fs.readdirSync(workflowsDir);
+
+let fixedFiles = 0;
+
+files.forEach(file => {
+  if (file.endsWith('.yml') || file.endsWith('.yaml')) {
+    const filePath = path.join(workflowsDir, file);
+    let content = fs.readFileSync(filePath, 'utf8');
+    let originalContent = content;
+    
+    // 修复常见版本问题
+    content = content.replace(/actions\/checkout@v3/g, 'actions/checkout@v4');
+    content = content.replace(/actions\/setup-node@v3/g, 'actions/setup-node@v4');
+    content = content.replace(/actions\/setup-go@v4/g, 'actions/setup-go@v5');
+    
+    // 修复权限问题
+    content = content.replace(/permissions: {}/g, 'permissions:\n  contents: read\n  pull-requests: read\n  actions: read\n  checks: read\n  deployments: read\n  issues: read\n  packages: read\n  repository-projects: read\n  security-events: read\n  statuses: read');
+    
+    // 移除无效的workflows权限配置
+    content = content.replace(/workflows: write\n/g, '');
+    content = content.replace(/workflows: read\n/g, '');
+    
+    // 修复超时设置
+    content = content.replace(/timeout-minutes: 10/g, 'timeout-minutes: 30');
+    
+    // 只在内容变化时写入
+    if (content !== originalContent) {
+      fs.writeFileSync(filePath, content, 'utf8');
+      console.log(`Fixed ${file}`);
+      fixedFiles++;
+    }
+  }
+});
+
+console.log(`\\nFixed ${fixedFiles} files`);
+
+2026-01-30T04:13:32.7441144Z   github-token: ***
+2026-01-30T04:13:32.7441986Z   debug: false
+2026-01-30T04:13:32.7442831Z   user-agent: actions/github-script
+2026-01-30T04:13:32.7443895Z   result-encoding: json
+2026-01-30T04:13:32.7444756Z   retries: 0
+2026-01-30T04:13:32.7446124Z   retry-exempt-status-codes: 400,401,403,404,422
+2026-01-30T04:13:32.7447718Z ##[endgroup]
+2026-01-30T04:13:32.8327060Z Workflow directory: /home/runner/work/coze-studio-test/coze-studio-test/.github/workflows
+2026-01-30T04:13:32.8335882Z Fixed all-in-one-fixer.yml
+2026-01-30T04:13:32.8338047Z Fixed ci.yml
+2026-01-30T04:13:32.8340486Z Fixed ci@main.yml
+2026-01-30T04:13:32.8342732Z Fixed common-pr-checks.yml
+2026-01-30T04:13:32.8347039Z Fixed complete-ci-cd.yml
+2026-01-30T04:13:32.8349555Z Fixed idl.yaml
+2026-01-30T04:13:32.8356306Z Fixed workflow-fixer.yml
+2026-01-30T04:13:32.8357587Z \nFixed 7 files
+2026-01-30T04:13:32.8549254Z ##[group]Run actions/github-script@v7
+2026-01-30T04:13:32.8550335Z with:
+2026-01-30T04:13:32.8570662Z   script: // 检查是否有更改
+const { execSync } = require('child_process');
+try {
+  execSync('git diff --quiet');
+  console.log('No changes to commit');
+  return;
+} catch (error) {
+  // 有更改，继续执行
+}
+
+// 获取当前提交信息
+const currentCommit = execSync('git rev-parse HEAD').toString().trim();
+const repository = process.env.GITHUB_REPOSITORY;
+const branch = 'main';
+
+console.log('Changes detected, preparing to update files...');
+
+// 读取所有修改的文件
+const files = execSync('git diff --name-only').toString().trim().split('\n');
+
+// 只处理工作流文件
+const workflowFiles = files.filter(file => file.startsWith('.github/workflows/'));
+
+if (workflowFiles.length === 0) {
+  console.log('No workflow files changed');
+  return;
+}
+
+console.log(`Updating ${workflowFiles.length} workflow files...`);
+
+// 使用 GitHub API 更新文件
+const github = require('@actions/github');
+const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+
+for (const file of workflowFiles) {
+  console.log(`Updating ${file}...`);
+  
+  // 读取文件内容
+  const fs = require('fs');
+  const content = fs.readFileSync(file, 'utf8');
+  
+  // 获取文件的当前 SHA
+  let sha;
+  try {
+    const response = await octokit.rest.repos.getContent({
+      owner: repository.split('/')[0],
+      repo: repository.split('/')[1],
+      path: file,
+      ref: branch
+    });
+    sha = response.data.sha;
+  } catch (error) {
+    console.log(`File ${file} doesn't exist, creating it...`);
+  }
+  
+  // 更新或创建文件
+  await octokit.rest.repos.createOrUpdateFileContents({
+    owner: repository.split('/')[0],
+    repo: repository.split('/')[1],
+    path: file,
+    message: 'fix: auto-correct workflow configuration errors',
+    content: Buffer.from(content).toString('base64'),
+    branch: branch,
+    sha: sha
+  });
+  
+  console.log(`Updated ${file}`);
+}
+
+console.log('All workflow files updated successfully!');
+
+2026-01-30T04:13:32.8592114Z   github-token: ***
+2026-01-30T04:13:32.8592919Z   debug: false
+2026-01-30T04:13:32.8656467Z   user-agent: actions/github-script
+2026-01-30T04:13:32.8657650Z   result-encoding: json
+2026-01-30T04:13:32.8658597Z   retries: 0
+2026-01-30T04:13:32.8659480Z   retry-exempt-status-codes: 400,401,403,404,422
+2026-01-30T04:13:32.8660644Z ##[endgroup]
+2026-01-30T04:13:32.9585003Z SyntaxError: Identifier 'github' has already been declared
+2026-01-30T04:13:32.9587744Z     at new AsyncFunction (<anonymous>)
+2026-01-30T04:13:32.9590976Z     at callAsyncFunction (/home/runner/work/_actions/actions/github-script/v7/dist/index.js:36187:16)
+2026-01-30T04:13:32.9595202Z     at main (/home/runner/work/_actions/actions/github-script/v7/dist/index.js:36285:26)
+2026-01-30T04:13:32.9598956Z     at /home/runner/work/_actions/actions/github-script/v7/dist/index.js:36260:1
+2026-01-30T04:13:32.9602172Z     at /home/runner/work/_actions/actions/github-script/v7/dist/index.js:36317:3
+2026-01-30T04:13:32.9606220Z     at Object.<anonymous> (/home/runner/work/_actions/actions/github-script/v7/dist/index.js:36320:12)
+2026-01-30T04:13:32.9609820Z     at Module._compile (node:internal/modules/cjs/loader:1521:14)
+2026-01-30T04:13:32.9612620Z     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+2026-01-30T04:13:32.9615569Z     at Module.load (node:internal/modules/cjs/loader:1266:32)
+2026-01-30T04:13:32.9618019Z     at Module._load (node:internal/modules/cjs/loader:1091:12)
+2026-01-30T04:13:32.9643562Z ##[error]Unhandled error: SyntaxError: Identifier 'github' has already been declared
+2026-01-30T04:13:32.9855173Z Post job cleanup.
+2026-01-30T04:13:33.1060741Z [command]/usr/bin/git version
+2026-01-30T04:13:33.1113151Z git version 2.52.0
+2026-01-30T04:13:33.1150854Z Copying '/home/runner/.gitconfig' to '/home/runner/work/_temp/fe64d7b1-ae40-4367-a207-82bc5393b111/.gitconfig'
+2026-01-30T04:13:33.1161047Z Temporarily overriding HOME='/home/runner/work/_temp/fe64d7b1-ae40-4367-a207-82bc5393b111' before making global git config changes
+2026-01-30T04:13:33.1164461Z Adding repository directory to the temporary git global config as a safe directory
+2026-01-30T04:13:33.1173862Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/coze-studio-test/coze-studio-test
+2026-01-30T04:13:33.1206590Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-01-30T04:13:33.1238346Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-01-30T04:13:33.1498011Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-01-30T04:13:33.1519144Z http.https://github.com/.extraheader
+2026-01-30T04:13:33.1533319Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-01-30T04:13:33.1569248Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-01-30T04:13:33.1814501Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-01-30T04:13:33.1847699Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-01-30T04:13:33.2215956Z Cleaning up orphan processes

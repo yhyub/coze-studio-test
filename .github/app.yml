@@ -1,0 +1,54 @@
+# GitHub App Configuration for Terminal Button
+# 用于在仓库导航栏中添加终端按钮
+
+name: Terminal Access
+description: Adds a terminal button to the repository navigation bar
+
+# 权限设置
+permissions:
+  # 仓库权限
+  contents:
+    read: true
+  # 工作流权限
+  actions:
+    read: true
+    write: true
+  # Pull Request权限
+  pull_requests:
+    read: true
+
+# Webhook配置
+webhook:
+  active: false
+
+# 应用图标
+# icon:
+#   url: "https://example.com/icon.png"
+
+# 应用回调URL
+# homepage_url: "https://example.com"
+
+# 应用功能
+default_events:
+  - push
+  - pull_request
+  - workflow_run
+
+# 应用安装设置
+default_installation_settings:
+  # 仓库权限
+  repository_permissions:
+    contents:
+      access: read
+    actions:
+      access: write
+    pull_requests:
+      access: read
+  # 组织权限
+  organization_permissions:
+    members:
+      access: read
+  # 是否允许在所有仓库中安装
+  can_install_in_organizations: true
+  # 是否允许在个人仓库中安装
+  can_install_in_personal_repositories: true

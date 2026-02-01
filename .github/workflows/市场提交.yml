@@ -1,0 +1,61 @@
+name: Submit to Marketplace
+
+on:
+  push:
+    tags: [v*]
+  workflow_dispatch:
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Build action
+        run: npm run build
+        
+      - name: Verify package
+        run: |
+          npm pack
+          ls -la workflow-auto-fixer-*.tgz
+          
+      - name: Create release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            ## What's Changed
+            - Initial release of Workflow Auto-Fixer
+            - Automatically fix GitHub workflow errors
+            - Support global repository fixing
+          draft: false
+          prerelease: false
+          
+      - name: Submit to Marketplace
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Submit to GitHub Marketplace
+            const result = await github.request('POST /marketplace_listing/actions', {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: {
+                name: 'Workflow Auto-Fixer',
+                short_description: 'Automatically fix GitHub workflow errors',
+                full_description: fs.readFileSync('README.md', 'utf8'),
+                categories: ['automation', 'github-actions', 'devops'],
+                public: true
+              }
+            });
+            console.log('Submitted to Marketplace:', result.data);

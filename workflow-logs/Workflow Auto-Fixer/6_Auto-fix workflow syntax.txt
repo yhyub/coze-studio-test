@@ -1,0 +1,74 @@
+﻿2026-01-30T04:38:04.1307878Z ##[group]Run actions/github-script@v7
+2026-01-30T04:38:04.1308172Z with:
+2026-01-30T04:38:04.1313285Z   script: // 自动修复常见工作流错误
+const fs = require('fs');
+const path = require('path');
+
+// 使用当前工作目录作为基础路径
+const workflowsDir = path.join(process.cwd(), '.github', 'workflows');
+console.log(`Workflow directory: ${workflowsDir}`);
+
+// 检查目录是否存在
+if (!fs.existsSync(workflowsDir)) {
+  console.error(`Directory ${workflowsDir} does not exist`);
+  return;
+}
+
+const files = fs.readdirSync(workflowsDir);
+
+let fixedFiles = 0;
+
+files.forEach(file => {
+  if (file.endsWith('.yml') || file.endsWith('.yaml')) {
+    const filePath = path.join(workflowsDir, file);
+    let content = fs.readFileSync(filePath, 'utf8');
+    let originalContent = content;
+    
+    // 修复常见版本问题
+    content = content.replace(/actions\/checkout@v3/g, 'actions/checkout@v4');
+    content = content.replace(/actions\/setup-node@v3/g, 'actions/setup-node@v4');
+    content = content.replace(/actions\/setup-go@v4/g, 'actions/setup-go@v5');
+    
+    // 修复权限问题 - 使用最小必要权限
+    if (content.includes('contents: write') && !content.includes('permissions:')) {
+        content = content.replace(
+            /permissions:\s*\{\}/,
+            'permissions:\\n  contents: write'
+        );
+    }
+    
+    // 移除无效的workflows权限配置
+    content = content.replace(/workflows: write\\n/g, '');
+    content = content.replace(/workflows: read\\n/g, '');
+    
+    // 修复超时设置
+    content = content.replace(/timeout-minutes: 10/g, 'timeout-minutes: 30');
+    
+    // 只在内容变化时写入
+    if (content !== originalContent) {
+      fs.writeFileSync(filePath, content, 'utf8');
+      console.log(`Fixed ${file}`);
+      fixedFiles++;
+    }
+  }
+});
+
+console.log(`\nFixed ${fixedFiles} files`);
+
+2026-01-30T04:38:04.1318619Z   github-token: ***
+2026-01-30T04:38:04.1318817Z   debug: false
+2026-01-30T04:38:04.1319018Z   user-agent: actions/github-script
+2026-01-30T04:38:04.1319267Z   result-encoding: json
+2026-01-30T04:38:04.1319459Z   retries: 0
+2026-01-30T04:38:04.1319675Z   retry-exempt-status-codes: 400,401,403,404,422
+2026-01-30T04:38:04.1319960Z ##[endgroup]
+2026-01-30T04:38:04.2153389Z Workflow directory: /home/runner/work/coze-studio-test/coze-studio-test/.github/workflows
+2026-01-30T04:38:04.2162441Z Fixed all-in-one-fixer.yml
+2026-01-30T04:38:04.2165039Z Fixed ci.yml
+2026-01-30T04:38:04.2167494Z Fixed ci@main.yml
+2026-01-30T04:38:04.2169871Z Fixed common-pr-checks.yml
+2026-01-30T04:38:04.2173642Z Fixed complete-ci-cd.yml
+2026-01-30T04:38:04.2176338Z Fixed idl.yaml
+2026-01-30T04:38:04.2183421Z Fixed workflow-fixer.yml
+2026-01-30T04:38:04.2184349Z 
+2026-01-30T04:38:04.2184497Z Fixed 7 files

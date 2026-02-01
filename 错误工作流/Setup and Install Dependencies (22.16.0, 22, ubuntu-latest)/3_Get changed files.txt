@@ -1,0 +1,63 @@
+﻿2026-01-30T04:36:18.1111221Z ##[group]Run tj-actions/changed-files@v45
+2026-01-30T04:36:18.1111642Z with:
+2026-01-30T04:36:18.1111871Z   separator:  
+2026-01-30T04:36:18.1112124Z   include_all_old_new_renamed_files: false
+2026-01-30T04:36:18.1112437Z   old_new_separator: ,
+2026-01-30T04:36:18.1112695Z   old_new_files_separator:  
+2026-01-30T04:36:18.1112976Z   files_from_source_file_separator: 
+
+2026-01-30T04:36:18.1113280Z   files_separator: 
+
+2026-01-30T04:36:18.1113542Z   files_yaml_from_source_file_separator: 
+
+2026-01-30T04:36:18.1113884Z   files_ignore_yaml_from_source_file_separator: 
+
+2026-01-30T04:36:18.1114209Z   files_ignore_separator: 
+
+2026-01-30T04:36:18.1114497Z   files_ignore_from_source_file_separator: 
+
+2026-01-30T04:36:18.1114815Z   path: .
+2026-01-30T04:36:18.1115041Z   quotepath: true
+2026-01-30T04:36:18.1115273Z   diff_relative: true
+2026-01-30T04:36:18.1115534Z   dir_names: false
+2026-01-30T04:36:18.1115796Z   dir_names_exclude_current_dir: false
+2026-01-30T04:36:18.1116096Z   dir_names_include_files_separator: 
+
+2026-01-30T04:36:18.1116483Z   dir_names_deleted_files_include_only_deleted_dirs: false
+2026-01-30T04:36:18.1116820Z   json: false
+2026-01-30T04:36:18.1117038Z   escape_json: true
+2026-01-30T04:36:18.1117269Z   safe_output: true
+2026-01-30T04:36:18.1117498Z   fetch_depth: 25
+2026-01-30T04:36:18.1117732Z   skip_initial_fetch: false
+2026-01-30T04:36:18.1118015Z   fetch_additional_submodule_history: false
+2026-01-30T04:36:18.1118323Z   since_last_remote_commit: false
+2026-01-30T04:36:18.1118604Z   write_output_files: false
+2026-01-30T04:36:18.1118864Z   output_dir: .github/outputs
+2026-01-30T04:36:18.1119165Z   output_renamed_files_as_deleted_and_added: false
+2026-01-30T04:36:18.1119492Z   recover_deleted_files: false
+2026-01-30T04:36:18.1119773Z   recover_files_separator: 
+
+2026-01-30T04:36:18.1120052Z   recover_files_ignore_separator: 
+
+2026-01-30T04:36:18.1120661Z   token: ***
+2026-01-30T04:36:18.1120924Z   api_url: https://api.github.com
+2026-01-30T04:36:18.1121223Z   use_rest_api: false
+2026-01-30T04:36:18.1121491Z   fail_on_initial_diff_error: false
+2026-01-30T04:36:18.1121786Z   fail_on_submodule_diff_error: false
+2026-01-30T04:36:18.1122084Z   negation_patterns_first: false
+2026-01-30T04:36:18.1122349Z   matrix: false
+2026-01-30T04:36:18.1122585Z   exclude_submodules: false
+2026-01-30T04:36:18.1122861Z   fetch_missing_history_max_retries: 20
+2026-01-30T04:36:18.1123159Z   use_posix_path_separator: false
+2026-01-30T04:36:18.1123430Z   tags_pattern: *
+2026-01-30T04:36:18.1123656Z ##[endgroup]
+2026-01-30T04:36:18.2301295Z ##[group]changed-files
+2026-01-30T04:36:18.2428644Z Using local .git directory
+2026-01-30T04:36:18.2872779Z Running on a push event...
+2026-01-30T04:36:18.2877397Z Repository is shallow, fetching more history...
+2026-01-30T04:36:18.8950708Z Retrieving changes between 0acd8324db18c191083aa4fc9050635fadafb263 (main) → 070297e155a380b13a703ea04e3b893944d31b3d (main)
+2026-01-30T04:36:18.9002783Z All Done!
+2026-01-30T04:36:18.9003743Z ##[endgroup]
+2026-01-30T04:36:18.9006427Z ##[group]changed-files-all
+2026-01-30T04:36:18.9073087Z All Done!
+2026-01-30T04:36:18.9073736Z ##[endgroup]

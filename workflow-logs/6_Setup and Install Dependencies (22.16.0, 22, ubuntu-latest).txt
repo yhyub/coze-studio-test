@@ -1,0 +1,272 @@
+﻿2026-01-30T04:36:13.0800325Z Current runner version: '2.331.0'
+2026-01-30T04:36:13.0823093Z ##[group]Runner Image Provisioner
+2026-01-30T04:36:13.0823915Z Hosted Compute Agent
+2026-01-30T04:36:13.0824455Z Version: 20260123.484
+2026-01-30T04:36:13.0825106Z Commit: 6bd6555ca37d84114959e1c76d2c01448ff61c5d
+2026-01-30T04:36:13.0825792Z Build Date: 2026-01-23T19:41:17Z
+2026-01-30T04:36:13.0826409Z Worker ID: {c740068a-3c0c-4e6b-823c-49b927c50963}
+2026-01-30T04:36:13.0827193Z Azure Region: westcentralus
+2026-01-30T04:36:13.0827749Z ##[endgroup]
+2026-01-30T04:36:13.0829111Z ##[group]Operating System
+2026-01-30T04:36:13.0829783Z Ubuntu
+2026-01-30T04:36:13.0830223Z 24.04.3
+2026-01-30T04:36:13.0830917Z LTS
+2026-01-30T04:36:13.0831432Z ##[endgroup]
+2026-01-30T04:36:13.0831942Z ##[group]Runner Image
+2026-01-30T04:36:13.0832441Z Image: ubuntu-24.04
+2026-01-30T04:36:13.0832987Z Version: 20260126.10.1
+2026-01-30T04:36:13.0834217Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260126.10/images/ubuntu/Ubuntu2404-Readme.md
+2026-01-30T04:36:13.0835739Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260126.10
+2026-01-30T04:36:13.0836601Z ##[endgroup]
+2026-01-30T04:36:13.0838725Z ##[group]GITHUB_TOKEN Permissions
+2026-01-30T04:36:13.0840884Z Actions: write
+2026-01-30T04:36:13.0841478Z Checks: read
+2026-01-30T04:36:13.0841917Z Contents: write
+2026-01-30T04:36:13.0842525Z Deployments: read
+2026-01-30T04:36:13.0842996Z Issues: read
+2026-01-30T04:36:13.0843469Z Metadata: read
+2026-01-30T04:36:13.0843983Z Packages: read
+2026-01-30T04:36:13.0844482Z Pages: write
+2026-01-30T04:36:13.0844996Z PullRequests: read
+2026-01-30T04:36:13.0845548Z RepositoryProjects: read
+2026-01-30T04:36:13.0846111Z SecurityEvents: read
+2026-01-30T04:36:13.0846597Z Statuses: read
+2026-01-30T04:36:13.0847228Z ##[endgroup]
+2026-01-30T04:36:13.0849161Z Secret source: Actions
+2026-01-30T04:36:13.0849882Z Prepare workflow directory
+2026-01-30T04:36:13.1231649Z Prepare all required actions
+2026-01-30T04:36:13.1268675Z Getting action download info
+2026-01-30T04:36:13.5135699Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-01-30T04:36:13.6113915Z Download action repository 'tj-actions/changed-files@v45' (SHA:48d8f15b2aaa3d255ca5af3eba4870f807ce6b3c)
+2026-01-30T04:36:14.1952376Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-01-30T04:36:14.3235900Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-01-30T04:36:14.6020638Z Complete job name: Setup and Install Dependencies (22.16.0, 22, ubuntu-latest)
+2026-01-30T04:36:14.6819415Z ##[group]Run actions/checkout@v4
+2026-01-30T04:36:14.6820807Z with:
+2026-01-30T04:36:14.6821470Z   fetch-depth: 1
+2026-01-30T04:36:14.6822232Z   repository: yhyub/coze-studio-test
+2026-01-30T04:36:14.6823392Z   token: ***
+2026-01-30T04:36:14.6824060Z   ssh-strict: true
+2026-01-30T04:36:14.6824761Z   ssh-user: git
+2026-01-30T04:36:14.6825489Z   persist-credentials: true
+2026-01-30T04:36:14.6826334Z   clean: true
+2026-01-30T04:36:14.6827061Z   sparse-checkout-cone-mode: true
+2026-01-30T04:36:14.6827964Z   fetch-tags: false
+2026-01-30T04:36:14.6828678Z   show-progress: true
+2026-01-30T04:36:14.6829405Z   lfs: false
+2026-01-30T04:36:14.6830065Z   submodules: false
+2026-01-30T04:36:14.6830992Z   set-safe-directory: true
+2026-01-30T04:36:14.6832062Z ##[endgroup]
+2026-01-30T04:36:14.7895525Z Syncing repository: yhyub/coze-studio-test
+2026-01-30T04:36:14.7898203Z ##[group]Getting Git version info
+2026-01-30T04:36:14.7899690Z Working directory is '/home/runner/work/coze-studio-test/coze-studio-test'
+2026-01-30T04:36:14.7902018Z [command]/usr/bin/git version
+2026-01-30T04:36:14.7974718Z git version 2.52.0
+2026-01-30T04:36:14.8001072Z ##[endgroup]
+2026-01-30T04:36:14.8014669Z Temporarily overriding HOME='/home/runner/work/_temp/3e503ed4-6d6f-4067-9f7a-eeb27d5cf841' before making global git config changes
+2026-01-30T04:36:14.8017273Z Adding repository directory to the temporary git global config as a safe directory
+2026-01-30T04:36:14.8027747Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/coze-studio-test/coze-studio-test
+2026-01-30T04:36:14.8064312Z Deleting the contents of '/home/runner/work/coze-studio-test/coze-studio-test'
+2026-01-30T04:36:14.8067185Z ##[group]Initializing the repository
+2026-01-30T04:36:14.8071693Z [command]/usr/bin/git init /home/runner/work/coze-studio-test/coze-studio-test
+2026-01-30T04:36:14.8180941Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-01-30T04:36:14.8183963Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-01-30T04:36:14.8186546Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-01-30T04:36:14.8187896Z hint: call:
+2026-01-30T04:36:14.8188528Z hint:
+2026-01-30T04:36:14.8189376Z hint: 	git config --global init.defaultBranch <name>
+2026-01-30T04:36:14.8191119Z hint:
+2026-01-30T04:36:14.8192122Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-01-30T04:36:14.8193845Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-01-30T04:36:14.8195333Z hint:
+2026-01-30T04:36:14.8196245Z hint: 	git branch -m <name>
+2026-01-30T04:36:14.8197049Z hint:
+2026-01-30T04:36:14.8198131Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-01-30T04:36:14.8200174Z Initialized empty Git repository in /home/runner/work/coze-studio-test/coze-studio-test/.git/
+2026-01-30T04:36:14.8203488Z [command]/usr/bin/git remote add origin https://github.com/yhyub/coze-studio-test
+2026-01-30T04:36:14.8230239Z ##[endgroup]
+2026-01-30T04:36:14.8231803Z ##[group]Disabling automatic garbage collection
+2026-01-30T04:36:14.8233932Z [command]/usr/bin/git config --local gc.auto 0
+2026-01-30T04:36:14.8261902Z ##[endgroup]
+2026-01-30T04:36:14.8268790Z ##[group]Setting up auth
+2026-01-30T04:36:14.8270071Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-01-30T04:36:14.8298165Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-01-30T04:36:14.8613937Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-01-30T04:36:14.8645913Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-01-30T04:36:14.8859901Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-01-30T04:36:14.8896788Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-01-30T04:36:14.9115673Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-01-30T04:36:14.9148402Z ##[endgroup]
+2026-01-30T04:36:14.9149626Z ##[group]Fetching the repository
+2026-01-30T04:36:14.9158959Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +070297e155a380b13a703ea04e3b893944d31b3d:refs/remotes/origin/main
+2026-01-30T04:36:17.1627112Z From https://github.com/yhyub/coze-studio-test
+2026-01-30T04:36:17.1628719Z  * [new ref]           070297e155a380b13a703ea04e3b893944d31b3d -> origin/main
+2026-01-30T04:36:17.1659007Z ##[endgroup]
+2026-01-30T04:36:17.1659923Z ##[group]Determining the checkout info
+2026-01-30T04:36:17.1661685Z ##[endgroup]
+2026-01-30T04:36:17.1666899Z [command]/usr/bin/git sparse-checkout disable
+2026-01-30T04:36:17.1705823Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-01-30T04:36:17.1731167Z ##[group]Checking out the ref
+2026-01-30T04:36:17.1735855Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-01-30T04:36:18.0605400Z Switched to a new branch 'main'
+2026-01-30T04:36:18.0607445Z branch 'main' set up to track 'origin/main'.
+2026-01-30T04:36:18.0639726Z ##[endgroup]
+2026-01-30T04:36:18.0677218Z [command]/usr/bin/git log -1 --format=%H
+2026-01-30T04:36:18.0698782Z 070297e155a380b13a703ea04e3b893944d31b3d
+2026-01-30T04:36:18.1111248Z ##[group]Run tj-actions/changed-files@v45
+2026-01-30T04:36:18.1111647Z with:
+2026-01-30T04:36:18.1111874Z   separator:  
+2026-01-30T04:36:18.1112128Z   include_all_old_new_renamed_files: false
+2026-01-30T04:36:18.1112441Z   old_new_separator: ,
+2026-01-30T04:36:18.1112699Z   old_new_files_separator:  
+2026-01-30T04:36:18.1112984Z   files_from_source_file_separator: 
+
+2026-01-30T04:36:18.1113286Z   files_separator: 
+
+2026-01-30T04:36:18.1113549Z   files_yaml_from_source_file_separator: 
+
+2026-01-30T04:36:18.1113892Z   files_ignore_yaml_from_source_file_separator: 
+
+2026-01-30T04:36:18.1114215Z   files_ignore_separator: 
+
+2026-01-30T04:36:18.1114504Z   files_ignore_from_source_file_separator: 
+
+2026-01-30T04:36:18.1114819Z   path: .
+2026-01-30T04:36:18.1115044Z   quotepath: true
+2026-01-30T04:36:18.1115276Z   diff_relative: true
+2026-01-30T04:36:18.1115538Z   dir_names: false
+2026-01-30T04:36:18.1115800Z   dir_names_exclude_current_dir: false
+2026-01-30T04:36:18.1116141Z   dir_names_include_files_separator: 
+
+2026-01-30T04:36:18.1116487Z   dir_names_deleted_files_include_only_deleted_dirs: false
+2026-01-30T04:36:18.1116824Z   json: false
+2026-01-30T04:36:18.1117041Z   escape_json: true
+2026-01-30T04:36:18.1117273Z   safe_output: true
+2026-01-30T04:36:18.1117506Z   fetch_depth: 25
+2026-01-30T04:36:18.1117736Z   skip_initial_fetch: false
+2026-01-30T04:36:18.1118019Z   fetch_additional_submodule_history: false
+2026-01-30T04:36:18.1118327Z   since_last_remote_commit: false
+2026-01-30T04:36:18.1118606Z   write_output_files: false
+2026-01-30T04:36:18.1118867Z   output_dir: .github/outputs
+2026-01-30T04:36:18.1119169Z   output_renamed_files_as_deleted_and_added: false
+2026-01-30T04:36:18.1119495Z   recover_deleted_files: false
+2026-01-30T04:36:18.1119780Z   recover_files_separator: 
+
+2026-01-30T04:36:18.1120064Z   recover_files_ignore_separator: 
+
+2026-01-30T04:36:18.1120667Z   token: ***
+2026-01-30T04:36:18.1120927Z   api_url: https://api.github.com
+2026-01-30T04:36:18.1121234Z   use_rest_api: false
+2026-01-30T04:36:18.1121495Z   fail_on_initial_diff_error: false
+2026-01-30T04:36:18.1121789Z   fail_on_submodule_diff_error: false
+2026-01-30T04:36:18.1122087Z   negation_patterns_first: false
+2026-01-30T04:36:18.1122353Z   matrix: false
+2026-01-30T04:36:18.1122589Z   exclude_submodules: false
+2026-01-30T04:36:18.1122865Z   fetch_missing_history_max_retries: 20
+2026-01-30T04:36:18.1123162Z   use_posix_path_separator: false
+2026-01-30T04:36:18.1123433Z   tags_pattern: *
+2026-01-30T04:36:18.1123659Z ##[endgroup]
+2026-01-30T04:36:18.2301352Z ##[group]changed-files
+2026-01-30T04:36:18.2428689Z Using local .git directory
+2026-01-30T04:36:18.2872817Z Running on a push event...
+2026-01-30T04:36:18.2877410Z Repository is shallow, fetching more history...
+2026-01-30T04:36:18.8950744Z Retrieving changes between 0acd8324db18c191083aa4fc9050635fadafb263 (main) → 070297e155a380b13a703ea04e3b893944d31b3d (main)
+2026-01-30T04:36:18.9002800Z All Done!
+2026-01-30T04:36:18.9003750Z ##[endgroup]
+2026-01-30T04:36:18.9006470Z ##[group]changed-files-all
+2026-01-30T04:36:18.9073103Z All Done!
+2026-01-30T04:36:18.9073743Z ##[endgroup]
+2026-01-30T04:36:18.9199815Z ##[group]Run # Get all change files
+2026-01-30T04:36:18.9200169Z [36;1m# Get all change files[0m
+2026-01-30T04:36:18.9200646Z [36;1mall_files=".github/workflows/complete-ci-cd.yml"[0m
+2026-01-30T04:36:18.9200965Z [36;1m[0m
+2026-01-30T04:36:18.9201214Z [36;1m# Filter out files in the common/changes directory[0m
+2026-01-30T04:36:18.9201539Z [36;1mfiltered_files=""[0m
+2026-01-30T04:36:18.9201780Z [36;1mfor file in $all_files; do[0m
+2026-01-30T04:36:18.9202067Z [36;1m  if [[ ! "$file" =~ ^common/changes/.* ]]; then[0m
+2026-01-30T04:36:18.9202394Z [36;1m    if [ -z "$filtered_files" ]; then[0m
+2026-01-30T04:36:18.9202855Z [36;1m      filtered_files="$file"[0m
+2026-01-30T04:36:18.9203097Z [36;1m    else[0m
+2026-01-30T04:36:18.9203318Z [36;1m      filtered_files="$filtered_files $file"[0m
+2026-01-30T04:36:18.9203590Z [36;1m    fi[0m
+2026-01-30T04:36:18.9203764Z [36;1m  fi[0m
+2026-01-30T04:36:18.9203942Z [36;1mdone[0m
+2026-01-30T04:36:18.9204119Z [36;1m[0m
+2026-01-30T04:36:18.9204344Z [36;1m# Create cached files in JSON format[0m
+2026-01-30T04:36:18.9204818Z [36;1mecho "[$( echo "$filtered_files" | sed 's/ /", "/g' | sed 's/^/"/' | sed 's/$/"/' )]" > changed-files-cache.json[0m
+2026-01-30T04:36:18.9205264Z [36;1m[0m
+2026-01-30T04:36:18.9205496Z [36;1m# Output cache file path for subsequent steps[0m
+2026-01-30T04:36:18.9205884Z [36;1mecho "cache_file=changed-files-cache.json" >> $GITHUB_OUTPUT[0m
+2026-01-30T04:36:18.9206224Z [36;1m[0m
+2026-01-30T04:36:18.9206434Z [36;1mecho "过滤前文件数量: $(echo $all_files | wc -w)"[0m
+2026-01-30T04:36:18.9206773Z [36;1mecho "过滤后文件数量: $(echo $filtered_files | wc -w)"[0m
+2026-01-30T04:36:18.9207120Z [36;1mecho "已生成缓存文件: changed-files-cache.json"[0m
+2026-01-30T04:36:18.9243094Z shell: /usr/bin/bash -e {0}
+2026-01-30T04:36:18.9243353Z ##[endgroup]
+2026-01-30T04:36:18.9422275Z 过滤前文件数量: 1
+2026-01-30T04:36:18.9437970Z 过滤后文件数量: 1
+2026-01-30T04:36:18.9438384Z 已生成缓存文件: changed-files-cache.json
+2026-01-30T04:36:18.9464351Z ##[group]Run git config --global user.name "flow_bot"
+2026-01-30T04:36:18.9464738Z [36;1mgit config --global user.name "flow_bot"[0m
+2026-01-30T04:36:18.9465121Z [36;1mgit config --global user.email "flow_bot@bytedance.com"[0m
+2026-01-30T04:36:18.9494627Z shell: /usr/bin/bash -e {0}
+2026-01-30T04:36:18.9494862Z ##[endgroup]
+2026-01-30T04:36:18.9649660Z ##[group]Run actions/setup-node@v4
+2026-01-30T04:36:18.9649932Z with:
+2026-01-30T04:36:18.9650128Z   node-version: 22.16.0
+2026-01-30T04:36:18.9650351Z   always-auth: false
+2026-01-30T04:36:18.9650954Z   check-latest: false
+2026-01-30T04:36:18.9651287Z   token: ***
+2026-01-30T04:36:18.9651489Z ##[endgroup]
+2026-01-30T04:36:19.1340162Z Attempting to download 22.16.0...
+2026-01-30T04:36:20.0488191Z Acquiring 22.16.0 - x64 from https://github.com/actions/node-versions/releases/download/22.16.0-15177438473/node-22.16.0-linux-x64.tar.gz
+2026-01-30T04:36:20.7417554Z Extracting ...
+2026-01-30T04:36:20.7526960Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/1c1f5576-6a73-4d86-a21a-08c13a2c3bbf -f /home/runner/work/_temp/a4b83fbd-3008-4afa-9f2c-c26030a6e546
+2026-01-30T04:36:21.8824042Z Adding to the cache ...
+2026-01-30T04:36:23.7701988Z ##[group]Environment details
+2026-01-30T04:36:24.0770901Z node: v22.16.0
+2026-01-30T04:36:24.0771468Z npm: 10.9.2
+2026-01-30T04:36:24.0771781Z yarn: 1.22.22
+2026-01-30T04:36:24.0772416Z ##[endgroup]
+2026-01-30T04:36:24.0933826Z ##[group]Run actions/upload-artifact@v4
+2026-01-30T04:36:24.0934110Z with:
+2026-01-30T04:36:24.0934309Z   name: changed-files-cache
+2026-01-30T04:36:24.0934556Z   path: changed-files-cache.json
+2026-01-30T04:36:24.0934827Z   retention-days: 1
+2026-01-30T04:36:24.0935033Z   if-no-files-found: warn
+2026-01-30T04:36:24.0935263Z   compression-level: 6
+2026-01-30T04:36:24.0935468Z   overwrite: false
+2026-01-30T04:36:24.0935678Z   include-hidden-files: false
+2026-01-30T04:36:24.0935909Z ##[endgroup]
+2026-01-30T04:36:24.3035207Z With the provided path, there will be 1 file uploaded
+2026-01-30T04:36:24.3036285Z Artifact name is valid!
+2026-01-30T04:36:24.3036782Z Root directory input is valid!
+2026-01-30T04:36:24.5691705Z Beginning upload of artifact content to blob storage
+2026-01-30T04:36:24.7844240Z Uploaded bytes 205
+2026-01-30T04:36:24.8421551Z Finished uploading artifact content to blob storage!
+2026-01-30T04:36:24.8425490Z SHA256 digest of uploaded artifact zip is 913da7fa8c103c96cc41ee5dd5b6620bd45a668fbcddf6638502be82d800fa89
+2026-01-30T04:36:24.8426902Z Finalizing artifact upload
+2026-01-30T04:36:24.9532593Z Artifact changed-files-cache.zip successfully finalized. Artifact ID 5313851479
+2026-01-30T04:36:24.9534334Z Artifact changed-files-cache has been successfully uploaded! Final size is 205 bytes. Artifact ID is 5313851479
+2026-01-30T04:36:24.9542756Z Artifact download URL: https://github.com/yhyub/coze-studio-test/actions/runs/21504559246/artifacts/5313851479
+2026-01-30T04:36:24.9731896Z Post job cleanup.
+2026-01-30T04:36:25.1414071Z Post job cleanup.
+2026-01-30T04:36:25.2365094Z [command]/usr/bin/git version
+2026-01-30T04:36:25.2400666Z git version 2.52.0
+2026-01-30T04:36:25.2438282Z Copying '/home/runner/.gitconfig' to '/home/runner/work/_temp/2c07c232-4ef0-4112-a217-cf36810225fc/.gitconfig'
+2026-01-30T04:36:25.2999938Z Temporarily overriding HOME='/home/runner/work/_temp/2c07c232-4ef0-4112-a217-cf36810225fc' before making global git config changes
+2026-01-30T04:36:25.3001703Z Adding repository directory to the temporary git global config as a safe directory
+2026-01-30T04:36:25.3022030Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/coze-studio-test/coze-studio-test
+2026-01-30T04:36:25.4611876Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-01-30T04:36:25.4657386Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-01-30T04:36:25.4916463Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-01-30T04:36:25.4937352Z http.https://github.com/.extraheader
+2026-01-30T04:36:25.4950018Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-01-30T04:36:25.5534415Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-01-30T04:36:25.5786619Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-01-30T04:36:25.5817672Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-01-30T04:36:25.7041640Z Evaluate and set job outputs
+2026-01-30T04:36:25.7047390Z Set output 'cache_file'
+2026-01-30T04:36:25.7049104Z Set output 'matrix_node_version'
+2026-01-30T04:36:25.7049720Z Set output 'matrix_os'
+2026-01-30T04:36:25.7050578Z Cleaning up orphan processes

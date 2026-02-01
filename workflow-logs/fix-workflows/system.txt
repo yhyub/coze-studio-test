@@ -1,0 +1,9 @@
+2026-01-30T04:13:26.2680000Z Evaluating fix-workflows.if
+2026-01-30T04:13:26.2680000Z Evaluating: (success() && ((needs.analyze-workflows.outputs.errors != '')))
+2026-01-30T04:13:26.2680000Z Expanded: (true && ('.github/workflows/all-in-one-fixer.yml,.github/workflows/ci.yml,.github/workflows/ci@backend.yml,.github/workflows/ci@main.yml,.github/workflows/claude.yml,.github/workflows/common-pr-checks.yml,.github/workflows/complete-ci-cd.yml,.github/workflows/deno.yml,.github/workflows/deploy.yml,.github/workflows/marketplace-install.yml,.github/workflows/marketplace-manager.yml,.github/workflows/marketplace-submit.yml,.github/workflows/release.yml,.github/workflows/security-scan.yml,.github/workflows/unified-workflow.yml,.github/workflows/workflow-fixer.yml,.github/workflows/workflow-validator.yml' != ''))
+2026-01-30T04:13:26.2680000Z Result: true
+2026-01-30T04:13:26.7600000Z Job is waiting for a hosted runner to come online.
+2026-01-30T04:13:26.7610000Z Job is about to start running on the hosted runner: GitHub Actions 1000001341
+2026-01-30T04:13:26.7500000Z Requested labels: ubuntu-latest
+2026-01-30T04:13:26.7500000Z Job defined at: yhyub/coze-studio-test/.github/workflows/workflow-fixer.yml@refs/heads/main
+2026-01-30T04:13:26.7500000Z Waiting for a runner to pick up this job...

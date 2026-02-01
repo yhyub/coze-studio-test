@@ -1,0 +1,88 @@
+﻿2026-01-30T04:37:49.6362450Z ##[group]Run peaceiris/actions-gh-pages@v4
+2026-01-30T04:37:49.6362815Z with:
+2026-01-30T04:37:49.6363279Z   github_token: ***
+2026-01-30T04:37:49.6363510Z   publish_dir: ./.github/actions-config
+2026-01-30T04:37:49.6363786Z   publish_branch: gh-pages
+2026-01-30T04:37:49.6364017Z   allow_empty_commit: false
+2026-01-30T04:37:49.6364429Z   keep_files: false
+2026-01-30T04:37:49.6364638Z   force_orphan: false
+2026-01-30T04:37:49.6364850Z   enable_jekyll: false
+2026-01-30T04:37:49.6365063Z   disable_nojekyll: false
+2026-01-30T04:37:49.6365287Z   exclude_assets: .github
+2026-01-30T04:37:49.6365511Z ##[endgroup]
+2026-01-30T04:37:49.6974504Z [INFO] Usage https://github.com/peaceiris/actions-gh-pages#readme
+2026-01-30T04:37:49.6978867Z ##[group]Dump inputs
+2026-01-30T04:37:49.6979387Z [INFO] GithubToken: true
+2026-01-30T04:37:49.6979881Z [INFO] PublishBranch: gh-pages
+2026-01-30T04:37:49.6980448Z [INFO] PublishDir: ./.github/actions-config
+2026-01-30T04:37:49.6980996Z [INFO] DestinationDir: 
+2026-01-30T04:37:49.6981564Z [INFO] ExternalRepository: 
+2026-01-30T04:37:49.6982039Z [INFO] AllowEmptyCommit: false
+2026-01-30T04:37:49.6982506Z [INFO] KeepFiles: false
+2026-01-30T04:37:49.6982932Z [INFO] ForceOrphan: false
+2026-01-30T04:37:49.6983354Z [INFO] UserName: 
+2026-01-30T04:37:49.6983737Z [INFO] UserEmail: 
+2026-01-30T04:37:49.6984120Z [INFO] CommitMessage: 
+2026-01-30T04:37:49.6984698Z [INFO] FullCommitMessage: 
+2026-01-30T04:37:49.6985496Z [INFO] TagName: 
+2026-01-30T04:37:49.6986083Z [INFO] TagMessage: 
+2026-01-30T04:37:49.6986843Z [INFO] EnableJekyll (DisableNoJekyll): false
+2026-01-30T04:37:49.6987583Z [INFO] CNAME: 
+2026-01-30T04:37:49.6987977Z [INFO] ExcludeAssets .github
+2026-01-30T04:37:49.6988284Z 
+2026-01-30T04:37:49.6988776Z ##[endgroup]
+2026-01-30T04:37:49.6989404Z ##[group]Setup auth token
+2026-01-30T04:37:49.6989813Z [INFO] setup GITHUB_TOKEN
+2026-01-30T04:37:49.6991017Z ##[endgroup]
+2026-01-30T04:37:49.6991551Z ##[group]Prepare publishing assets
+2026-01-30T04:37:49.6992233Z [INFO] ForceOrphan: false
+2026-01-30T04:37:49.7034403Z [command]/usr/bin/git clone --depth=1 --single-branch --branch gh-pages ***github.com/yhyub/coze-studio-test.git /home/runner/actions_github_pages_1769747869698
+2026-01-30T04:37:49.7069552Z Cloning into '/home/runner/actions_github_pages_1769747869698'...
+2026-01-30T04:37:50.0962657Z [INFO] clean up /home/runner/actions_github_pages_1769747869698
+2026-01-30T04:37:50.0963442Z [INFO] chdir /home/runner/actions_github_pages_1769747869698
+2026-01-30T04:37:50.0973562Z [command]/usr/bin/git rm -r --ignore-unmatch *
+2026-01-30T04:37:50.1016836Z rm '.editorconfig'
+2026-01-30T04:37:50.1017520Z rm '.gitattributes'
+2026-01-30T04:37:50.1017936Z rm '.nojekyll'
+2026-01-30T04:37:50.1018322Z rm '.pre-commit-config.yaml'
+2026-01-30T04:37:50.1018752Z rm 'README.md'
+2026-01-30T04:37:50.1019089Z rm 'TERMINAL_USAGE.md'
+2026-01-30T04:37:50.1019471Z rm 'actions.yaml'
+2026-01-30T04:37:50.1020695Z rm 'actions主配置文件，管理所有已安装的Actions.yaml'
+2026-01-30T04:37:50.1021198Z rm 'auto-fix.yml'
+2026-01-30T04:37:50.1021588Z rm 'ci-cd.yml'
+2026-01-30T04:37:50.1021945Z rm 'index.html'
+2026-01-30T04:37:50.1022285Z rm 'install-action.sh'
+2026-01-30T04:37:50.1022651Z rm 'issue-summary.yml'
+2026-01-30T04:37:50.1023048Z rm 'marketplace-actions.yaml'
+2026-01-30T04:37:50.1023471Z rm 'security-policy.md'
+2026-01-30T04:37:50.1023875Z rm 'security-scan.sh'
+2026-01-30T04:37:50.1024445Z rm 'src/App.jsx'
+2026-01-30T04:37:50.1024788Z rm 'src/index.css'
+2026-01-30T04:37:50.1025094Z rm 'src/main.jsx'
+2026-01-30T04:37:50.1025433Z rm 'test.yml'
+2026-01-30T04:37:50.1025889Z [INFO] chdir /home/runner/actions_github_pages_1769747869698
+2026-01-30T04:37:50.1026489Z [INFO] prepare publishing assets
+2026-01-30T04:37:50.1027526Z [INFO] copy /home/runner/work/coze-studio-test/coze-studio-test/.github/actions-config to /home/runner/actions_github_pages_1769747869698
+2026-01-30T04:37:50.1183246Z [INFO] delete excluded assets
+2026-01-30T04:37:50.1220175Z rm: no paths given
+2026-01-30T04:37:50.1223115Z [INFO] Created /home/runner/actions_github_pages_1769747869698/.nojekyll
+2026-01-30T04:37:50.1224681Z ##[endgroup]
+2026-01-30T04:37:50.1225423Z ##[group]Setup Git config
+2026-01-30T04:37:50.1240488Z [command]/usr/bin/git remote rm origin
+2026-01-30T04:37:50.1300259Z [command]/usr/bin/git remote add origin ***github.com/yhyub/coze-studio-test.git
+2026-01-30T04:37:50.1344543Z [command]/usr/bin/git add --all
+2026-01-30T04:37:50.1396911Z [command]/usr/bin/git config user.name yhyub
+2026-01-30T04:37:50.1435167Z [command]/usr/bin/git config user.email yhyub@users.noreply.github.com
+2026-01-30T04:37:50.1463802Z ##[endgroup]
+2026-01-30T04:37:50.1464452Z ##[group]Create a commit
+2026-01-30T04:37:50.1476388Z [command]/usr/bin/git commit -m deploy: 070297e155a380b13a703ea04e3b893944d31b3d
+2026-01-30T04:37:50.1512700Z On branch gh-pages
+2026-01-30T04:37:50.1513017Z nothing to commit, working tree clean
+2026-01-30T04:37:50.1517582Z [INFO] skip commit
+2026-01-30T04:37:50.1518359Z ##[endgroup]
+2026-01-30T04:37:50.1530527Z ##[group]Push the commit or tag
+2026-01-30T04:37:50.1530856Z [command]/usr/bin/git push origin gh-pages
+2026-01-30T04:37:50.4526488Z Everything up-to-date
+2026-01-30T04:37:50.4561258Z ##[endgroup]
+2026-01-30T04:37:50.4561620Z [INFO] Action successfully completed

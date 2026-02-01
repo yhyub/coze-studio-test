@@ -1,0 +1,27 @@
+﻿2026-01-30T04:37:23.0843344Z ##[group]Run node common/scripts/install-run-rush.js increment --action ts-check -p "changed-files-cache.json"
+2026-01-30T04:37:23.0844725Z [36;1mnode common/scripts/install-run-rush.js increment --action ts-check -p "changed-files-cache.json"[0m
+2026-01-30T04:37:23.0886419Z shell: /usr/bin/bash -e {0}
+2026-01-30T04:37:23.0886804Z ##[endgroup]
+2026-01-30T04:37:23.1231273Z The rush.json configuration requests Rush version 5.147.1
+2026-01-30T04:37:23.1238719Z 
+2026-01-30T04:37:23.1239543Z Invoking "rush increment --action ts-check -p changed-files-cache.json"
+2026-01-30T04:37:23.1240836Z -----------------------------------------------------------------------
+2026-01-30T04:37:23.1242364Z 
+2026-01-30T04:37:23.3859859Z Found configuration in /home/runner/work/coze-studio-test/coze-studio-test/rush.json
+2026-01-30T04:37:23.3861910Z 
+2026-01-30T04:37:23.3915413Z 
+2026-01-30T04:37:23.3916444Z [1mRush Multi-Project Build Tool 5.147.1[33m[39m[22m[36m - https://rushjs.io[39m
+2026-01-30T04:37:23.3917294Z Node.js version is 22.16.0 (LTS)
+2026-01-30T04:37:23.3917649Z 
+2026-01-30T04:37:23.3931118Z 
+2026-01-30T04:37:23.6661944Z Trying to acquire lock for pnpm-8.15.8
+2026-01-30T04:37:23.6805038Z Acquired lock for pnpm-8.15.8
+2026-01-30T04:37:23.6819341Z Found pnpm version 8.15.8 in /home/runner/.rush/node-v22.16.0/pnpm-8.15.8
+2026-01-30T04:37:23.6830827Z 
+2026-01-30T04:37:23.6831329Z Symlinking "/home/runner/work/coze-studio-test/coze-studio-test/common/temp/pnpm-local"
+2026-01-30T04:37:23.6832291Z   --> "/home/runner/.rush/node-v22.16.0/pnpm-8.15.8"
+2026-01-30T04:37:23.6843050Z Acquiring lock for "common/autoinstallers/plugins" folder...
+2026-01-30T04:37:23.6939173Z Autoinstaller folder is already up to date
+2026-01-30T04:37:23.6939404Z 
+2026-01-30T04:37:23.8014216Z Starting "rush increment"
+2026-01-30T04:37:23.8014992Z 

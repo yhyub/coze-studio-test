@@ -1,0 +1,17 @@
+﻿2026-01-30T04:37:38.5154643Z ##[group]Run actions/upload-artifact@v4
+2026-01-30T04:37:38.5154916Z with:
+2026-01-30T04:37:38.5155104Z   name: security-scan-results
+2026-01-30T04:37:38.5155343Z   path: .github/actions-config/logs/
+2026-01-30T04:37:38.5155594Z   if-no-files-found: warn
+2026-01-30T04:37:38.5155802Z   compression-level: 6
+2026-01-30T04:37:38.5156001Z   overwrite: false
+2026-01-30T04:37:38.5156196Z   include-hidden-files: false
+2026-01-30T04:37:38.5156403Z env:
+2026-01-30T04:37:38.5156633Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:38.5157031Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-01-30T04:37:38.5157713Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:38.5158082Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:38.5158443Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:38.5158801Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-01-30T04:37:38.5159094Z ##[endgroup]
+2026-01-30T04:37:38.7293889Z ##[warning]No files were found with the provided path: .github/actions-config/logs/. No artifacts will be uploaded.

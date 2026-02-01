@@ -1,0 +1,43 @@
+﻿2026-01-30T04:36:30.4099307Z Current runner version: '2.331.0'
+2026-01-30T04:36:30.4133086Z ##[group]Runner Image Provisioner
+2026-01-30T04:36:30.4134386Z Hosted Compute Agent
+2026-01-30T04:36:30.4135394Z Version: 20260123.484
+2026-01-30T04:36:30.4136404Z Commit: 6bd6555ca37d84114959e1c76d2c01448ff61c5d
+2026-01-30T04:36:30.4137751Z Build Date: 2026-01-23T19:41:17Z
+2026-01-30T04:36:30.4139078Z Worker ID: {97631ee2-e0e2-40e8-8cae-5997b91b41cf}
+2026-01-30T04:36:30.4140323Z Azure Region: northcentralus
+2026-01-30T04:36:30.4141203Z ##[endgroup]
+2026-01-30T04:36:30.4143592Z ##[group]Operating System
+2026-01-30T04:36:30.4144567Z Ubuntu
+2026-01-30T04:36:30.4145364Z 24.04.3
+2026-01-30T04:36:30.4146260Z LTS
+2026-01-30T04:36:30.4146953Z ##[endgroup]
+2026-01-30T04:36:30.4147727Z ##[group]Runner Image
+2026-01-30T04:36:30.4148880Z Image: ubuntu-24.04
+2026-01-30T04:36:30.4149751Z Version: 20260126.10.1
+2026-01-30T04:36:30.4151494Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260126.10/images/ubuntu/Ubuntu2404-Readme.md
+2026-01-30T04:36:30.4154574Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260126.10
+2026-01-30T04:36:30.4156216Z ##[endgroup]
+2026-01-30T04:36:30.4160559Z ##[group]GITHUB_TOKEN Permissions
+2026-01-30T04:36:30.4163523Z Actions: write
+2026-01-30T04:36:30.4164531Z Checks: read
+2026-01-30T04:36:30.4165404Z Contents: write
+2026-01-30T04:36:30.4166343Z Deployments: read
+2026-01-30T04:36:30.4167277Z Issues: read
+2026-01-30T04:36:30.4168265Z Metadata: read
+2026-01-30T04:36:30.4169319Z Packages: read
+2026-01-30T04:36:30.4170270Z Pages: write
+2026-01-30T04:36:30.4171060Z PullRequests: read
+2026-01-30T04:36:30.4171897Z RepositoryProjects: read
+2026-01-30T04:36:30.4172901Z SecurityEvents: read
+2026-01-30T04:36:30.4173702Z Statuses: read
+2026-01-30T04:36:30.4174657Z ##[endgroup]
+2026-01-30T04:36:30.4178022Z Secret source: Actions
+2026-01-30T04:36:30.4179480Z Prepare workflow directory
+2026-01-30T04:36:30.4644929Z Prepare all required actions
+2026-01-30T04:36:30.4701975Z Getting action download info
+2026-01-30T04:36:30.7725557Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-01-30T04:36:30.8541970Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-01-30T04:36:30.9469296Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+2026-01-30T04:36:31.0426520Z Download action repository 'actions/download-artifact@v4' (SHA:d3f86a106a0bac45b974a628896c90dbdf5c8093)
+2026-01-30T04:36:31.5401520Z Complete job name: Quality Checks

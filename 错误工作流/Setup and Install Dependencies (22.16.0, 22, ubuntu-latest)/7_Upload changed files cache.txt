@@ -1,0 +1,21 @@
+﻿2026-01-30T04:36:24.0933817Z ##[group]Run actions/upload-artifact@v4
+2026-01-30T04:36:24.0934108Z with:
+2026-01-30T04:36:24.0934306Z   name: changed-files-cache
+2026-01-30T04:36:24.0934554Z   path: changed-files-cache.json
+2026-01-30T04:36:24.0934824Z   retention-days: 1
+2026-01-30T04:36:24.0935031Z   if-no-files-found: warn
+2026-01-30T04:36:24.0935261Z   compression-level: 6
+2026-01-30T04:36:24.0935466Z   overwrite: false
+2026-01-30T04:36:24.0935676Z   include-hidden-files: false
+2026-01-30T04:36:24.0935900Z ##[endgroup]
+2026-01-30T04:36:24.3035159Z With the provided path, there will be 1 file uploaded
+2026-01-30T04:36:24.3036278Z Artifact name is valid!
+2026-01-30T04:36:24.3036777Z Root directory input is valid!
+2026-01-30T04:36:24.5691677Z Beginning upload of artifact content to blob storage
+2026-01-30T04:36:24.7844214Z Uploaded bytes 205
+2026-01-30T04:36:24.8421517Z Finished uploading artifact content to blob storage!
+2026-01-30T04:36:24.8425410Z SHA256 digest of uploaded artifact zip is 913da7fa8c103c96cc41ee5dd5b6620bd45a668fbcddf6638502be82d800fa89
+2026-01-30T04:36:24.8426888Z Finalizing artifact upload
+2026-01-30T04:36:24.9532572Z Artifact changed-files-cache.zip successfully finalized. Artifact ID 5313851479
+2026-01-30T04:36:24.9534326Z Artifact changed-files-cache has been successfully uploaded! Final size is 205 bytes. Artifact ID is 5313851479
+2026-01-30T04:36:24.9542505Z Artifact download URL: https://github.com/yhyub/coze-studio-test/actions/runs/21504559246/artifacts/5313851479

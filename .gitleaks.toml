@@ -1,0 +1,27 @@
+title = "Gitleaks Configuration"
+description = "Custom gitleaks configuration for detecting secrets"
+
+[[rules]]
+id = "generic-api-key"
+description = "Generic API Key"
+regex = '''api[_-]?key[_-]?[a-zA-Z0-9]{32}'''
+
+[[rules]]
+id = "github-token"
+description = "GitHub Token"
+regex = '''ghp_[a-zA-Z0-9]{36}'''
+
+[[rules]]
+id = "slack-webhook"
+description = "Slack Webhook URL"
+regex = '''https://hooks\.slack\.com/services/[a-zA-Z0-9_/-]+'''
+
+[[rules]]
+id = "npm-token"
+description = "NPM Token"
+regex = '''npm_[a-zA-Z0-9]{36}'''
+
+[[rules]]
+id = "aws-access-key"
+description = "AWS Access Key"
+regex = '''AKIA[0-9A-Z]{16}'''

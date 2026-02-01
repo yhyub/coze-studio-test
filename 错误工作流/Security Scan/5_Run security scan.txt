@@ -1,0 +1,15 @@
+﻿2026-01-30T04:37:38.4986468Z ##[group]Run cd .github/actions-config
+2026-01-30T04:37:38.4986812Z [36;1mcd .github/actions-config[0m
+2026-01-30T04:37:38.4987069Z [36;1m# 创建日志目录[0m
+2026-01-30T04:37:38.4987269Z [36;1mmkdir -p logs[0m
+2026-01-30T04:37:38.4987685Z [36;1m# 使用本地配置文件进行扫描[0m
+2026-01-30T04:37:38.4987994Z [36;1mCONFIG_FILE="actions.yaml" bash security-scan.sh -v -l[0m
+2026-01-30T04:37:38.5019774Z shell: /usr/bin/bash -e {0}
+2026-01-30T04:37:38.5019999Z env:
+2026-01-30T04:37:38.5020240Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:38.5020659Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-01-30T04:37:38.5021224Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:38.5021585Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:38.5021935Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:38.5022297Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-01-30T04:37:38.5022641Z ##[endgroup]

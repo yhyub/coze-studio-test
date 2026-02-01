@@ -1,0 +1,206 @@
+﻿2026-01-30T04:37:31.7170159Z Current runner version: '2.331.0'
+2026-01-30T04:37:31.7195679Z ##[group]Runner Image Provisioner
+2026-01-30T04:37:31.7197009Z Hosted Compute Agent
+2026-01-30T04:37:31.7198253Z Version: 20260123.484
+2026-01-30T04:37:31.7199246Z Commit: 6bd6555ca37d84114959e1c76d2c01448ff61c5d
+2026-01-30T04:37:31.7200517Z Build Date: 2026-01-23T19:41:17Z
+2026-01-30T04:37:31.7201691Z Worker ID: {882dba5f-0110-42ad-b10f-ac31307a0845}
+2026-01-30T04:37:31.7203022Z Azure Region: westcentralus
+2026-01-30T04:37:31.7203869Z ##[endgroup]
+2026-01-30T04:37:31.7205610Z ##[group]Operating System
+2026-01-30T04:37:31.7206242Z Ubuntu
+2026-01-30T04:37:31.7206669Z 24.04.3
+2026-01-30T04:37:31.7207218Z LTS
+2026-01-30T04:37:31.7208443Z ##[endgroup]
+2026-01-30T04:37:31.7209211Z ##[group]Runner Image
+2026-01-30T04:37:31.7209958Z Image: ubuntu-24.04
+2026-01-30T04:37:31.7210829Z Version: 20260126.10.1
+2026-01-30T04:37:31.7212108Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260126.10/images/ubuntu/Ubuntu2404-Readme.md
+2026-01-30T04:37:31.7213647Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260126.10
+2026-01-30T04:37:31.7214518Z ##[endgroup]
+2026-01-30T04:37:31.7216606Z ##[group]GITHUB_TOKEN Permissions
+2026-01-30T04:37:31.7219278Z Actions: write
+2026-01-30T04:37:31.7219813Z Checks: read
+2026-01-30T04:37:31.7220373Z Contents: write
+2026-01-30T04:37:31.7220943Z Deployments: read
+2026-01-30T04:37:31.7221402Z Issues: read
+2026-01-30T04:37:31.7222323Z Metadata: read
+2026-01-30T04:37:31.7222821Z Packages: read
+2026-01-30T04:37:31.7223305Z Pages: write
+2026-01-30T04:37:31.7223870Z PullRequests: read
+2026-01-30T04:37:31.7224415Z RepositoryProjects: read
+2026-01-30T04:37:31.7224978Z SecurityEvents: read
+2026-01-30T04:37:31.7225550Z Statuses: read
+2026-01-30T04:37:31.7226337Z ##[endgroup]
+2026-01-30T04:37:31.7228749Z Secret source: Actions
+2026-01-30T04:37:31.7229543Z Prepare workflow directory
+2026-01-30T04:37:31.7558527Z Prepare all required actions
+2026-01-30T04:37:31.7596019Z Getting action download info
+2026-01-30T04:37:32.1221609Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-01-30T04:37:32.2096305Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-01-30T04:37:32.2923099Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-01-30T04:37:32.5149785Z Complete job name: Security Scan
+2026-01-30T04:37:32.5873241Z ##[group]Run actions/checkout@v4
+2026-01-30T04:37:32.5874158Z with:
+2026-01-30T04:37:32.5874609Z   repository: yhyub/coze-studio-test
+2026-01-30T04:37:32.5875331Z   token: ***
+2026-01-30T04:37:32.5875751Z   ssh-strict: true
+2026-01-30T04:37:32.5876167Z   ssh-user: git
+2026-01-30T04:37:32.5876604Z   persist-credentials: true
+2026-01-30T04:37:32.5877086Z   clean: true
+2026-01-30T04:37:32.5877779Z   sparse-checkout-cone-mode: true
+2026-01-30T04:37:32.5878292Z   fetch-depth: 1
+2026-01-30T04:37:32.5878726Z   fetch-tags: false
+2026-01-30T04:37:32.5879201Z   show-progress: true
+2026-01-30T04:37:32.5879634Z   lfs: false
+2026-01-30T04:37:32.5880046Z   submodules: false
+2026-01-30T04:37:32.5880487Z   set-safe-directory: true
+2026-01-30T04:37:32.5881248Z ##[endgroup]
+2026-01-30T04:37:32.7016975Z Syncing repository: yhyub/coze-studio-test
+2026-01-30T04:37:32.7019473Z ##[group]Getting Git version info
+2026-01-30T04:37:32.7021015Z Working directory is '/home/runner/work/coze-studio-test/coze-studio-test'
+2026-01-30T04:37:32.7023371Z [command]/usr/bin/git version
+2026-01-30T04:37:32.7084454Z git version 2.52.0
+2026-01-30T04:37:32.7112303Z ##[endgroup]
+2026-01-30T04:37:32.7134875Z Temporarily overriding HOME='/home/runner/work/_temp/760df994-38e8-416d-b8af-3dcdf75c8010' before making global git config changes
+2026-01-30T04:37:32.7137784Z Adding repository directory to the temporary git global config as a safe directory
+2026-01-30T04:37:32.7141968Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/coze-studio-test/coze-studio-test
+2026-01-30T04:37:32.7181288Z Deleting the contents of '/home/runner/work/coze-studio-test/coze-studio-test'
+2026-01-30T04:37:32.7184699Z ##[group]Initializing the repository
+2026-01-30T04:37:32.7190232Z [command]/usr/bin/git init /home/runner/work/coze-studio-test/coze-studio-test
+2026-01-30T04:37:32.7272317Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-01-30T04:37:32.7273667Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-01-30T04:37:32.7275055Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-01-30T04:37:32.7276140Z hint: call:
+2026-01-30T04:37:32.7276731Z hint:
+2026-01-30T04:37:32.7277942Z hint: 	git config --global init.defaultBranch <name>
+2026-01-30T04:37:32.7279161Z hint:
+2026-01-30T04:37:32.7280303Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-01-30T04:37:32.7282182Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-01-30T04:37:32.7283679Z hint:
+2026-01-30T04:37:32.7284428Z hint: 	git branch -m <name>
+2026-01-30T04:37:32.7285253Z hint:
+2026-01-30T04:37:32.7286465Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-01-30T04:37:32.7288980Z Initialized empty Git repository in /home/runner/work/coze-studio-test/coze-studio-test/.git/
+2026-01-30T04:37:32.7292325Z [command]/usr/bin/git remote add origin https://github.com/yhyub/coze-studio-test
+2026-01-30T04:37:32.7324173Z ##[endgroup]
+2026-01-30T04:37:32.7325510Z ##[group]Disabling automatic garbage collection
+2026-01-30T04:37:32.7329335Z [command]/usr/bin/git config --local gc.auto 0
+2026-01-30T04:37:32.7358554Z ##[endgroup]
+2026-01-30T04:37:32.7359954Z ##[group]Setting up auth
+2026-01-30T04:37:32.7366177Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-01-30T04:37:32.7401481Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-01-30T04:37:32.7744718Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-01-30T04:37:32.7779095Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-01-30T04:37:32.8022997Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-01-30T04:37:32.8062660Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-01-30T04:37:32.8289107Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-01-30T04:37:32.8322858Z ##[endgroup]
+2026-01-30T04:37:32.8323791Z ##[group]Fetching the repository
+2026-01-30T04:37:32.8331481Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +070297e155a380b13a703ea04e3b893944d31b3d:refs/remotes/origin/main
+2026-01-30T04:37:35.1028862Z From https://github.com/yhyub/coze-studio-test
+2026-01-30T04:37:35.1031156Z  * [new ref]           070297e155a380b13a703ea04e3b893944d31b3d -> origin/main
+2026-01-30T04:37:35.1063052Z ##[endgroup]
+2026-01-30T04:37:35.1064908Z ##[group]Determining the checkout info
+2026-01-30T04:37:35.1066919Z ##[endgroup]
+2026-01-30T04:37:35.1071487Z [command]/usr/bin/git sparse-checkout disable
+2026-01-30T04:37:35.1114924Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-01-30T04:37:35.1142439Z ##[group]Checking out the ref
+2026-01-30T04:37:35.1146793Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-01-30T04:37:36.0043737Z Switched to a new branch 'main'
+2026-01-30T04:37:36.0045264Z branch 'main' set up to track 'origin/main'.
+2026-01-30T04:37:36.0119306Z ##[endgroup]
+2026-01-30T04:37:36.0124331Z [command]/usr/bin/git log -1 --format=%H
+2026-01-30T04:37:36.0148012Z 070297e155a380b13a703ea04e3b893944d31b3d
+2026-01-30T04:37:36.0379933Z ##[group]Run actions/setup-python@v5
+2026-01-30T04:37:36.0380255Z with:
+2026-01-30T04:37:36.0380448Z   python-version: 3.11
+2026-01-30T04:37:36.0380664Z   check-latest: false
+2026-01-30T04:37:36.0381001Z   token: ***
+2026-01-30T04:37:36.0381204Z   update-environment: true
+2026-01-30T04:37:36.0381450Z   allow-prereleases: false
+2026-01-30T04:37:36.0381677Z   freethreaded: false
+2026-01-30T04:37:36.0381877Z ##[endgroup]
+2026-01-30T04:37:36.2078750Z ##[group]Installed versions
+2026-01-30T04:37:36.2180050Z Successfully set up CPython (3.11.14)
+2026-01-30T04:37:36.2180825Z ##[endgroup]
+2026-01-30T04:37:36.2293965Z ##[group]Run python -m pip install --upgrade pip
+2026-01-30T04:37:36.2294415Z [36;1mpython -m pip install --upgrade pip[0m
+2026-01-30T04:37:36.2294713Z [36;1mpip install yq[0m
+2026-01-30T04:37:36.2344571Z shell: /usr/bin/bash -e {0}
+2026-01-30T04:37:36.2344879Z env:
+2026-01-30T04:37:36.2345157Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:36.2345598Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-01-30T04:37:36.2346034Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:36.2346401Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:36.2346765Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:36.2347125Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-01-30T04:37:36.2347699Z ##[endgroup]
+2026-01-30T04:37:36.9152972Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (25.3)
+2026-01-30T04:37:37.6925033Z Collecting yq
+2026-01-30T04:37:37.8004731Z   Downloading yq-3.4.3-py3-none-any.whl.metadata (9.0 kB)
+2026-01-30T04:37:37.8810080Z Collecting PyYAML>=5.3.1 (from yq)
+2026-01-30T04:37:37.9006234Z   Downloading pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+2026-01-30T04:37:37.9347892Z Collecting xmltodict>=0.11.0 (from yq)
+2026-01-30T04:37:37.9544318Z   Downloading xmltodict-1.0.2-py3-none-any.whl.metadata (15 kB)
+2026-01-30T04:37:37.9953109Z Collecting tomlkit>=0.11.6 (from yq)
+2026-01-30T04:37:38.0149034Z   Downloading tomlkit-0.14.0-py3-none-any.whl.metadata (2.8 kB)
+2026-01-30T04:37:38.0585619Z Collecting argcomplete>=1.8.1 (from yq)
+2026-01-30T04:37:38.0784704Z   Downloading argcomplete-3.6.3-py3-none-any.whl.metadata (16 kB)
+2026-01-30T04:37:38.1099714Z Downloading yq-3.4.3-py3-none-any.whl (18 kB)
+2026-01-30T04:37:38.1346063Z Downloading argcomplete-3.6.3-py3-none-any.whl (43 kB)
+2026-01-30T04:37:38.1731704Z Downloading pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (806 kB)
+2026-01-30T04:37:38.2330164Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 806.6/806.6 kB 22.7 MB/s  0:00:00
+2026-01-30T04:37:38.2530445Z Downloading tomlkit-0.14.0-py3-none-any.whl (39 kB)
+2026-01-30T04:37:38.2744280Z Downloading xmltodict-1.0.2-py3-none-any.whl (13 kB)
+2026-01-30T04:37:38.3112501Z Installing collected packages: xmltodict, tomlkit, PyYAML, argcomplete, yq
+2026-01-30T04:37:38.4436193Z 
+2026-01-30T04:37:38.4447056Z Successfully installed PyYAML-6.0.3 argcomplete-3.6.3 tomlkit-0.14.0 xmltodict-1.0.2 yq-3.4.3
+2026-01-30T04:37:38.4986481Z ##[group]Run cd .github/actions-config
+2026-01-30T04:37:38.4986815Z [36;1mcd .github/actions-config[0m
+2026-01-30T04:37:38.4987073Z [36;1m# 创建日志目录[0m
+2026-01-30T04:37:38.4987272Z [36;1mmkdir -p logs[0m
+2026-01-30T04:37:38.4987688Z [36;1m# 使用本地配置文件进行扫描[0m
+2026-01-30T04:37:38.4987997Z [36;1mCONFIG_FILE="actions.yaml" bash security-scan.sh -v -l[0m
+2026-01-30T04:37:38.5019779Z shell: /usr/bin/bash -e {0}
+2026-01-30T04:37:38.5020001Z env:
+2026-01-30T04:37:38.5020242Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:38.5020662Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-01-30T04:37:38.5021227Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:38.5021587Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:38.5021937Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:38.5022345Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-01-30T04:37:38.5022644Z ##[endgroup]
+2026-01-30T04:37:38.5154651Z ##[group]Run actions/upload-artifact@v4
+2026-01-30T04:37:38.5154918Z with:
+2026-01-30T04:37:38.5155107Z   name: security-scan-results
+2026-01-30T04:37:38.5155345Z   path: .github/actions-config/logs/
+2026-01-30T04:37:38.5155597Z   if-no-files-found: warn
+2026-01-30T04:37:38.5155804Z   compression-level: 6
+2026-01-30T04:37:38.5156003Z   overwrite: false
+2026-01-30T04:37:38.5156198Z   include-hidden-files: false
+2026-01-30T04:37:38.5156406Z env:
+2026-01-30T04:37:38.5156636Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:38.5157034Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-01-30T04:37:38.5157716Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:38.5158084Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:38.5158445Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-01-30T04:37:38.5158803Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-01-30T04:37:38.5159125Z ##[endgroup]
+2026-01-30T04:37:38.7293921Z ##[warning]No files were found with the provided path: .github/actions-config/logs/. No artifacts will be uploaded.
+2026-01-30T04:37:38.7407861Z Post job cleanup.
+2026-01-30T04:37:38.9037264Z Post job cleanup.
+2026-01-30T04:37:38.9988192Z [command]/usr/bin/git version
+2026-01-30T04:37:39.0024796Z git version 2.52.0
+2026-01-30T04:37:39.0069085Z Temporarily overriding HOME='/home/runner/work/_temp/9b5976bb-d2b1-4aaa-b266-31efcc44e358' before making global git config changes
+2026-01-30T04:37:39.0070439Z Adding repository directory to the temporary git global config as a safe directory
+2026-01-30T04:37:39.0082873Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/coze-studio-test/coze-studio-test
+2026-01-30T04:37:39.0118221Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-01-30T04:37:39.0150812Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-01-30T04:37:39.0404657Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-01-30T04:37:39.0426662Z http.https://github.com/.extraheader
+2026-01-30T04:37:39.0439602Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-01-30T04:37:39.0470051Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-01-30T04:37:39.0719042Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-01-30T04:37:39.0750494Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-01-30T04:37:39.1111952Z Cleaning up orphan processes

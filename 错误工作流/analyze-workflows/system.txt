@@ -1,0 +1,9 @@
+2026-01-30T04:13:01.1170000Z Evaluating analyze-workflows.if
+2026-01-30T04:13:01.1170000Z Evaluating: success()
+2026-01-30T04:13:01.1170000Z Result: true
+2026-01-30T04:13:01.5990000Z Requested labels: ubuntu-latest
+2026-01-30T04:13:01.5990000Z Job defined at: yhyub/coze-studio-test/.github/workflows/workflow-fixer.yml@refs/heads/main
+2026-01-30T04:13:01.5990000Z Waiting for a runner to pick up this job...
+2026-01-30T04:13:01.6050000Z Job is about to start running on the hosted runner: GitHub Actions 1000001337
+2026-01-30T04:13:01.6050000Z Job is waiting for a hosted runner to come online.\n
+

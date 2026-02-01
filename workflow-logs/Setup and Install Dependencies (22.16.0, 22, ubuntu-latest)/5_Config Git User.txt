@@ -1,0 +1,5 @@
+﻿2026-01-30T04:36:18.9464341Z ##[group]Run git config --global user.name "flow_bot"
+2026-01-30T04:36:18.9464730Z [36;1mgit config --global user.name "flow_bot"[0m
+2026-01-30T04:36:18.9465118Z [36;1mgit config --global user.email "flow_bot@bytedance.com"[0m
+2026-01-30T04:36:18.9494621Z shell: /usr/bin/bash -e {0}
+2026-01-30T04:36:18.9494859Z ##[endgroup]
