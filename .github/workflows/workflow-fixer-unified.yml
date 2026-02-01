@@ -467,46 +467,46 @@ jobs:
           else
             echo "Creating workflow documentation..."
             TODAY=$(date +"%Y-%m-%d")
-            echo '# 工作流文�? > .github/WORKFLOWS_DOCUMENTATION.md
+            echo '# 工作流文档' > .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '## 文档信息' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- **版本**: v1.3' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo "- **创建日期**: ${TODAY}" >> .github/WORKFLOWS_DOCUMENTATION.md
             echo "- **更新日期**: ${TODAY}" >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **作�?*: GitHub Actions' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **作者**: GitHub Actions' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '## 目录结构' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '### .github 目录' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **actions/**: 自定�?Action' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **actions/**: 自定义 Action' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- **actions-config/**: Actions 配置文件' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **workflows/**: 工作流文�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **workflows/**: 工作流文件' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- **scripts/**: 辅助脚本' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '## 工作流分�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '## 工作流分类' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '### CI/CD 工作�? >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **ci.yml**: CI 工作�? >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **ci@backend.yml**: 后端 CI 工作�? >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **ci@main.yml**: 主分�?CI 工作�? >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **deploy.yml**: 部署工作�? >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **release.yml**: 发布工作�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '### CI/CD 工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **ci.yml**: CI 工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **ci@backend.yml**: 后端 CI 工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **ci@main.yml**: 主分支 CI 工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **deploy.yml**: 部署工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **release.yml**: 发布工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '### 测试工作�? >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **deno.yml**: Deno 测试工作�? >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **idl.yaml**: IDL 测试工作�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '### 测试工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **deno.yml**: Deno 测试工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **idl.yaml**: IDL 测试工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '### 安全工作�? >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **security-scan.yml**: 安全扫描工作�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '### 安全工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **security-scan.yml**: 安全扫描工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- **license-check.yaml**: 许可证检查工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '### 其他工作�? >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **claude.yml**: Claude PR 助手工作�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '### 其他工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **claude.yml**: Claude PR 助手工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- **unified-workflow-fixer.yml**: 统一工作流修复器' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '## Actions 配置' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '### 允许的来�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '### 允许的来源' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- actions/checkout' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- actions/setup-node' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- actions/setup-python' >> .github/WORKFLOWS_DOCUMENTATION.md
@@ -521,32 +521,32 @@ jobs:
             echo '- actions/github-script' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '### 已安装的 Actions' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **actions/checkout@v4**: 基础代码检�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **actions/checkout@v4**: 基础代码检查' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- **actions/setup-node@v5**: Node.js 环境设置' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- **actions/setup-python@v5**: Python 环境设置' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- **actions/cache@v4**: 依赖缓存' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- **actions/upload-artifact@v4**: 上传构建产物' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- **actions/download-artifact@v4**: 下载构建产物' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- **github/codeql-action@v3**: 代码安全扫描' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **actions/dependency-review-action@v4**: 依赖安全检�? >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **reviewdog/reviewdog@v0.16.0**: 代码质量检�? >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **codecov/codecov-action@v4**: 测试覆盖率报�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **actions/dependency-review-action@v4**: 依赖安全检查' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **reviewdog/reviewdog@v0.16.0**: 代码质量检查' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **codecov/codecov-action@v4**: 测试覆盖率报告' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- **8398a7/action-slack@v3**: 工作流通知' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- **actions/github-script@v7**: GitHub API 脚本' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '### 自定�?Actions' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- **action-fixer**: 自动检测和修复工作流错�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '### 自定义 Actions' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- **action-fixer**: 自动检测和修复工作流错误' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '## 安全策略' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '### 版本管理' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- 强制使用固定版本�? >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- 定期检查安全更�? >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- 避免使用 `@master` �?`@latest`' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- 强制使用固定版本' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- 定期检查安全更新' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- 避免使用 `@master` 或 `@latest`' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '### 权限管理' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- 最小权限原�? >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- 明确的权限配�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- 最小权限原则' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- 明确的权限配置' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- 定期权限审计' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '### 依赖管理' >> .github/WORKFLOWS_DOCUMENTATION.md
@@ -556,42 +556,42 @@ jobs:
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '## 使用建议' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '### CI 工作�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '### CI 工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- 增量构建' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- 并行测试' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- 缓存优化' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '### 部署工作�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '### 部署工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- 安全扫描' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- 部署前检�? >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '- 部署后验�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- 部署前检查' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '- 部署后验证' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '### 安全工作�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '### 安全工作流' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- 定期扫描' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- 及时修复漏洞' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '- 安全报告' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '## 优化方向' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '1. **工作流整�?*: 合并相似的工作流，减少重�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '1. **工作流整合**: 合并相似的工作流，减少重复' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '2. **安全增强**: 增加更多安全检查点' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '3. **性能优化**: 进一步优化缓存和并行执行' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '4. **监控增强**: 添加更多监控和通知' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '5. **自动化增�?*: 增加更多自动化修复功�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '5. **自动化增强**: 增加更多自动化修复功能' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '## 故障排除' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '### 常见错误' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '1. **权限错误**: 检查工作流权限配置' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '2. **语法错误**: 使用 YAML 验证工具检查语�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '2. **语法错误**: 使用 YAML 验证工具检查语法' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '3. **依赖错误**: 检查依赖配置和网络连接' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '4. **超时错误**: 增加超时设置或优化执行时�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '4. **超时错误**: 增加超时设置或优化执行时间' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '### 解决方案' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '1. **权限问题**: 添加适当的权限配�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '1. **权限问题**: 添加适当的权限配置' >> .github/WORKFLOWS_DOCUMENTATION.md
             echo '2. **语法问题**: 使用 `reviewdog/reviewdog` 自动修复' >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '3. **依赖问题**: 增加缓存和重试机�? >> .github/WORKFLOWS_DOCUMENTATION.md
-            echo '4. **超时问题**: 优化执行步骤和增加超时设�? >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '3. **依赖问题**: 增加缓存和重试机制' >> .github/WORKFLOWS_DOCUMENTATION.md
+            echo '4. **超时问题**: 优化执行步骤和增加超时设置' >> .github/WORKFLOWS_DOCUMENTATION.md
           fi
           
           # Commit documentation changes
@@ -729,4 +729,4 @@ jobs:
           status: ${{ job.status }}
           channel: '#ci-cd'
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}\n
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

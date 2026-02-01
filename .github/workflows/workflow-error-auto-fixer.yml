@@ -1,7 +1,8 @@
 name: Workflow Error Auto-Fixer
 
 on:
-  # 1. 监听工作流失败事�?  workflow_run:
+  # 1. 监听工作流失败事件
+  workflow_run:
     workflows: ["**"]  # 监控所有工作流
     types:
       - completed
@@ -29,7 +30,8 @@ jobs:
       workflows: write
       checks: write
     steps:
-      - name: 收集失败工作流信息        id: gather-info
+      - name: 收集失败工作流信息
+        id: gather-info
         run: |
           # 获取工作流运行ID
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
@@ -49,9 +51,11 @@ jobs:
           echo "head_branch=$(echo $RESPONSE | jq -r '.head_branch')" >> $GITHUB_OUTPUT
           echo "trigger_by=$(echo $RESPONSE | jq -r '.actor.login')" >> $GITHUB_OUTPUT
 
-      - name: 获取详细错误日志        id: get-logs
+      - name: 获取详细错误日志
+        id: get-logs
         run: |
-          # 下载并分析日志          gh run view ${{ steps.gather-info.outputs.run_id }} --log-failed > failed_logs.txt
+          # 下载并分析日志
+          gh run view ${{ steps.gather-info.outputs.run_id }} --log-failed > failed_logs.txt
           
           # 提取关键错误信息
           ERROR_PATTERN=$(grep -i -E "error:|failed|syntax|permission|not found|command not found" failed_logs.txt | head -5)
@@ -73,7 +77,8 @@ jobs:
           echo "error_type=$ERROR_TYPE" >> $GITHUB_OUTPUT
           cat failed_logs.txt >> $GITHUB_STEP_SUMMARY
 
-      - name: 智能诊断与修复建议        id: diagnose
+      - name: 智能诊断与修复建议
+        id: diagnose
         run: |
           ERROR_TYPE="${{ steps.get-logs.outputs.error_type }}"
           FIX_STRATEGY="none"
@@ -118,7 +123,7 @@ jobs:
           mkdir -p fixes
           WORKFLOW_PATH=".github/workflows/${{ steps.gather-info.outputs.workflow_name }}"
           
-          case "${{ steps.diagnose.outputs.fix_strategy }}" in
+          case "${{ steps.diagnose.outputs.fix_strategy }}":
             patch_yaml)
               # 修复常见的YAML语法错误
               echo "正在修复YAML语法..."
@@ -130,13 +135,40 @@ jobs:
             
             update_permissions)
               # 更新工作流权限
-              echo "更新工作流权限.."
+              echo "更新工作流权限..."
               cat > fixes/permissions_patch.yaml << 'EOF'
               # 建议的权限更新
               permissions:
                 contents: write
                 actions: read
                 checks: write
+              EOF
+              
+              # 添加GitHub App权限错误处理
+              cat > fixes/github_app_permission_fix.md << 'EOF'
+              # GitHub App 权限错误处理指南
+              
+              ## 错误信息
+              ```
+              Error: Unhandled error: HttpError: refusing to allow a GitHub App to create or update workflow .github/workflows/actions-config-manager.yml without workflows permission
+              ```
+              
+              ## 解决方案
+              
+              ### 方案一：修改 GitHub App 权限（推荐，一劳永逸）
+              1. 登录 GitHub，点击右上角头像 -> "Settings"
+              2. 在左侧边栏底部，找到 "Developer settings"
+              3. 点击 "GitHub Apps"
+              4. 找到你正在使用的 GitHub App（负责执行工作流自动修复的应用）
+              5. 进入该 App 的详细配置页面
+              6. 找到 "Permissions" 部分
+              7. 在权限列表中，找到 "Workflows" 这一项
+              8. 将权限级别从默认的 Read-only 修改为 Read and write
+              9. 保存设置
+              10. 重新运行工作流
+              
+              ### 方案二：修改工作流触发方式
+              如果暂时无法修改 GitHub App 权限，可以考虑使用个人访问令牌 (PAT) 或其他具有适当权限的认证方式来触发工作流。
               EOF
               ;;
             
@@ -195,7 +227,8 @@ jobs:
           
           echo "PR已创建: $BRANCH_NAME"
 
-      - name: 创建问题工单（需要人工干预时）        if: steps.diagnose.outputs.fix_strategy == 'manual_review'
+      - name: 创建问题工单（需要人工干预时）
+        if: steps.diagnose.outputs.fix_strategy == 'manual_review'
         run: |
           gh issue create \
             --title "需要人工检查: ${{ steps.gather-info.outputs.workflow_name }} 工作流失败" \
@@ -235,4 +268,4 @@ jobs:
           name: workflow-fix-report-${{ steps.gather-info.outputs.run_id }}
           path: |
             fixes/
-            failed_logs.txt\n
+            failed_logs.txt

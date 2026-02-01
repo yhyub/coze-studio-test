@@ -126,7 +126,8 @@ jobs:
                 // 修复超时设置
                 content = content.replace(/timeout-minutes: 10/g, 'timeout-minutes: 30');
                 
-                // 只在内容变化时写�?                if (content !== originalContent) {
+                // 只在内容变化时写入
+                if (content !== originalContent) {
                   fs.writeFileSync(filePath, content, 'utf8');
                   console.log(`Fixed ${file}`);
                   fixedFiles++;
@@ -179,7 +180,7 @@ jobs:
               const fs = require('fs');
               const content = fs.readFileSync(file, 'utf8');
               
-              // 获取文件的当�?SHA
+              // 获取文件的当前SHA
               let sha;
               try {
                 const response = await github.rest.repos.getContent({
@@ -210,10 +211,24 @@ jobs:
                 console.error(`Error updating ${file}: ${error.message}`);
                 if (error.message.includes('without `workflows` permission')) {
                   console.error('\n🚨 Permission Error: GitHub App lacks workflows permission');
-                  console.error('Please update GitHub App permissions to include "Workflows: Read and write"');
-                  console.error('Steps: Settings → Developer settings → GitHub Apps → Your App → Permissions → Workflows');
+                  console.error('Error: Unhandled error: HttpError: refusing to allow a GitHub App to create or update workflow without workflows permission');
+                  console.error('\n📋 Detailed Solution Steps:');
+                  console.error('1. Log in to GitHub and click your profile picture → "Settings"');
+                  console.error('2. Scroll to the bottom of the left sidebar and click "Developer settings"');
+                  console.error('3. Click "GitHub Apps" to see your installed apps');
+                  console.error('4. Find the GitHub App that runs this workflow (look for app related to workflow automation)');
+                  console.error('5. Click into the app configuration page');
+                  console.error('6. Go to "Permissions" section');
+                  console.error('7. Find "Workflows" permission and change it from "Read-only" to "Read and write"');
+                  console.error('8. Click "Save changes" at the bottom');
+                  console.error('9. Return to this workflow run and click "Re-run all jobs"');
+                  console.error('\n🔄 Alternative Approach:');
+                  console.error('If you cannot modify GitHub App permissions, consider:');
+                  console.error('- Using a personal access token (PAT) with workflow permissions');
+                  console.error('- Running this workflow manually with proper credentials');
+                  console.error('- Contacting your organization admin to update app permissions');
                 }
               }
             }
             
-            console.log('All workflow files updated successfully!');\n
+            console.log('All workflow files updated successfully!');

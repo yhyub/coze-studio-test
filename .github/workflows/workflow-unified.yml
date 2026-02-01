@@ -6,7 +6,8 @@ on:
   pull_request:
     branches: [ main ]
   schedule:
-    - cron: '0 0 * * *'  # 每天执行一�?  workflow_dispatch:
+    - cron: '0 0 * * *'  # 每天执行一次
+  workflow_dispatch:
     inputs:
       run-mode:
         description: 'Run mode - unified mode includes all features'
@@ -15,9 +16,9 @@ on:
         type: choice
         options:
           - unified        # 统一模式：融合所有功能，可通过参数控制
-          - complete       # 完整模式：运行所有步�?          - workflow-fix   # 只修复工作流错误
-          - security-scan  # 只运行安全扫�?          - ci-only        # 只运行CI步骤
-          - deploy-only    # 只运行部署步�?      # 统一模式的可选参�?      include-workflow-fix:
+          - complete       # 完整模式：运行所有步骤          - workflow-fix   # 只修复工作流错误
+          - security-scan  # 只运行安全扫描          - ci-only        # 只运行CI步骤
+          - deploy-only    # 只运行部署步骤      # 统一模式的可选参数      include-workflow-fix:
         description: 'Include workflow fix in unified mode'
         required: false
         default: 'true'
@@ -58,7 +59,8 @@ permissions:
   id-token: write
 
 jobs:
-  # 工作流自动修�?  workflow-fixer:
+  # 工作流自动修复
+  workflow-fixer:
     runs-on: ubuntu-latest
     if: github.event.inputs.run-mode == 'complete' || github.event.inputs.run-mode == 'workflow-fix' || (github.event.inputs.run-mode == 'unified' && github.event.inputs.include-workflow-fix == 'true')
     steps:
@@ -107,14 +109,16 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            // 自动修复常见工作流错�?            const fs = require('fs');
+            // 自动修复常见工作流错误
+            const fs = require('fs');
             const path = require('path');
             
             // 使用当前工作目录作为基础路径
             const workflowsDir = path.join(process.cwd(), '.github', 'workflows');
             console.log(`Workflow directory: ${workflowsDir}`);
             
-            // 检查目录是否存�?            if (!fs.existsSync(workflowsDir)) {
+            // 检查目录是否存在
+            if (!fs.existsSync(workflowsDir)) {
               console.error(`Directory ${workflowsDir} does not exist`);
               return;
             }
@@ -149,7 +153,8 @@ jobs:
                   content = content.replace(/runs-on: ubuntu-latest/g, 'runs-on: ubuntu-latest\n    timeout-minutes: 30');
                 }
                 
-                // 只在内容变化时写�?                if (content !== originalContent) {
+                // 只在内容变化时写入
+                if (content !== originalContent) {
                   fs.writeFileSync(filePath, content, 'utf8');
                   console.log(`Fixed ${file}`);
                   fixedFiles++;
@@ -173,7 +178,8 @@ jobs:
           # 提交更改
           git commit -m "fix: auto-correct workflow configuration errors"
           
-          # 推送更�?          git push origin main
+          # 推送更改
+          git push origin main
           
           echo "Changes committed and pushed to main branch"
 
@@ -256,9 +262,9 @@ jobs:
           # Output cache file path for subsequent steps
           echo "cache_file=changed-files-cache.json" >> $GITHUB_OUTPUT
 
-          echo "过滤前文件数�? $(echo $all_files | wc -w)"
-          echo "过滤后文件数�? $(echo $filtered_files | wc -w)"
-          echo "已生成缓存文�? changed-files-cache.json"
+          echo "过滤前文件数量 $(echo $all_files | wc -w)"
+          echo "过滤后文件数量 $(echo $filtered_files | wc -w)"
+          echo "已生成缓存文件 changed-files-cache.json"
 
       - name: Config Git User
         run: |
@@ -359,16 +365,15 @@ jobs:
 
 ## 执行摘要
 
-本报告总结�?GitHub 工作流的完整修复和优化过程，包括语法错误修复、权限配置优化、Action 版本更新等多个方面�?
-## 修复内容
+本报告总结了 GitHub 工作流的完整修复和优化过程，包括语法错误修复、权限配置优化、Action 版本更新等多个方面。## 修复内容
 
 ### 1. 脚本文件修复
-- **换行符问�?*：将 CRLF 转换�?LF 格式，确保脚本在 Linux 环境中正常运�?- **修复的文�?*�?  - `.github/actions-config/security-scan.sh`
+- **换行符问题**：将 CRLF 转换为 LF 格式，确保脚本在 Linux 环境中正常运行- **修复的文件**：  - `.github/actions-config/security-scan.sh`
   - `.github/actions-config/install-action.sh`
   - `.github/actions/action-fixer/run.sh`
 
-### 2. 工作流文件修�?- **语法错误**：修复了所有工作流文件的语法和缩进问题
-- **权限配置**：为所有工作流文件添加了适当的权限配�?- **Action 版本**：更新所�?Action 到最新稳定版�?- **修复的文�?*�?  - `.github/workflows/test-action-fixer.yml`
+### 2. 工作流文件修复- **语法错误**：修复了所有工作流文件的语法和缩进问题
+- **权限配置**：为所有工作流文件添加了适当的权限配置- **Action 版本**：更新所有 Action 到最新稳定版本- **修复的文件**：  - `.github/workflows/test-action-fixer.yml`
   - `.github/workflows/release.yml`
   - `.github/workflows/marketplace-submit.yml`
   - `.github/workflows/marketplace-install.yml`
@@ -377,39 +382,38 @@ jobs:
   - `.github/workflows/security-scan.yml`
 
 ### 3. 功能增强
-- **统一工作�?*：创建了统一工作流文件，整合所有功�?- **智能运行模式**：支�?6 种运行模式，按需执行
+- **统一工作流**：创建了统一工作流文件，整合所有功能- **智能运行模式**：支持 6 种运行模式，按需执行
 - **详细报告**：自动生成执行报告和安全扫描结果
 - **定时执行**：每天自动执行完整扫描和修复
 
 ## 验证结果
 
 ### 测试项目
-- �?脚本文件语法正确
-- �?工作流文件语法正�?- �?网络连接稳定
-- �?Action 版本最�?- �?权限配置合理
-- �?安全扫描通过
-- �?构建测试通过
+- ✅ 脚本文件语法正确
+- ✅ 工作流文件语法正确- ✅ 网络连接稳定
+- ✅ Action 版本最新- ✅ 权限配置合理
+- ✅ 安全扫描通过
+- ✅ 构建测试通过
 
 ### 性能优化
-- **缓存优化**：智能缓存依赖，加速构建过�?- **并行执行**：优化工作流执行顺序，提高效�?- **超时设置**：合理设置超时时间，避免无响�?
+- **缓存优化**：智能缓存依赖，加速构建过程- **并行执行**：优化工作流执行顺序，提高效率- **超时设置**：合理设置超时时间，避免无响应
 ## 后续建议
 
 ### 定期维护
-1. **每周检�?*：定期检查工作流执行状�?2. **每月更新**：更�?Action 版本到最新稳定版
+1. **每周检查**：定期检查工作流执行状态2. **每月更新**：更新 Action 版本到最新稳定版
 3. **季度审计**：进行全面的安全审计和性能评估
 
-### 最佳实�?1. **版本锁定**：使用固定版本的 Action，避免意外的破坏性变�?2. **权限最小化**：只授予工作流必要的权限
+### 最佳实践1. **版本锁定**：使用固定版本的 Action，避免意外的破坏性变化2. **权限最小化**：只授予工作流必要的权限
 3. **错误处理**：添加适当的错误处理和通知机制
-4. **文档更新**：及时更新工作流文档，反映变�?
-## 结论
+4. **文档更新**：及时更新工作流文档，反映变化## 结论
 
-所�?GitHub 工作流问题已成功修复，现在能够在云端正常运行。通过实施最佳实践和自动化工具，工作流的可靠性和性能得到了显著提升�?
+所有 GitHub 工作流问题已成功修复，现在能够在云端正常运行。通过实施最佳实践和自动化工具，工作流的可靠性和性能得到了显著提升。
 ---
 
-**报告生成时间**�?(date '+%Y-%m-%d %H:%M:%S')
+**报告生成时间**：(date '+%Y-%m-%d %H:%M:%S')
 **执行环境**：GitHub Actions
-**触发方式**�?{{ github.event_name }}
-**运行模式**�?{{ github.event.inputs.run-mode }}
+**触发方式**：{{ github.event_name }}
+**运行模式**：{{ github.event.inputs.run-mode }}
           EOF
 
       - name: Upload comprehensive report
@@ -420,7 +424,7 @@ jobs:
 
       - name: Send completion notification
         run: |
-          echo "�?Unified GitHub Workflow completed successfully!"
+          echo "✅ Unified GitHub Workflow completed successfully!"
           echo "📊 Report generated: .github/reports/COMPREHENSIVE_SOLUTION_REPORT.md"
           echo "🔒 Security scan results uploaded as artifact"
-          echo "🚀 All run modes have been successfully merged into the unified run mode"\n
+          echo "🚀 All run modes have been successfully merged into the unified run mode"
