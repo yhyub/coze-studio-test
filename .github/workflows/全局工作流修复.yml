@@ -165,6 +165,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install PyGithub yq pyyaml
           npm install -g @octokit/rest
+          sudo apt-get update && sudo apt-get install -y jq
       
       - name: Get branches
         id: get-branches
@@ -226,8 +227,8 @@ jobs:
                 # 2. Fix expression syntax
                 content=$(echo "$content" | sed 's|if: steps\.|if: ${{ steps\. }}|g')
                 
-                # 3. Fix secrets usage
-                content=$(echo "$content" | sed 's|secrets\.|env\.|g')
+                # 3. Fix secrets usage - 保留secrets变量，不进行替换
+                # content=$(echo "$content" | sed 's|secrets\.|env\.|g')
                 
                 # 4. Update action versions
                 content=$(echo "$content" | sed 's/actions\/checkout@v[0-9]\+/actions\/checkout@v4/g')
