@@ -1,0 +1,78 @@
+# GitHub市场安装程序集中管理配置文件
+# 用于管理从GitHub市场安装的所有Action
+
+# 允许的Action来源列表
+allowed_sources:
+  - actions/checkout
+  - actions/setup-node
+  - actions/setup-python
+  - peaceiris/actions-gh-pages
+  - actions/upload-artifact
+  - actions/cache
+  - actions/download-artifact
+  - actions/upload-release-asset
+  - actions/create-release
+  - actions/labeler
+  - actions/stale
+  - actions/delete-package-versions
+  - actions/setup-go
+  - actions/setup-java
+  - actions/setup-dotnet
+  - actions/setup-ruby
+  - actions/setup-php
+  - actions/setup-node
+  - actions/setup-python
+  - actions/setup-ruby
+  - actions/setup-dotnet
+  - actions/setup-java
+  - actions/setup-go
+  - actions/setup-php
+  - actions/setup-ruby
+  - actions/setup-dotnet
+  - actions/setup-java
+  - actions/setup-go
+  - actions/setup-php
+
+# 已安装的Action配置
+installed_actions:
+  - name: actions/checkout
+    version: v4
+    source: actions/checkout
+    usage: 每天使用
+    security: 已审�?    workflows: [ci-cd.yml, deploy.yml]
+    description: 检出仓库代�?  
+  - name: actions/setup-node
+    version: v5
+    source: actions/setup-node
+    usage: 每周使用
+    security: 已审�?    workflows: [deploy.yml]
+    description: 设置Node.js环境
+  
+  - name: actions/setup-python
+    version: v5
+    source: actions/setup-python
+    usage: 每月使用
+    security: 已审�?    workflows: [security-scan.yml]
+    description: 设置Python环境
+  
+  - name: peaceiris/actions-gh-pages
+    version: v4
+    source: peaceiris/actions-gh-pages
+    usage: 每季度使�?    security: 已审�?    workflows: [deploy.yml]
+    description: 部署到GitHub Pages
+  
+  - name: actions/upload-artifact
+    version: v4
+    source: actions/upload-artifact
+    usage: 每年使用
+    security: 已审�?    workflows: [security-scan.yml]
+    description: 上传构建产物
+
+# 自定义Action配置
+custom_actions:
+  - name: my-custom-action
+    version: v1
+    source: my-org/my-repo
+    usage: 测试使用
+    security: 待审�?    workflows: [test.yml]
+    description: 自定义Action\n

@@ -1,0 +1,43 @@
+# 工作流错误自动修复系统配置
+
+# 目录配置
+scripts_dir: scripts
+fixes_dir: fixes
+workflows_dir: .github/workflows
+coze_workflows_dir: coze-workflows
+
+# 安全配置
+enable_security: true
+security_scan: true
+
+# 通知配置
+create_pr: false
+create_issue: true
+notification_email: ""
+
+# 错误修复配置
+max_retries: 3
+auto_fix: true
+validate_fixes: true
+
+# 错误分类配置
+error_categories:
+  - config_error
+  - environment_issue
+  - permission_issue
+  - version_issue
+
+# 支持的工作流类型
+supported_workflows:
+  - github_actions
+  - coze
+
+# 日志配置
+log_level: info
+log_file: workflow-fix.log
+
+# 超时配置
+timeout:
+  script_execution: 300
+  validation: 60
+  total: 600

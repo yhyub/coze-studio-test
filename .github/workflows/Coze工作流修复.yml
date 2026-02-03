@@ -1,0 +1,126 @@
+name: Coze Workflow Fixer
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/**/*.yml'
+      - '.github/workflows/**/*.yaml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/**/*.yml'
+      - '.github/workflows/**/*.yaml'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  fix-coze-workflows:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Create fix script
+        run: |
+          mkdir -p .github/actions-config/scripts
+          cat > .github/actions-config/scripts/fix-coze-workflows.py << 'EOF'
+          import yaml
+          import os
+          import re
+
+          def fix_workflow_file(file_path):
+              print(f"Processing file: {file_path}")
+              
+              # Read the file
+              with open(file_path, 'r', encoding='utf-8') as f:
+                  content = f.read()
+              
+              # Fix common issues
+              # 1. Fix workflow_dispatch syntax
+              content = re.sub(r'workflow_dispatch:\s*\{[^}]*\}', 'workflow_dispatch:', content)
+              
+              # 2. Fix indentation issues
+              lines = content.split('\n')
+              fixed_lines = []
+              for line in lines:
+                  # Remove trailing spaces
+                  line = line.rstrip()
+                  # Skip empty lines at the end
+                  if not line and not fixed_lines:
+                      continue
+                  fixed_lines.append(line)
+              
+              # Remove trailing empty lines
+              while fixed_lines and not fixed_lines[-1]:
+                  fixed_lines.pop()
+              
+              fixed_content = '\n'.join(fixed_lines)
+              
+              # Write back the fixed content
+              with open(file_path, 'w', encoding='utf-8') as f:
+                  f.write(fixed_content)
+              
+              print(f"Fixed file: {file_path}")
+
+          # Process all workflow files
+          workflow_dir = '.github/workflows'
+          for root, dirs, files in os.walk(workflow_dir):
+              for file in files:
+                  if file.endswith(('.yml', '.yaml')):
+                      file_path = os.path.join(root, file)
+                      try:
+                          fix_workflow_file(file_path)
+                      except Exception as e:
+                          print(f"Error processing {file_path}: {e}")
+
+          print("Coze workflow fix completed!")
+          EOF
+
+      - name: Fix Coze workflows
+        run: |
+          python .github/actions-config/scripts/fix-coze-workflows.py
+
+      - name: Check for changes
+        id: check-changes
+        run: |
+          if git diff --quiet; then
+              echo "No changes to commit"
+              echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+              echo "Changes detected"
+              echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit changes
+        if: steps.check-changes.outputs.has_changes == 'true'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/workflows/
+          git commit -m "fix: automatically fix Coze workflow errors"
+          git push
+
+      - name: Output results
+        run: |
+          echo "Coze workflow fix process completed!"
+          if [ "${{ steps.check-changes.outputs.has_changes }}" == "true" ]; then
+              echo "Changes were made and committed to the repository."
+          else
+              echo "No changes were needed."
+          fi

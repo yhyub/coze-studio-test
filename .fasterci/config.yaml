@@ -1,0 +1,21 @@
+workflows:
+  - name: CI
+    on:
+      pull_request:
+        branches:
+          - main
+      push:
+        branches:
+          - main
+    github_check_md_file: .github/workflows/ci.yml
+    steps:
+      - name: Checkout code
+        run: git checkout $GITHUB_SHA
+      - name: Set up environment
+        run: echo "Setting up environment"
+      - name: Install dependencies
+        run: node common/scripts/install-run-rush.js install --to tag:core
+      - name: Build
+        run: node common/scripts/install-run-rush.js build --to tag:core
+      - name: Test
+        run: node common/scripts/install-run-rush.js test --to tag:core

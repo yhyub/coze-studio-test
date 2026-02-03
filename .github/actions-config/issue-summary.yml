@@ -1,0 +1,32 @@
+name: Issue Summary
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  summarize:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create summary comment
+        run: |
+          echo "Creating issue summary..."
+          echo "Issue title: ${{ github.event.issue.title }}"
+          echo "Issue body: ${{ github.event.issue.body }}"
+          SUMMARY="Issue summary: ${{ github.event.issue.title }} - Created by ${{ github.event.issue.user.login }}"
+          echo "Summary: $SUMMARY"
+          echo "SUMMARY=$SUMMARY" >> $GITHUB_ENV
+
+      - name: Comment with summary
+        run: |
+          gh issue comment $ISSUE_NUMBER --body '$SUMMARY'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          SUMMARY: ${{ env.SUMMARY }}\n

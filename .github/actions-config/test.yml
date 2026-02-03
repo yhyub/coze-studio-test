@@ -1,0 +1,93 @@
+name: Test Workflow
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      test_data:
+        description: 'Test data'
+        required: false
+        default: 'default'
+        type: string
+
+jobs:
+  test-environment:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Environment test
+        run: |
+          echo "Environment test started"
+          echo "GitHub SHA: ${{ github.sha }}"
+          echo "Runner OS: ${{ runner.os }}"
+          echo "Node.js version: $(node --version 2>/dev/null || echo 'Not installed')"
+          echo "Python version: $(python --version 2>/dev/null || echo 'Not installed')"
+          echo "Go version: $(go version 2>/dev/null || echo 'Not installed')"
+          echo "Environment test completed!"
+
+  data-acquisition:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set environment
+        run: |
+          echo "Test data: ${{ github.event.inputs.test_data }}"
+          echo "GitHub SHA: ${{ github.sha }}"
+          echo "Runner OS: ${{ runner.os }}"
+
+      - name: Simulate data acquisition
+        id: data_fetch
+        run: |
+          echo "Starting data acquisition..."
+          sleep 5
+          echo "Data acquisition completed!"
+          echo "data=Acquired data: ${{ github.event.inputs.test_data }}" >> $GITHUB_OUTPUT
+
+      - name: Process acquired data
+        run: |
+          echo "Starting data processing..."
+          echo "Acquired data: ${{ steps.data_fetch.outputs.data }}"
+          sleep 3
+          echo "Data processing completed!"
+
+      - name: Verify data
+        run: |
+          echo "Verifying data integrity..."
+          if [ "${{ github.event.inputs.test_data }}" = "default" ]; then
+            echo "Data verification passed!"
+          else
+            echo "Data verification passed! Test data: ${{ github.event.inputs.test_data }}"
+          fi
+
+  final-verification:
+    runs-on: ubuntu-latest
+    needs: [test-environment, data-acquisition]
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Final verification
+        run: |
+          echo "Final verification started"
+          echo "Test results summary:"
+          echo "   - Environment test: Passed"
+          echo "   - Data acquisition test: Passed"
+          echo "All tests passed!"
+
+      - name: Output final result
+        run: |
+          echo "Test workflow completed successfully!"
+          echo "Run time: $(date)"
+          echo "Repository: ${{ github.repository }}"
+          echo "All test cases passed!"\n

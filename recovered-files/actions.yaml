@@ -1,0 +1,25 @@
+allowed_sources:
+  - actions/checkout
+  - actions/setup-node
+  - actions/setup-python
+  - actions/cache
+  - actions/upload-artifact
+  - actions/download-artifact
+  - github/codeql-action
+  - actions/dependency-review-action
+  - reviewdog/reviewdog
+  - codecov/codecov-action
+  - 8398a7/action-slack
+  - actions/github-script
+
+installed_actions:
+  - name: actions/checkout
+    version: v4
+    source: actions/checkout
+    usage: 每天使用
+    security: 已审核
+    workflows: []
+
+custom_actions:
+  directory: ".github/actions"
+  list: []

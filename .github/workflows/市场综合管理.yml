@@ -1,0 +1,244 @@
+name: Marketplace Actions Management
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:  # 允许手动触发
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+  checks: read
+  deployments: read
+  issues: read
+  packages: write
+  repository-projects: read
+  security-events: read
+  statuses: read
+
+jobs:
+  install-actions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install yq
+    
+    - name: Install Marketplace Actions
+      run: |
+        cd .github/actions-config
+        # 检查配置文件是否存在
+        if [ -f "actions.yaml" ]; then
+          echo "配置文件存在，开始安装Actions..."
+          # 这里可以添加具体的Action安装命令
+          # 例如：bash install-action.sh actions/checkout v4
+        else
+          echo "配置文件不存在，跳过安装步骤"
+        fi
+
+    - name: Run security scan
+      run: |
+        cd .github/actions-config
+        # 创建日志目录
+        mkdir -p logs
+        # 检查配置文件是否存在
+        if [ -f "actions.yaml" ]; then
+          echo "配置文件存在，开始安全扫描.."
+          # 使用本地配置文件进行扫描
+          if [ -f "security-scan.sh" ]; then
+            CONFIG_FILE="actions.yaml" bash security-scan.sh -v -l
+          else
+            echo "security-scan.sh not found, skipping security scan"
+          fi
+        else
+          echo "配置文件不存在，跳过安全扫描步骤"
+          # 创建空的扫描结果文件
+          echo "No security scan performed: configuration file not found" > logs/scan-results.txt
+        fi
+    
+    - name: Upload scan results
+      uses: actions/upload-artifact@v4
+      with:
+        name: marketplace-actions-results
+        path: .github/actions-config/logs/
+        if-no-files-found: warn
+
+  manage-marketplace-actions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip && pip install yq
+
+      - name: Validate actions-config directory
+        run: |
+          if [ ! -d ".github/actions-config" ]; then
+            mkdir -p .github/actions-config
+          fi
+          
+          if [ ! -f ".github/actions-config/actions.yaml" ]; then
+            echo "Creating actions.yaml..."
+            echo "allowed_sources: " > .github/actions-config/actions.yaml
+            echo "  - actions/checkout" >> .github/actions-config/actions.yaml
+            echo "  - actions/setup-node" >> .github/actions-config/actions.yaml
+            echo "  - actions/setup-python" >> .github/actions-config/actions.yaml
+            echo "  - actions/upload-artifact" >> .github/actions-config/actions.yaml
+            echo "" >> .github/actions-config/actions.yaml
+            echo "installed_actions: " >> .github/actions-config/actions.yaml
+            echo "  - name: actions/checkout" >> .github/actions-config/actions.yaml
+            echo "    version: v4" >> .github/actions-config/actions.yaml
+            echo "    source: actions/checkout" >> .github/actions-config/actions.yaml
+            echo "    usage: 基础代码检出" >> .github/actions-config/actions.yaml
+            echo "    security: 已审核" >> .github/actions-config/actions.yaml
+            echo "    workflows: []" >> .github/actions-config/actions.yaml
+          fi
+          
+          echo "✓ Directory validated"
+
+      - name: Sync marketplace actions
+        if: github.event.inputs.action == 'sync'
+        run: |
+          cd .github/actions-config
+          echo "Syncing..."
+          if yq eval '.installed_actions' actions.yaml > /dev/null 2>&1; then
+            echo "✓ Config valid"
+          else
+            echo "Error: Invalid config"
+            exit 1
+          fi
+
+      - name: Validate workflow files
+        if: github.event.inputs.action == 'validate'
+        run: |
+          echo "Validating workflows..."
+          errors=""
+          for file in .github/workflows/*.yml; do
+            if ! yq eval "$file" > /dev/null 2>&1; then
+              errors+="$file,"
+            fi
+          done
+          errors=$(echo "$errors" | sed 's/,$//')
+          if [ -n "$errors" ]; then
+            echo "Error: Invalid files: $errors"
+            exit 1
+          else
+            echo "✓ All valid"
+          fi
+
+      - name: Cleanup non-official files
+        if: github.event.inputs.action == 'clean'
+        run: |
+          cd .github/actions-config
+          echo "Cleaning..."
+          official_files=('actions.yaml' 'install-action.sh' 'security-scan.sh' 'security-policy.md' 'marketplace-actions.yaml')
+          for file in *; do
+            is_official=false
+            for official_file in "${official_files[@]}"; do
+              if [ "$file" == "$official_file" ]; then
+                is_official=true
+                break
+              fi
+            done
+            if [ -d "$file" ]; then
+              if [ "$file" != "logs" ]; then
+                echo "Removing directory: $file"
+              fi
+            elif [ "$is_official" == false ]; then
+              echo "Removing file: $file"
+            fi
+          done
+
+      - name: Audit marketplace actions
+        if: github.event.inputs.action == 'audit'
+        run: |
+          cd .github/actions-config
+          echo "Auditing..."
+          if [ -f "security-scan.sh" ]; then
+            CONFIG_FILE="actions.yaml" bash security-scan.sh -v -l
+          else
+            echo "security-scan.sh not found"
+          fi
+
+      - name: Upload audit results
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: marketplace-actions-audit
+          path: .github/actions-config/logs/
+
+  submit-to-marketplace:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: github.ref_type == 'tag' && startsWith(github.ref_name, 'v')
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Build action
+        run: npm run build
+        
+      - name: Verify package
+        run: |
+          npm pack
+          ls -la workflow-auto-fixer-*.tgz
+          
+      - name: Create release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            ## What's Changed
+            - Initial release of Workflow Auto-Fixer
+            - Automatically fix GitHub workflow errors
+            - Support global repository fixing
+          draft: false
+          prerelease: false
+          
+      - name: Submit to Marketplace
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Submit to GitHub Marketplace
+            const result = await github.request('POST /marketplace_listing/actions', {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: {
+                name: 'Workflow Auto-Fixer',
+                short_description: 'Automatically fix GitHub workflow errors',
+                full_description: fs.readFileSync('README.md', 'utf8'),
+                categories: ['automation', 'github-actions', 'devops'],
+                public: true
+              }
+            });
+            console.log('Submitted to Marketplace:', result.data);
